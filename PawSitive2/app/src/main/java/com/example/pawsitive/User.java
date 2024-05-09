@@ -73,6 +73,7 @@ public class User {
     public static String getName() {
         return name;
     }
+    public ArrayList<Review> getReviews() {return reviews;}
 
     public static String getPassword() {
         return password;

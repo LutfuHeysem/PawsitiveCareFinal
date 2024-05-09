@@ -18,6 +18,7 @@ public class ProfilePage1 extends AppCompatActivity {
     ImageView profileImage;
     TextView profileUserName;
     TextView stars;
+    User owner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,50 +40,7 @@ public class ProfilePage1 extends AppCompatActivity {
 
 
 
-        if(user.getStars() == 0.5)
-        {
-            stars.setBackgroundResource(R.drawable.halfStar);
-        }
-        if(user.getStars() == 1.5)
-        {
-            stars.setBackgroundResource(R.drawable.oneAndHalfStar);
-        }
-        if(user.getStars() == 2.5)
-        {
-            stars.setBackgroundResource(R.drawable.twoAndHalfStar);
-        }
-        if(user.getStars() == 3.5)
-        {
-            stars.setBackgroundResource(R.drawable.threeAndHalfStar);
-        }
-        if(user.getStars() == 4.5)
-        {
-            stars.setBackgroundResource(R.drawable.fourAndHalfStar);
-        }
-        if(user.getStars() == 0)
-        {
-            stars.setBackgroundResource(R.drawable.zeroStar);
-        }
-        if(user.getStars() == 1)
-        {
-            stars.setBackgroundResource(R.drawable.oneStar);
-        }
-        if(user.getStars() == 2)
-        {
-            stars.setBackgroundResource(R.drawable.twoStar);
-        }
-        if(user.getStars() == 3)
-        {
-            stars.setBackgroundResource(R.drawable.threeStar);
-        }
-        if(user.getStars() == 4)
-        {
-            stars.setBackgroundResource(R.drawable.fourStar);
-        }
-        if(user.getStars() == 5)
-        {
-            stars.setBackgroundResource(R.drawable.fiveStar);
-        }
+        //stars.setBackgroundResource(Review.getResource(Review.calculateStarAverage(owner)));
 
 
 
