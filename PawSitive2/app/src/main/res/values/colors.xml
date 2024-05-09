@@ -3,10 +3,9 @@
     <color name="white_color">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="blue_color">#00008B</color>
-    <color name="primary_text">#808080</color> <!-- Black color -->
+    <color name="primary_text">#3A3B3C</color> <!-- Black color -->
     <color name="accent_color">#FF4081</color> <!-- Pink accent color -->
-    <color name="secondary_text">#D3D3D3</color> <!-- Light gray color -->
-    <!-- Add more color definitions here if needed -->
+    <color name="secondary_text">#808080</color> <!-- Light gray color -->
     <color name="red_color">#FF0000</color>
     <color name="green_color">#00FF00</color>
     <color name="yellow_color">#FFFF00</color>

@@ -9,9 +9,15 @@ public class Review
         this.noOfStar = noOfStar;
         this.reviewString = reviewString;
     }
+<<<<<<< Updated upstream
 
     public int getNoOfStar() {
         return noOfStar;
+=======
+    public int calculateStarAverage(User user)
+    {
+        return 0;
+>>>>>>> Stashed changes
     }
 
     public String getReviewString() {
