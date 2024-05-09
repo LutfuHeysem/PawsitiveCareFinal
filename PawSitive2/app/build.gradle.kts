@@ -83,7 +83,7 @@ dependencies {
     implementation("androidx.activity:activity:1.8.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
-    implementation(project(":app"))
+//    implementation(project(":app"))
 
     //implementation ("androidx.multidex:multidex:multidex_version")
 
