@@ -3,6 +3,7 @@
     <string name="title_activity_create_new_account">CreateNewAccount</string>
 
     <string-array name="PetTypes">
+        <item>Select Type</item>
         <item>Cat</item>
         <item>Dog</item>
         <item>Snake</item>
@@ -10,9 +11,34 @@
     </string-array>
 
     <string-array name="PetGenders">
+        <item>Select Gender</item>
         <item>Male</item>
         <item>Female</item>
     </string-array>
+
+    <string-array name="EnergyLevels">
+        <item>Select Energy Level</item>
+        <item>Very Low</item>
+        <item>Low</item>
+        <item>Moderate</item>
+        <item>High</item>
+        <item>Very High</item>
+    </string-array>
+
+    <string-array name="FeedingCondition">
+        <item>Select Feeding Condition</item>
+        <item>Prefer Sea Food</item>
+        <item>Prefer Lamb</item>
+    </string-array>
+
+    <string-array name="NumberOfWalks">
+        <item>Select Number Of Walks</item>
+        <item>Everyday</item>
+        <item>Every 2 Days</item>
+        <item>Twice A Week</item>
+        <item>Once A Week</item>
+    </string-array>
+
 
     <string name="title_activity_profile_page">ProfilePage</string>
     <string name="title_home">Home</string>

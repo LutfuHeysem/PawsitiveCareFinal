@@ -17,9 +17,11 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -31,16 +33,18 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AddEditPet extends AppCompatActivity {
     private FirebaseFirestore fStore;
-
+    Button UploadImageButton, SaveButton;
     ImageView UploadImageView;
-    Button UploadImageButton;
-
-
-    private String petName, additionalNotes, type, gender;
+    TextView Name, Age, Weight, Notes;
+    CheckBox Neutered, Microchipped, Friendly, CanBeLeftAlone, HouseTrained;
+    private boolean neutered, microchipped, friendly, canBeLeftAlone, houseTrained;
+    Spinner spinnerNumberOfWalksSelector, spinnerFeedingConditionerSelector,
+            spinnerEnergyLevelSelector, spinnerGenderSelector, spinnerTypeSelector;
+    private String typeSelection, genderSelection, energyLevelSelection, feedingConditionSelection,
+            numberOfWalksSelection, name, additionalNotes, type, gender;
     private int age, weight;
     private byte[] imageInBase64;
-    private User owner;
-
+    private boolean imageClicked = false;
     public final int GET_FROM_GALLERY = 3;
 
 
@@ -75,23 +79,82 @@ public class AddEditPet extends AppCompatActivity {
             return insets;
         });
 
-        Spinner spinnerTypeSelector=findViewById(R.id.TypeSelector);
+        spinnerTypeSelector = findViewById(R.id.TypeSelector);
         ArrayAdapter<CharSequence>adapter=ArrayAdapter.createFromResource(this, R.array.PetTypes, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinnerTypeSelector.setAdapter(adapter);
 
-        Spinner spinnerGenderSelector=findViewById(R.id.GenderSelector);
+        spinnerGenderSelector = findViewById(R.id.GenderSelector);
         ArrayAdapter<CharSequence>adapter2=ArrayAdapter.createFromResource(this, R.array.PetGenders, android.R.layout.simple_spinner_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinnerGenderSelector.setAdapter(adapter2);
 
-        UploadImageButton = findViewById(R.id.UploadImageButton);
+        spinnerEnergyLevelSelector = findViewById(R.id.EnergyLevelSelector);
+        ArrayAdapter<CharSequence>adapter3=ArrayAdapter.createFromResource(this, R.array.EnergyLevels, android.R.layout.simple_spinner_item);
+        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        spinnerEnergyLevelSelector.setAdapter(adapter3);
+
+        spinnerFeedingConditionerSelector = findViewById(R.id.FeedingConditionsSpinner);
+        ArrayAdapter<CharSequence>adapter4=ArrayAdapter.createFromResource(this, R.array.FeedingCondition, android.R.layout.simple_spinner_item);
+        adapter4.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        spinnerFeedingConditionerSelector.setAdapter(adapter4);
+
+        spinnerNumberOfWalksSelector = findViewById(R.id.NumberOfWalksSpinner);
+        ArrayAdapter<CharSequence>adapter5=ArrayAdapter.createFromResource(this, R.array.NumberOfWalks, android.R.layout.simple_spinner_item);
+        adapter5.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        spinnerNumberOfWalksSelector.setAdapter(adapter5);
+
         UploadImageView = findViewById(R.id.UploadImageView);
 
+        UploadImageButton = findViewById(R.id.UploadImageButton);
+        SaveButton = findViewById(R.id.SaveButton);
+
+        Name = findViewById(R.id.PetNameInput);
+        Age = findViewById(R.id.PetAgeInput);
+        Weight = findViewById(R.id.PetSizeInput);
+        Notes = findViewById(R.id.AdditionalNotes);
+
+        Neutered = findViewById(R.id.NeuteredCheck);
+        Microchipped = findViewById(R.id.MicrochippedCheck);
+        Friendly = findViewById(R.id.FriendlyCheck);
+        CanBeLeftAlone = findViewById(R.id.LeftAloneCheck);
+        HouseTrained = findViewById(R.id.HouseTrainedCheck);
+
+        SaveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                typeSelection = spinnerTypeSelector.getSelectedItem().toString();
+                genderSelection = spinnerGenderSelector.getSelectedItem().toString();
+                energyLevelSelection = spinnerEnergyLevelSelector.getSelectedItem().toString();
+                feedingConditionSelection = spinnerFeedingConditionerSelector.getSelectedItem().toString();
+                numberOfWalksSelection = spinnerNumberOfWalksSelector.getSelectedItem().toString();
+
+                //imageInBase64
+
+                name = Name.getText().toString();
+                additionalNotes = Notes.getText().toString();
+
+                age = Integer.parseInt(Age.getText().toString());
+                weight = Integer.parseInt(Weight.getText().toString());
+
+                neutered = Neutered.isChecked();
+                microchipped = Microchipped.isChecked();
+                friendly = Friendly.isChecked();
+                canBeLeftAlone = CanBeLeftAlone.isChecked();
+                houseTrained = HouseTrained.isChecked();
+
+                Pet newPet = new Pet(name, typeSelection, energyLevelSelection, feedingConditionSelection, numberOfWalksSelection,
+                        additionalNotes, age, weight, neutered, microchipped, friendly, canBeLeftAlone, houseTrained, imageInBase64);
+
+
+
+            }
+        });
 
         UploadImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                imageClicked = true;
                 startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
             }
         });
@@ -99,12 +162,19 @@ public class AddEditPet extends AppCompatActivity {
         UploadImageButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                //BASE 64 CONVERSION
-                UploadImageView.buildDrawingCache();
-                Bitmap photo = UploadImageView.getDrawingCache();
-                ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.PNG, 100, bos);
-                imageInBase64 = bos.toByteArray();
+
+                if(!imageClicked){
+                    Toast.makeText(AddEditPet.this, "Select an image first", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    //BASE 64 CONVERSION
+                    UploadImageView.buildDrawingCache();
+                    Bitmap photo = UploadImageView.getDrawingCache();
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    photo.compress(Bitmap.CompressFormat.PNG, 100, bos);
+                    imageInBase64 = bos.toByteArray();
+                }
+
             }
         });
     }
