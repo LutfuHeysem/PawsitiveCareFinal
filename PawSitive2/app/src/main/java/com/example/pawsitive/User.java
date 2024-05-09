@@ -9,6 +9,8 @@ import android.util.Log;
 import com.google.firebase.firestore.QuerySnapshot;
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
+
 public class User {
     private static String name;
     private static String password;
@@ -18,6 +20,7 @@ public class User {
     private static String cardNumber;
     private static String cvv;
     private static String expirationDate;
+    private ArrayList<Review> reviews;
 
     public User(String email) {
         this.email = email;
