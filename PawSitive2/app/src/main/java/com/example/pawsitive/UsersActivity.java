@@ -38,6 +38,7 @@ public class UsersActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         preferenceManager = new PreferenceManager(getApplicationContext());
         setListener();
+        System.out.println("qwer");
         getUsers();
 
     }
@@ -48,20 +49,21 @@ public class UsersActivity extends AppCompatActivity {
     private void getUsers() {
         loading(true);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(Constants.KEY_COLLECTION_USERS)
+        db.collection("Users")
                 .get()
                 .addOnCompleteListener(task -> {
                     loading(false);
                     String currentUserId = preferenceManager.getString(Constants.KEY_USER_ID);
                     if(task.isSuccessful() && task.getResult() != null){
-                        System.out.println("burdayam");
+
                         System.out.println(task.getResult());
 
                         List<UserForChat> users = new ArrayList<>();
                         for (QueryDocumentSnapshot queryDocumentSnapshot: task.getResult()){
-                            if(currentUserId.equals(queryDocumentSnapshot.getId())){
-                                continue;
-                            }
+//                            if(currentUserId.equals(queryDocumentSnapshot.getId())){
+//                                continue;
+//                            }
+                            System.out.println(queryDocumentSnapshot.getString(Constants.KEY_NAME));
                             UserForChat user = new UserForChat();
                             user.name = queryDocumentSnapshot.getString(Constants.KEY_NAME);
                             user.email = queryDocumentSnapshot.getString(Constants.KEY_EMAIL);
