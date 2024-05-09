@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">PawSitive</string>
+    <string name="title_activity_create_new_account">CreateNewAccount</string>
+
+    <string-array name="PetTypes">
+        <item>Cat</item>
+        <item>Dog</item>
+        <item>Snake</item>
+        <item>Bird</item>
+    </string-array>
+
+    <string-array name="PetGenders">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <string name="title_activity_profile_page">ProfilePage</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="select_user">Select User</string>
+
+</resources>
