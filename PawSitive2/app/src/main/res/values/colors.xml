@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="white_color">#FFFFFF</color>
     <color name="black">#000000</color>
@@ -9,4 +8,14 @@
     <color name="red_color">#FF0000</color>
     <color name="green_color">#00FF00</color>
     <color name="yellow_color">#FFFF00</color>
+    <color name="light_gray">#D3D3D3</color>
+    <color name="dark_gray">#A9A9A9</color>
+    <color name="light_blue">#ADD8E6</color>
+    <color name="dark_blue">#000058</color>
+    <color name="light_green">#90EE90</color>
+    <color name="dark_green">#008000</color>
+    <color name="light_red">#FFC0CB</color>
+    <color name="dark_red">#8B0000</color>
+    <color name="light_yellow">#FFFFE0</color>
+    <color name="dark_yellow">#FFD700</color>
 </resources>
