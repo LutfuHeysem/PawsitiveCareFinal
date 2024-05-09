@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
         newAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TEMPORARY
                 Intent intent = new Intent(MainActivity.this, CreateNewAccount.class);
                 startActivity(intent);
             }

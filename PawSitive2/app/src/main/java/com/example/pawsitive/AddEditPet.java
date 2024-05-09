@@ -19,20 +19,35 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import com.google.android.material.chip.ChipGroup;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+
 public class AddEditPet extends AppCompatActivity {
+    private FirebaseFirestore fStore;
+
     ImageView UploadImageView;
+    Button UploadImageButton;
+
+
+    private String petName, additionalNotes, type, gender;
+    private int age, weight;
+    private byte[] imageInBase64;
+    private User owner;
+
     public final int GET_FROM_GALLERY = 3;
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-
-        //Detects request codes
         if(requestCode==GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
             Uri selectedImage = data.getData();
             Bitmap bitmap = null;
@@ -70,8 +85,9 @@ public class AddEditPet extends AppCompatActivity {
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinnerGenderSelector.setAdapter(adapter2);
 
-        Button UploadImageButton = findViewById(R.id.UploadImageButton);
+        UploadImageButton = findViewById(R.id.UploadImageButton);
         UploadImageView = findViewById(R.id.UploadImageView);
+
 
         UploadImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,10 +96,15 @@ public class AddEditPet extends AppCompatActivity {
             }
         });
 
-
         UploadImageButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                //BASE 64 CONVERSION
+                UploadImageView.buildDrawingCache();
+                Bitmap photo = UploadImageView.getDrawingCache();
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                photo.compress(Bitmap.CompressFormat.PNG, 100, bos);
+                imageInBase64 = bos.toByteArray();
             }
         });
     }
