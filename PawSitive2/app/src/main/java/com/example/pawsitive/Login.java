@@ -79,14 +79,17 @@ public class Login extends AppCompatActivity {
                                     if(currUser != null && currUser.isEmailVerified())
                                     {
 
+<<<<<<< Updated upstream
                                     Toast.makeText(Login.this, "Successful Login!", Toast.LENGTH_SHORT).show();
                                     //TEMPORARY
                                         Intent petIntent = new Intent(Login.this, AddEditPet.class);
+=======
                                         User loggedUser = new User(logEmail);
 
                                         Toast.makeText(Login.this, "Successful Login!", Toast.LENGTH_SHORT).show();
                                         //TEMPORARY
                                         Intent petIntent = new Intent(Login.this, UsersActivity.class);
+>>>>>>> Stashed changes
                                         startActivity(petIntent);
                                         //TEMPORARY
                                     }
