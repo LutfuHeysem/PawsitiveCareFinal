@@ -91,8 +91,14 @@ public class ResetPassword extends AppCompatActivity {
                 else if (!newP.equals(newP2))
                     Toast.makeText(ResetPassword.this, "Check confirmation of your new password!", Toast.LENGTH_SHORT).show();
                 else {
+                    mUser.updatePassword(newP).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Toast.makeText(ResetPassword.this, "Password changed successfully", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(ResetPassword.this, Login.class));
+                        }
+                    });
                     userData.put("Password", newP);
-
                     assert mUser != null;
                     updateInfo(userData, mUser.getEmail());
                 }

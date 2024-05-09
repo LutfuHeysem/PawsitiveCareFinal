@@ -76,13 +76,24 @@ public class Login extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
                                     currUser = currAuth.getCurrentUser();
-                                    User loggedUser = new User(logEmail);
+                                    if(currUser != null && currUser.isEmailVerified())
+                                    {
 
                                     Toast.makeText(Login.this, "Successful Login!", Toast.LENGTH_SHORT).show();
                                     //TEMPORARY
                                         Intent petIntent = new Intent(Login.this, AddEditPet.class);
+                                        User loggedUser = new User(logEmail);
+
+                                        Toast.makeText(Login.this, "Successful Login!", Toast.LENGTH_SHORT).show();
+                                        //TEMPORARY
+                                        Intent petIntent = new Intent(Login.this, UsersActivity.class);
                                         startActivity(petIntent);
-                                    //TEMPORARY
+                                        //TEMPORARY
+                                    }
+                                    else if(currUser != null && !currUser.isEmailVerified())
+                                        Toast.makeText(Login.this, "Verify your email first!", Toast.LENGTH_SHORT).show();
+                                    else
+                                        Toast.makeText(Login.this, "Unknown Error", Toast.LENGTH_SHORT).show();
                                 }
                             }).addOnFailureListener(Login.this, new OnFailureListener() {
                                 @Override

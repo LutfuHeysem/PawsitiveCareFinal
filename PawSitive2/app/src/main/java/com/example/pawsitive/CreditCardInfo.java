@@ -16,6 +16,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -92,53 +93,45 @@ public class CreditCardInfo extends AppCompatActivity {
                 }
                 else
                 {
-                    auth.createUserWithEmailAndPassword(mailC, passC)
-                            .addOnCompleteListener(CreditCardInfo.this, new OnCompleteListener<AuthResult>() {
+                    auth.createUserWithEmailAndPassword(mailC, passC).addOnCompleteListener(CreditCardInfo.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if(task.isSuccessful())
                                     {
-                                        auth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        auth.getCurrentUser().sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if(task.isSuccessful()) {
-                                                    userData = new HashMap<>();
-                                                    userData.put("Name", nameC);
-                                                    userData.put("Password", passC);
-                                                    userData.put("Email", mailC);
-                                                    userData.put("Location", locC);
-                                                    userData.put("Name On The Credit Card", nameCard);
-                                                    userData.put("Card Number", number);
-                                                    userData.put("CVV", cvv);
-                                                    userData.put("Expiration Date", exp);
-
-                                                    fStore.collection("Users").document(auth.getCurrentUser().getEmail())
-                                                            .set(userData).addOnCompleteListener(CreditCardInfo.this, new OnCompleteListener<Void>() {
-                                                                @Override
-                                                                public void onComplete(@NonNull Task<Void> task) {
-                                                                    if(task.isSuccessful())
-                                                                    {
-                                                                        Toast.makeText(CreditCardInfo.this, "Successful Sign Up", Toast.LENGTH_SHORT).show();
-                                                                        Intent intent = new Intent(CreditCardInfo.this, Login.class);
-                                                                        startActivity(intent);
-                                                                    }
-                                                                    else
-                                                                        Toast.makeText(CreditCardInfo.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                                                }
-                                                            });
-                                                }
-                                                else
-                                                {
-                                                    Toast.makeText(CreditCardInfo.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                                }
+                                            public void onSuccess(Void unused) {
+                                                Toast.makeText(CreditCardInfo.this, "Verification email has sent!", Toast.LENGTH_SHORT).show();
                                             }
                                         });
+
+                                            userData = new HashMap<>();
+                                            userData.put("Name", nameC);
+                                            userData.put("Password", passC);
+                                            userData.put("Email", mailC);
+                                            userData.put("Location", locC);
+                                            userData.put("Name On The Credit Card", nameCard);
+                                            userData.put("Card Number", number);
+                                            userData.put("CVV", cvv);
+                                            userData.put("Expiration Date", exp);
+
+                                            fStore.collection("Users").document(auth.getCurrentUser().getEmail())
+                                                    .set(userData).addOnCompleteListener(CreditCardInfo.this, new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if(task.isSuccessful())
+                                                            {
+                                                                Toast.makeText(CreditCardInfo.this, "Successful Sign Up", Toast.LENGTH_SHORT).show();
+                                                                Intent intent = new Intent(CreditCardInfo.this, Login.class);
+                                                                startActivity(intent);
+                                                            }
+                                                            else
+                                                                Toast.makeText(CreditCardInfo.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    });
                                     }
                                     else
-                                    {
                                         Toast.makeText(CreditCardInfo.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                    }
-
                                 }
                             });
                 }
