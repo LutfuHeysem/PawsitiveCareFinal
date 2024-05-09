@@ -44,6 +44,7 @@ public class Review
         if(averageStar == 1.5)
         {
             return (R.drawable.oneandhalfstar);
+        }
         if(averageStar == 2.5)
         {
             return (R.drawable.twoandhalfstar);
@@ -80,11 +81,7 @@ public class Review
         {
             return (R.drawable.fivestar);
         }
-        throw new RuntimeException("average can be an intager from 0 to 5 or an (intiger + 0.5) < 5");
+        throw new RuntimeException("average can be an intager from 0 to 5 or an (intager + 0.5) < 5");
     }
-
-
-
-
 
 }
