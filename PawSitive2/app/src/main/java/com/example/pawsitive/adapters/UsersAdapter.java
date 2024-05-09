@@ -11,14 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pawsitive.User;
+import com.example.pawsitive.UserForChat;
 import com.example.pawsitive.databinding.ItemContainerChatBinding;
 
 import java.util.List;
 public class UsersAdapter extends  RecyclerView.Adapter<UsersAdapter.UserViewHolder>{
 
-    private final List<User> users;
+    private final List<UserForChat> users;
 
-    public UsersAdapter(List<User> users) {
+    public UsersAdapter(List<UserForChat> users) {
         this.users = users;
     }
 
@@ -57,9 +58,9 @@ public class UsersAdapter extends  RecyclerView.Adapter<UsersAdapter.UserViewHol
 
         }
 
-        void setUserData(User user){
-            binding.textName.setText(user.getName());
-            binding.textEmail.setText(user.getEmail());
+        void setUserData(UserForChat user){
+            binding.textName.setText(user.name);
+            binding.textEmail.setText(user.email);
 
         }
     }
