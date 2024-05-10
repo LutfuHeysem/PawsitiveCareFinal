@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,8 +38,17 @@ public class ProfilePage1 extends AppCompatActivity {
         //profileUserName.setText(user.getUsername);
         stars = (TextView) findViewById(R.id.ratingStars);
 
-
-
+        TextView location = (TextView) findViewById(R.id.locationText);
+        location.setText("Location: " + owner.getLocation());
+        EditText allInfo = findViewById(R.id.allinfo);
+//        if(owner.getEmail().equals(thisuser)//dk how to do will research
+//        {
+//            allInfo.setFocusable(true);
+//        }
+//        else
+//        {
+//            allInfo.setFocusable(false);
+//        }
 
         //stars.setBackgroundResource(Review.getResource(Review.calculateStarAverage(owner)));
 
