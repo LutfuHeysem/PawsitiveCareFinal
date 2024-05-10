@@ -16,7 +16,6 @@ public class CreateNewAccount extends AppCompatActivity {
     //instance variables
     private String name, pass, email, loc;
     private EditText editName, editEmail, editPass, editLoc;
-    private int cvv;
     private Button back, signUp;
     private CheckBox privacy;
 

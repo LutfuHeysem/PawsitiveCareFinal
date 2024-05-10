@@ -28,7 +28,6 @@ public class ForgetPassword extends AppCompatActivity {
     private Button back, confirm;
     private EditText mail;
     private String mailString;
-    private ProgressBar prog;
     private FirebaseAuth mAuth;
 
 
@@ -42,7 +41,6 @@ public class ForgetPassword extends AppCompatActivity {
         confirm = findViewById(R.id.button6);
 
         mail = findViewById(R.id.mail);
-        prog = findViewById(R.id.progressBar4);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -67,9 +65,7 @@ public class ForgetPassword extends AppCompatActivity {
     }
 
     private void ResetPassword()
-    {
-        prog.setVisibility(View.VISIBLE);
-        confirm.setVisibility(View.INVISIBLE);
+    {;
         mAuth.sendPasswordResetEmail(mailString).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
@@ -81,8 +77,6 @@ public class ForgetPassword extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(ForgetPassword.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                prog.setVisibility(View.INVISIBLE);
-                confirm.setVisibility(View.VISIBLE);
             }
         });
     }

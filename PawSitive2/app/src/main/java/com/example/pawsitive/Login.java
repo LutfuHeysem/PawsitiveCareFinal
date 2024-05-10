@@ -23,7 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class Login extends AppCompatActivity {
 
-    private Button back, reset, login;
+    private Button back, forget, login;
 
     private EditText emailEdit, passEdit;
     private String logEmail, logPass;
@@ -38,7 +38,7 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         back = findViewById(R.id.button3);
-        reset = findViewById(R.id.button5);
+        forget = findViewById(R.id.button5);
         login = findViewById(R.id.button4);
 
         emailEdit = findViewById(R.id.editTextText);
@@ -52,10 +52,10 @@ public class Login extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        reset.setOnClickListener(new View.OnClickListener() {
+        forget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Login.this, ResetPassword.class);
+                Intent intent = new Intent(Login.this, ForgetPassword.class);
                 startActivity(intent);
             }
         });
@@ -81,12 +81,10 @@ public class Login extends AppCompatActivity {
                                     Toast.makeText(Login.this, "Successful Login!", Toast.LENGTH_SHORT).show();
                                     //TEMPORARY
                                         User loggedUser = new User(logEmail);
-
                                         Toast.makeText(Login.this, "Successful Login!", Toast.LENGTH_SHORT).show();
                                         //TEMPORARY
                                         Intent petIntent = new Intent(Login.this, UsersActivity.class);
                                         startActivity(petIntent);
-                                        //TEMPORARY
                                     }
                                     else if(currUser != null && !currUser.isEmailVerified())
                                         Toast.makeText(Login.this, "Verify your email first!", Toast.LENGTH_SHORT).show();
