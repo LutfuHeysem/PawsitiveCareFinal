@@ -8,7 +8,7 @@ public class Constants {
     public static final String KEY_PREFERENCE_NAME = "chatAppPreference";
     public static final String KEY_IS_SIGNED_IN = "isSignedIn";
     public static final String KEY_USER_ID = "userId";
-    public static final String KEY_IMAGE = "img";
+    public static final String KEY_IMAGE = "Profile Photo";
     public static final String KEY_USER = "user";
     public static final String KEY_COLLECTION_CHAT = "chat";
     public static final String  KEY_SENDER_ID = "senderID";

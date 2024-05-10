@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -26,13 +27,25 @@ import android.widget.Toast;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.HashMap;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.chip.ChipGroup;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 
 public class AddEditPet extends AppCompatActivity {
+    private HashMap<String, Object> petData;
     private FirebaseFirestore fStore;
+
     Button UploadImageButton, SaveButton;
     ImageView UploadImageView;
     TextView Name, Age, Weight, Notes;
@@ -58,6 +71,7 @@ public class AddEditPet extends AppCompatActivity {
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                 UploadImageView.setImageBitmap(bitmap);
+                imageClicked = true;
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -120,6 +134,8 @@ public class AddEditPet extends AppCompatActivity {
         CanBeLeftAlone = findViewById(R.id.LeftAloneCheck);
         HouseTrained = findViewById(R.id.HouseTrainedCheck);
 
+        fStore = FirebaseFirestore.getInstance();
+
         SaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,6 +150,13 @@ public class AddEditPet extends AppCompatActivity {
                 name = Name.getText().toString();
                 additionalNotes = Notes.getText().toString();
 
+                if(typeSelection.equals("") || genderSelection.equals("") || energyLevelSelection.equals("") ||
+                        feedingConditionSelection.equals("") || numberOfWalksSelection.equals("") ||
+                        name.equals("") || Age.getText().toString().equals("") || Weight.getText().toString().equals("")){
+                    Toast.makeText(AddEditPet.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 age = Integer.parseInt(Age.getText().toString());
                 weight = Integer.parseInt(Weight.getText().toString());
 
@@ -146,6 +169,40 @@ public class AddEditPet extends AppCompatActivity {
                 Pet newPet = new Pet(name, typeSelection, energyLevelSelection, feedingConditionSelection, numberOfWalksSelection,
                         additionalNotes, age, weight, neutered, microchipped, friendly, canBeLeftAlone, houseTrained, imageInBase64);
 
+                petData = new HashMap<>();
+                petData.put("Name", name);
+                petData.put("Type", typeSelection);
+                petData.put("Energy Level", energyLevelSelection);
+                petData.put("Feeding Condition", feedingConditionSelection);
+                petData.put("Number Of Walks", numberOfWalksSelection);
+                petData.put("Age", age);
+                petData.put("Weight", weight);
+                petData.put("Neutered", neutered);
+                petData.put("Microchipped", microchipped);
+                petData.put("Friendly", friendly);
+                petData.put("Can Be Left Alone", canBeLeftAlone);
+                petData.put("House Trained", houseTrained);
+                petData.put("Image", imageInBase64);
+
+                fStore.collection("Users").document(User.getEmail())
+                        .collection("Pets").document(name).set(petData)
+                        .addOnCompleteListener(AddEditPet.this, new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()) {
+                                    Toast.makeText(AddEditPet.this, "Save successful", Toast.LENGTH_SHORT).show();
+                                    //START NEW ACTIVITY HERE
+                                    Intent profilePage = new Intent(AddEditPet.this, ProfilePage1.class);
+                                    startActivity(profilePage);
+                                }
+                                else{
+                                    Toast.makeText(AddEditPet.this, "Save failed", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
+
+
 
 
             }
@@ -154,7 +211,6 @@ public class AddEditPet extends AppCompatActivity {
         UploadImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imageClicked = true;
                 startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
             }
         });
@@ -162,12 +218,12 @@ public class AddEditPet extends AppCompatActivity {
         UploadImageButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-
                 if(!imageClicked){
                     Toast.makeText(AddEditPet.this, "Select an image first", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     //BASE 64 CONVERSION
+                    Toast.makeText(AddEditPet.this, "Upload successful", Toast.LENGTH_SHORT).show();
                     UploadImageView.buildDrawingCache();
                     Bitmap photo = UploadImageView.getDrawingCache();
                     ByteArrayOutputStream bos = new ByteArrayOutputStream();

@@ -31,7 +31,7 @@ public class CreditCardInfo extends AppCompatActivity {
     private Button back, confirm;
     private String[] date = new String[2];
     private int month, year;
-    private String nameCard, number, exp, cvv, nameC, passC, locC, mailC;
+    private String nameCard, number, exp, cvv, nameC, passC, locC, mailC, imageStrC;
     private EditText editNameCard, editNum, editCvv, editExp;
     private FirebaseAuth auth;
     private HashMap<String, Object> userData;
@@ -71,6 +71,7 @@ public class CreditCardInfo extends AppCompatActivity {
                 passC = intent.getStringExtra("pass");
                 locC = intent.getStringExtra("loc");
                 mailC = intent.getStringExtra("email");
+                imageStrC = intent.getStringExtra("imageStr");
 
                 nameCard = editNameCard.getText().toString();
                 exp = editExp.getText().toString();
@@ -107,13 +108,13 @@ public class CreditCardInfo extends AppCompatActivity {
 
                                             userData = new HashMap<>();
                                             userData.put("Name", nameC);
-                                            userData.put("Password", passC);
                                             userData.put("Email", mailC);
                                             userData.put("Location", locC);
                                             userData.put("Name On The Credit Card", nameCard);
                                             userData.put("Card Number", number);
                                             userData.put("CVV", cvv);
                                             userData.put("Expiration Date", exp);
+                                            userData.put("Profile Photo", imageStrC);
 
                                             fStore.collection("Users").document(auth.getCurrentUser().getEmail())
                                                     .set(userData).addOnCompleteListener(CreditCardInfo.this, new OnCompleteListener<Void>() {

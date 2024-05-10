@@ -46,7 +46,7 @@
 
     <EditText
         android:id="@+id/PetNameInput"
-        android:layout_width="280dp"
+        android:layout_width="255dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="10dp"
@@ -75,7 +75,7 @@
 
     <Spinner
         android:id="@+id/TypeSelector"
-        android:layout_width="wrap_content"
+        android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:backgroundTint="#76D0FE"
@@ -89,7 +89,7 @@
 
     <Spinner
         android:id="@+id/GenderSelector"
-        android:layout_width="wrap_content"
+        android:layout_width="125dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
@@ -98,6 +98,7 @@
         android:contextClickable="true"
         android:dropDownWidth="100dp"
         android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="@+id/PetNameInput"
         app:layout_constraintStart_toEndOf="@+id/TypeSelector"
         app:layout_constraintTop_toBottomOf="@+id/PetNameInput" />
 
@@ -234,16 +235,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NumberOfWalksSpinner" />
 
-    <TextView
+    <EditText
         android:id="@+id/AdditionalNotes"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
+        android:ems="10"
         android:hint="Additional Notes"
+        android:inputType="text"
+        android:textAlignment="textStart"
         app:layout_constraintBottom_toBottomOf="@+id/NumberOfWalksSpinner"
         app:layout_constraintEnd_toEndOf="@+id/EnergyLevelSelector"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/FeedingConditionsSpinner"
-        app:layout_constraintTop_toBottomOf="@+id/EnergyLevelSelector" />
+        app:layout_constraintTop_toBottomOf="@+id/EnergyLevelSelector"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

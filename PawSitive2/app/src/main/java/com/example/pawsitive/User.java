@@ -20,7 +20,8 @@ public class User {
     private static String cardNumber;
     private static String cvv;
     private static String expirationDate;
-    private ArrayList<Review> reviews;
+    private ArrayList<ReviewMain> reviews;
+    private ArrayList<Pet> pets;
 
     public User(String email) {
         this.email = email;
@@ -73,7 +74,7 @@ public class User {
     public static String getName() {
         return name;
     }
-    public ArrayList<Review> getReviews() {return reviews;}
+    public ArrayList<ReviewMain> getReviews() {return reviews;}
 
     public static String getPassword() {
         return password;
@@ -101,6 +102,9 @@ public class User {
 
     public static String getExpirationDate() {
         return expirationDate;
+    }
+    public ArrayList<Pet> getPets() {
+        return pets;
     }
 
     public interface OnUserLoadListener {
