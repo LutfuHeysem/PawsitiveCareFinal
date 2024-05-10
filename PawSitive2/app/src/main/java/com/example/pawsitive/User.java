@@ -20,7 +20,7 @@ public class User {
     private static String cardNumber;
     private static String cvv;
     private static String expirationDate;
-    private ArrayList<Review> reviews;
+    private ArrayList<ReviewMain> reviews;
     private ArrayList<Pet> pets;
 
     public User(String email) {
@@ -74,7 +74,7 @@ public class User {
     public static String getName() {
         return name;
     }
-    public ArrayList<Review> getReviews() {return reviews;}
+    public ArrayList<ReviewMain> getReviews() {return reviews;}
 
     public static String getPassword() {
         return password;
