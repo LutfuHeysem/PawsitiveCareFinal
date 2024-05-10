@@ -64,9 +64,7 @@ public class UsersAdapter extends  RecyclerView.Adapter<UsersAdapter.UserViewHol
         void setUserData(UserForChat user){
             binding.textName.setText(user.name);
             binding.textEmail.setText(user.email);
-            System.out.println("USER TOKEN");
-            System.out.println(user.token);
-            binding.imageProfile.setImageBitmap(getUserImage(user.token));
+            binding.imageProfile.setImageBitmap(getUserImage(user.img));
             binding.getRoot().setOnClickListener(
                     v -> userListener.onUserClicked(user)
             );

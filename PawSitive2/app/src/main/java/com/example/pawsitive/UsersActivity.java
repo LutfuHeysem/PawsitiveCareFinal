@@ -69,7 +69,9 @@ public class UsersActivity extends AppCompatActivity implements UserListener {
                             UserForChat user = new UserForChat();
                             user.name = queryDocumentSnapshot.getString(Constants.KEY_NAME);
                             user.email = queryDocumentSnapshot.getString(Constants.KEY_EMAIL);
-                            user.token = queryDocumentSnapshot.getString("img");
+                            //user.token = queryDocumentSnapshot.getString(Constants.KEY_FCM_TOKEN);
+                            user.img = queryDocumentSnapshot.getString(Constants.KEY_IMAGE);
+                            user.id = queryDocumentSnapshot.getId();
                             users.add(user);
                         }
                         if(!users.isEmpty()){
