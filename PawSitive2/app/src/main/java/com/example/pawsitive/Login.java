@@ -84,7 +84,7 @@ public class Login extends AppCompatActivity {
 
                                         Toast.makeText(Login.this, "Successful Login!", Toast.LENGTH_SHORT).show();
                                         //TEMPORARY
-                                        Intent petIntent = new Intent(Login.this, AddEditPet.class);
+                                        Intent petIntent = new Intent(Login.this, UsersActivity.class);
                                         startActivity(petIntent);
                                         //TEMPORARY
                                     }

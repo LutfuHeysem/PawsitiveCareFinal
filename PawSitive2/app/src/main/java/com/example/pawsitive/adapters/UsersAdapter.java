@@ -13,15 +13,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pawsitive.User;
 import com.example.pawsitive.UserForChat;
 import com.example.pawsitive.databinding.ItemContainerChatBinding;
+import com.example.pawsitive.listeners.UserListener;
 
 import java.util.List;
 public class UsersAdapter extends  RecyclerView.Adapter<UsersAdapter.UserViewHolder>{
 
     private final List<UserForChat> users;
-
-    public UsersAdapter(List<UserForChat> users) {
+    private final UserListener userListener;
+    public UsersAdapter(List<UserForChat> users, UserListener userListener) {
         this.users = users;
+        this.userListener = userListener;
     }
+
 
     @NonNull
     @Override
@@ -61,7 +64,12 @@ public class UsersAdapter extends  RecyclerView.Adapter<UsersAdapter.UserViewHol
         void setUserData(UserForChat user){
             binding.textName.setText(user.name);
             binding.textEmail.setText(user.email);
-
+            System.out.println("USER TOKEN");
+            System.out.println(user.token);
+            binding.imageProfile.setImageBitmap(getUserImage(user.token));
+            binding.getRoot().setOnClickListener(
+                    v -> userListener.onUserClicked(user)
+            );
         }
     }
 
