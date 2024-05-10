@@ -100,6 +100,8 @@ public class CreateNewAccount extends AppCompatActivity {
                     photo.compress(Bitmap.CompressFormat.PNG, 100, bos);
                     imageInBase64 = bos.toByteArray();
                     imageStr = Base64.getEncoder().encodeToString(imageInBase64);
+                    Toast.makeText(CreateNewAccount.this, "Save successful", Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
