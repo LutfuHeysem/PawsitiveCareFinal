@@ -85,7 +85,8 @@ public class Login extends AppCompatActivity {
 
                                         //TEMPORARY
                                         Intent petIntent = new Intent(Login.this, AddEditPet.class);
-                                        startActivity(petIntent);
+                                        Intent chatIntent = new Intent(Login.this, UsersActivity.class);
+                                        startActivity(chatIntent);
                                     }
                                     else if(currUser != null && !currUser.isEmailVerified())
                                         Toast.makeText(Login.this, "Verify your email first!", Toast.LENGTH_SHORT).show();

@@ -192,6 +192,8 @@ public class AddEditPet extends AppCompatActivity {
                                 if(task.isSuccessful()) {
                                     Toast.makeText(AddEditPet.this, "Save successful", Toast.LENGTH_SHORT).show();
                                     //START NEW ACTIVITY HERE
+                                    Intent profilePage = new Intent(AddEditPet.this, ProfilePage1.class);
+                                    startActivity(profilePage);
                                 }
                                 else{
                                     Toast.makeText(AddEditPet.this, "Save failed", Toast.LENGTH_SHORT).show();
