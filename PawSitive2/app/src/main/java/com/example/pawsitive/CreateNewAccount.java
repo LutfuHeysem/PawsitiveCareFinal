@@ -101,7 +101,6 @@ public class CreateNewAccount extends AppCompatActivity {
                     imageInBase64 = bos.toByteArray();
                     imageStr = Base64.getEncoder().encodeToString(imageInBase64);
                     Toast.makeText(CreateNewAccount.this, "Save successful", Toast.LENGTH_SHORT).show();
-
                 }
             }
         });
@@ -125,6 +124,7 @@ public class CreateNewAccount extends AppCompatActivity {
                 {
                     Intent intent = new Intent(CreateNewAccount.this, CreditCardInfo.class);
                     intent.putExtra("name", name);
+                    intent.putExtra("pass", pass);
                     intent.putExtra("loc", loc);
                     intent.putExtra("email", email);
                     intent.putExtra("imageStr", imageStr);
