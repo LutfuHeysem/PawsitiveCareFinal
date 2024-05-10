@@ -57,7 +57,7 @@ public class ChatActivity extends AppCompatActivity {
         chatAdapter = new ChatAdapter(
                 chatMessages,
                 getBitmapFromEncodedString(receiverUser.img),
-                preferenceManager.getString(Constants.KEY_USER_ID)
+                User.getEmail()
         );
         binding.chatRecyclerView.setAdapter(chatAdapter);
         db = FirebaseFirestore.getInstance();
