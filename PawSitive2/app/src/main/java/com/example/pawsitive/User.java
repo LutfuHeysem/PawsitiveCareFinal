@@ -1,10 +1,14 @@
 package com.example.pawsitive;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.core.Tag;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.TaskCompletionSource;
+
 import android.util.Log;
 import com.google.firebase.firestore.QuerySnapshot;
 import androidx.annotation.NonNull;
@@ -20,7 +24,8 @@ public class User {
     private static String cardNumber;
     private static String cvv;
     private static String expirationDate;
-    private ArrayList<ReviewMain> reviews;
+    private ArrayList<String> reviews;
+    private ArrayList<Float> stars;
     private ArrayList<Pet> pets;
 
     public User(String email) {
@@ -67,6 +72,44 @@ public class User {
             }
 
         });
+
+        db.collection("Users").document(email).collection("Reviews").document("Comments")
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if(documentSnapshot.exists())
+                        {
+                            String com = documentSnapshot.getString("Comment");
+                            reviews.add(com);
+                        }
+                        else
+                            Log.d("User", "No comments document exists!");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("User", "Error fetching comments", e);
+                    }
+                });
+
+        db.collection("Users").document(email).collection("Reviews").document("Stars")
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if(documentSnapshot.exists())
+                        {
+                            Float sta = documentSnapshot.getDouble("Stars").floatValue();
+                            stars.add(sta);
+                        }
+                        else
+                            Log.d("User", "No stars document exists!");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("User", "Error fetching stars", e);
+                    }
+                });
     }
 // dkjbvhy3wbhvr@yahoo.com
 // 016956216532
@@ -74,7 +117,8 @@ public class User {
     public static String getName() {
         return name;
     }
-    public ArrayList<ReviewMain> getReviews() {return reviews;}
+    public ArrayList<String> getReviews() {return reviews;}
+    public ArrayList<Float> getStars() {return stars;}
 
     public static String getPassword() {
         return password;

@@ -1,8 +1,11 @@
 package com.example.pawsitive;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -23,9 +26,11 @@ import java.util.HashMap;
 
 public class ReviewMain extends AppCompatActivity {
 
-    private String reviewString = "AZERBAYCAN DA ... YAPANA ... DERLER!";
-    private int noOfStar = 3;
+    private String reviewString;
     private HashMap<String, Object> userComment, userStar;
+    private float rating;
+    private RatingBar star;
+    private EditText comment;
     private FirebaseAuth auth;
     private FirebaseFirestore fStore;
     private Button saveReview;
@@ -38,30 +43,51 @@ public class ReviewMain extends AppCompatActivity {
         saveReview = findViewById(R.id.button7);
         fStore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
+
+        comment = findViewById(R.id.editTextText2);
+        star = findViewById(R.id.ratingBar);
+
         userComment = new HashMap<>();
         userStar = new HashMap<>();
-
-        userStar.put("Stars", noOfStar);
-        userComment.put("Comment", reviewString);
         saveReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fStore.collection("Users").document(auth.getCurrentUser().getEmail()).collection("Reviews").document("Stars")
-                        .set(userStar);
+                reviewString = comment.getText().toString();
+                rating = star.getRating();
+
+                userStar.put("Stars", rating);
+                userComment.put("Comment", reviewString);
+
                 fStore.collection("Users").document(auth.getCurrentUser().getEmail()).collection("Reviews").document("Comments")
                         .set(userComment).addOnCompleteListener(ReviewMain.this, new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if(task.isSuccessful())
-                                    Toast.makeText(ReviewMain.this, "Your revies is saved successfully!", Toast.LENGTH_SHORT).show();
+                                {
+                                    fStore.collection("Users").document(auth.getCurrentUser().getEmail()).collection("Reviews").document("Stars")
+                                            .set(userStar).addOnCompleteListener(ReviewMain.this, new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if(task.isSuccessful())
+                                                    {
+                                                        Toast.makeText(ReviewMain.this, "Your review is saved successfully!", Toast.LENGTH_SHORT).show();
+                                                        startActivity(new Intent(ReviewMain.this, ResetPassword.class));
+                                                    }
+                                                    else
+                                                        Toast.makeText(ReviewMain.this, "Error in adding stars! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                }
+                                else
+                                    Toast.makeText(ReviewMain.this, "Error in adding comment! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
             }
         });
 
     }
-    public int getNoOfStar() {
-        return noOfStar;
+    public float getNoOfStar() {
+        return rating;
     }
 
     public String getReviewString() {
@@ -77,7 +103,7 @@ public class ReviewMain extends AppCompatActivity {
         double sumOfStars = 0;
         for(int i = 0; i < user.getReviews().size(); i++)
         {
-            sumOfStars+= user.getReviews().get(i).getNoOfStar();
+            sumOfStars+= user.getStars().get(i);
         }
         double sumOfStarsTimesTwo = 2 * sumOfStars;
         double averageStarsTimesTwo = sumOfStarsTimesTwo / user.getReviews().size();

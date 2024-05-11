@@ -85,7 +85,7 @@ public class Login extends AppCompatActivity {
 
                                         //TEMPORARY
                                         Intent petIntent = new Intent(Login.this, AddEditPet.class);
-                                        Intent chatIntent = new Intent(Login.this, UsersActivity.class);
+                                        Intent chatIntent = new Intent(Login.this, ReviewMain.class);
                                         startActivity(chatIntent);
                                     }
                                     else if(currUser != null && !currUser.isEmailVerified())
