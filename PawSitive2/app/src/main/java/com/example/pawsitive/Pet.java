@@ -1,14 +1,13 @@
 package com.example.pawsitive;
 
 public class Pet {
-    private String name, type, energyLevel, feedingCondition, numberOfWalks, notes;
+    private String name, type, energyLevel, feedingCondition, numberOfWalks, notes, imageStr;
     private int age, weight;
     private boolean neutered, microchipped, friendly, canBeLeftAlone, houseTrained;
-    private byte[] imageInBase64;
 
     public Pet(String name, String type, String energyLevel, String feedingCondition, String numberOfWalks,
                String notes, int age, int weight, boolean neutered, boolean microchipped, boolean friendly, boolean canBeLeftAlone,
-               boolean houseTrained, byte[] imageInBase64){
+               boolean houseTrained, String imageStr){
 
         this.name = name;
         this.type = type;
@@ -23,12 +22,12 @@ public class Pet {
         this.friendly = friendly;
         this.canBeLeftAlone = canBeLeftAlone;
         this.houseTrained = houseTrained;
-        this.imageInBase64 = imageInBase64;
+        this.imageStr = imageStr;
 
     }
 
-    public byte[] getImageInBase64() {
-        return imageInBase64;
+    public String getImageStr() {
+        return imageStr;
     }
     public String getName() {
         return name;
@@ -134,7 +133,7 @@ public class Pet {
         this.houseTrained = houseTrained;
     }
 
-    public void setImageInBase64(byte[] imageInBase64) {
-        this.imageInBase64 = imageInBase64;
+    public void setImageStr(String imageStr) {
+        this.imageStr = imageStr;
     }
 }
