@@ -1,9 +1,11 @@
 package com.example.pawsitive;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -32,6 +34,14 @@ public class ProfilePage1 extends AppCompatActivity {
         });
 
         Button backButtonProfilePage = (Button) findViewById(R.id.backButtonProfilePage);
+
+        backButtonProfilePage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), HomePage.class);
+                startActivity(intent);
+            }
+        });
 
         profileImage = (ImageView) findViewById(R.id.profileImage);
         profileUserName = (TextView) findViewById(R.id.profileUserName);

@@ -13,6 +13,9 @@
         android:theme="@style/Theme.PawSitive"
         tools:targetApi="31">
         <activity
+            android:name=".ProfilePageEdit"
+            android:exported="false" />
+        <activity
             android:name=".FavouritesPage"
             android:exported="false" />
         <activity
