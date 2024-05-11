@@ -17,12 +17,16 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.pawsitive.R;
 import com.example.pawsitive.classes.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class ProfilePage1 extends AppCompatActivity {
     ImageView profileImage;
     TextView profileUserName;
     TextView stars;
     User owner;
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,8 +36,9 @@ public class ProfilePage1 extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
-        });
 
+        });
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
         Button backButtonProfilePage = (Button) findViewById(R.id.backButtonProfilePage);
 
         backButtonProfilePage.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +58,7 @@ public class ProfilePage1 extends AppCompatActivity {
         TextView location = (TextView) findViewById(R.id.locationText);
         location.setText("Location: " + owner.getLocation());
                 EditText allInfo = findViewById(R.id.allinfo);
-        if(owner.getEmail().equals(User.getEmail()))//dk how to do will research
+        if(owner.getEmail().equals(mUser.getEmail()))//dk how to do will research
         {
             allInfo.setFocusable(true);
         }
@@ -62,7 +67,7 @@ public class ProfilePage1 extends AppCompatActivity {
             allInfo.setFocusable(false);
         }
 
-        //stars.setBackgroundResource(Review.getResource(Review.calculateStarAverage(owner)));
+        stars.setBackgroundResource(ReviewMain.getResource(ReviewMain.calculateStarAverage(owner)));
 
 
 
