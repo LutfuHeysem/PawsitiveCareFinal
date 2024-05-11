@@ -114,7 +114,7 @@
         app:layout_constraintTop_toBottomOf="@+id/logo">
 
         <LinearLayout
-            android:id="@+id/home"
+            android:id="@+id/home_icon"
             android:layout_width="81dp"
             android:layout_height="match_parent"
             android:orientation="horizontal">
@@ -125,6 +125,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_home_black_24dp" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -134,7 +135,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/heartIcon"
+                android:id="@+id/heart_icon"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="5dp"
@@ -150,7 +151,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/addIcon"
+                android:id="@+id/add_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -165,7 +166,7 @@
             tools:ignore="ExtraText">
 
             <ImageView
-                android:id="@+id/messagesIcon"
+                android:id="@+id/chat_icon"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="5dp"
@@ -182,7 +183,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/profileIcon"
+                android:id="@+id/profile_icon"
                 android:layout_width="0dp"
                 android:layout_height="46dp"
                 android:layout_marginTop="5dp"
