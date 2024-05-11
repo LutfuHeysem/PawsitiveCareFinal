@@ -1,4 +1,4 @@
-package com.example.pawsitive;
+package com.example.pawsitive.classes;
 
 import java.io.Serializable;
 

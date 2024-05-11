@@ -1,4 +1,4 @@
-package com.example.pawsitive;
+package com.example.pawsitive.acitvities;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,26 +7,23 @@ import android.util.Base64;
 import android.view.View;
 
 import java.util.Collections;
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.pawsitive.classes.ChatMessage;
+import com.example.pawsitive.classes.User;
+import com.example.pawsitive.classes.UserForChat;
 import com.example.pawsitive.adapters.ChatAdapter;
 import com.example.pawsitive.databinding.ActivityChatBinding;
-import com.example.pawsitive.databinding.ActivityUsersBinding;
 import com.example.pawsitive.utilities.Constants;
 import com.example.pawsitive.utilities.PreferenceManager;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;

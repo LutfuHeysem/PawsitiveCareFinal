@@ -1,16 +1,16 @@
-package com.example.pawsitive;
+package com.example.pawsitive.acitvities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
 import android.view.View;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
+import com.example.pawsitive.classes.Pet;
+import com.example.pawsitive.classes.User;
+import com.example.pawsitive.classes.UserForChat;
 import com.example.pawsitive.adapters.UsersAdapter;
 import com.example.pawsitive.databinding.ActivityUsersBinding;
 import com.example.pawsitive.listeners.UserListener;
@@ -18,15 +18,12 @@ import com.example.pawsitive.utilities.Constants;
 import com.example.pawsitive.utilities.PreferenceManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.TaskCompletionSource;
-import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import org.checkerframework.checker.units.qual.C;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class UsersActivity extends AppCompatActivity implements UserListener {
@@ -40,7 +37,6 @@ public class UsersActivity extends AppCompatActivity implements UserListener {
         setContentView(binding.getRoot());
         preferenceManager = new PreferenceManager(getApplicationContext());
         setListener();
-        System.out.println("qwer");
         getUsers();
 
     }
@@ -72,7 +68,10 @@ public class UsersActivity extends AppCompatActivity implements UserListener {
                             //user.token = queryDocumentSnapshot.getString(Constants.KEY_FCM_TOKEN);
                             user.img = queryDocumentSnapshot.getString(Constants.KEY_IMAGE);
                             user.id = queryDocumentSnapshot.getId();
-                            users.add(user);
+                            if(User.searchInsidefChat(user.email)) {
+                                System.out.println(user.email);
+                                users.add(user);
+                            }
                         }
                         if(!users.isEmpty()){
                             UsersAdapter usersAdapter = new UsersAdapter(users, this);
@@ -110,4 +109,27 @@ public class UsersActivity extends AppCompatActivity implements UserListener {
         startActivity(intent);
         finish();
     }
+
+
+
+
+
+    // THIS METHOD WILL BE CALLED WHEN THE USER CLICKS THE START CHAT BUTTON IN PROFILE PAGE
+
+    public void addUserToChat(String email){ // parameter will be the email of the user that clicked
+        try {
+            User.addUserToChatPage(email);
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            HashMap<String, String> userData = new HashMap<>();
+            userData.put("email", email);
+
+            db.collection("Users").document(User.getEmail())
+                    .collection("UsersForChat").document(email).set(userData);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
 }

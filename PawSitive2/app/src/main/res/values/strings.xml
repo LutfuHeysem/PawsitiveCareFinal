@@ -44,7 +44,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="select_user">Messages</string>
+    <string name="select_user">Chats</string>
     <string name="type_a_message">Type a message</string>
 
 </resources>

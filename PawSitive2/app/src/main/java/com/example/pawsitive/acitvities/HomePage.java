@@ -1,6 +1,4 @@
-package com.example.pawsitive;
-
-import static com.example.pawsitive.R.id.homeIcon;
+package com.example.pawsitive.acitvities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import android.widget.ImageView;
+
+import com.example.pawsitive.R;
+import com.example.pawsitive.classes.User;
 
 import java.util.ArrayList;
 
@@ -41,7 +41,7 @@ public class HomePage extends AppCompatActivity {
 
         }
     private void initializeImageViews(){
-        ImageView homeIcon = findViewById(R.id.home_icon);
+        ImageView homeIcon = findViewById(R.id.homeIcon);
         ImageView favourtiesIcon = findViewById(R.id.heart_icon);
         ImageView addIcon = findViewById(R.id.add_icon);
         ImageView chatIcon = findViewById(R.id.chat_icon);
@@ -86,7 +86,7 @@ public class HomePage extends AppCompatActivity {
             public void onClick(View v) {
                 //handle click on chat image
                 //navigate to chat page
-                Intent intent = new Intent(HomePage.this, ChatActivity.class);
+                Intent intent = new Intent(HomePage.this, UsersActivity.class);
                 startActivity(intent);
             }
         });

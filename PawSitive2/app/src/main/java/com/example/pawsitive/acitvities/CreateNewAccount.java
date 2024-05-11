@@ -1,4 +1,4 @@
-package com.example.pawsitive;
+package com.example.pawsitive.acitvities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.pawsitive.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;

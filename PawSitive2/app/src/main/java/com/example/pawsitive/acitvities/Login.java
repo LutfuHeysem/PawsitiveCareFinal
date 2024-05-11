@@ -1,4 +1,4 @@
-package com.example.pawsitive;
+package com.example.pawsitive.acitvities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,10 +11,9 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
+import com.example.pawsitive.R;
+import com.example.pawsitive.classes.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
@@ -84,10 +83,11 @@ public class Login extends AppCompatActivity {
                                         Toast.makeText(Login.this, "Successful Login!", Toast.LENGTH_SHORT).show();
 
                                         //TEMPORARY
+                                        Intent homeIntent = new Intent(Login.this, HomePage.class);
                                         Intent petIntent = new Intent(Login.this, AddEditPet.class);
-                                        Intent chatIntent = new Intent(Login.this, User.class);
+                                        Intent chatIntent = new Intent(Login.this, UsersActivity.class);
                                         Intent reviewIntent = new Intent(Login.this, ReviewMain.class);
-                                        startActivity(petIntent);
+                                        startActivity(homeIntent);
                                     }
                                     else if(currUser != null && !currUser.isEmailVerified())
                                         Toast.makeText(Login.this, "Verify your email first!", Toast.LENGTH_SHORT).show();

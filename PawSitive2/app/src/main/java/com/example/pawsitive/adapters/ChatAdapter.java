@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.pawsitive.ChatMessage;
+import com.example.pawsitive.classes.ChatMessage;
 import com.example.pawsitive.databinding.ItemContainerReceivedMessageBinding;
 import com.example.pawsitive.databinding.ItemContainerSentMessageBinding;
 

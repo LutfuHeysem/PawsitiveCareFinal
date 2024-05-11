@@ -1,8 +1,6 @@
-package com.example.pawsitive;
+package com.example.pawsitive.acitvities;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +14,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.example.pawsitive.R;
+import com.example.pawsitive.classes.User;
 
 public class ProfilePage1 extends AppCompatActivity {
     ImageView profileImage;

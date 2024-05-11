@@ -1,4 +1,4 @@
-package com.example.pawsitive;
+package com.example.pawsitive.classes;
 
 public class Pet {
     private String name, type, energyLevel, feedingCondition, numberOfWalks, notes, imageStr;

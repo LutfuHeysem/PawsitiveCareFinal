@@ -1,8 +1,10 @@
-package com.example.pawsitive;
+package com.example.pawsitive.classes;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.core.Tag;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.android.gms.tasks.Task;
@@ -10,6 +12,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.TaskCompletionSource;
 
 import android.util.Log;
+
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import androidx.annotation.NonNull;
 
@@ -27,9 +31,11 @@ public class User {
     private ArrayList<String> reviews;
     private ArrayList<Float> stars;
     private ArrayList<Pet> pets;
+    private static ArrayList<String> chatUsers;
 
     public User(String email) {
-        this.email = email;
+        User.email = email;
+        getChatUsersFromDatabase();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         TaskCompletionSource<DocumentSnapshot> source = new TaskCompletionSource<>();
         Task<DocumentSnapshot> task = source.getTask();
@@ -114,9 +120,58 @@ public class User {
 // dkjbvhy3wbhvr@yahoo.com
 // 016956216532
 
+public static boolean searchInsidefChat(String key) {
+    for (int i = 0; i < chatUsers.size(); i++) {
+        if (chatUsers.get(i).equals(key)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+    public void getChatUsersFromDatabase() {
+        try {
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+            CollectionReference usersForChatRef = db.collection("Users")
+                    .document(User.getEmail())
+                    .collection("UsersForChat");
+
+            usersForChatRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    ArrayList<String> users = new ArrayList<>();
+                    for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                        String email = documentSnapshot.getString("email");
+                        if (email != null) {
+                            users.add(email);
+                        }
+                    }
+                    chatUsers = users;
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    System.out.println("Failed to fetch users from Firebase: " + e.getMessage());
+                }
+            });
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    public static void addUserToChatPage(String user){
+        chatUsers.add(user);
+    }
     public static String getName() {
         return name;
     }
+
+    public static void setChatUsers(ArrayList<String> chatUsers) {
+        User.chatUsers = chatUsers;
+    }
+
     public ArrayList<String> getReviews() {return reviews;}
     public ArrayList<Float> getStars() {return stars;}
 

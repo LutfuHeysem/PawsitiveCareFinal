@@ -1,4 +1,4 @@
-package com.example.pawsitive;
+package com.example.pawsitive.acitvities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,7 +8,6 @@ import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -28,20 +27,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Base64;
-import java.util.Collection;
 import java.util.HashMap;
 
+import com.example.pawsitive.classes.Pet;
+import com.example.pawsitive.R;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.chip.ChipGroup;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 
 
 public class AddEditPet extends AppCompatActivity {

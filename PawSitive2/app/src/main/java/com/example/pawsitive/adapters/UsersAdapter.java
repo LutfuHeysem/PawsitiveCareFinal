@@ -10,8 +10,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.pawsitive.User;
-import com.example.pawsitive.UserForChat;
+import com.example.pawsitive.classes.UserForChat;
 import com.example.pawsitive.databinding.ItemContainerChatBinding;
 import com.example.pawsitive.listeners.UserListener;
 
