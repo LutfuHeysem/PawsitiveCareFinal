@@ -17,10 +17,14 @@ import com.example.pawsitive.listeners.UserListener;
 import com.example.pawsitive.utilities.Constants;
 import com.example.pawsitive.utilities.PreferenceManager;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -126,6 +130,13 @@ public class UsersActivity extends AppCompatActivity implements UserListener {
 
             db.collection("Users").document(User.getEmail())
                     .collection("UsersForChat").document(email).set(userData);
+
+            HashMap<String, String> userDataReceiver = new HashMap<>();
+            userDataReceiver.put("email", User.getEmail());
+            db.collection("Users").document(email)
+                    .collection("UsersForChat").document(User.getEmail()).set(userDataReceiver);
+
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
