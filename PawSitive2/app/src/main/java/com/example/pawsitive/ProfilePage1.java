@@ -32,6 +32,7 @@ public class ProfilePage1 extends AppCompatActivity {
         });
 
         Button backButtonProfilePage = (Button) findViewById(R.id.backButtonProfilePage);
+
         profileImage = (ImageView) findViewById(R.id.profileImage);
         profileUserName = (TextView) findViewById(R.id.profileUserName);
         //will be done when we learn how to get data from firebase
@@ -40,15 +41,15 @@ public class ProfilePage1 extends AppCompatActivity {
 
         TextView location = (TextView) findViewById(R.id.locationText);
         location.setText("Location: " + owner.getLocation());
-        EditText allInfo = findViewById(R.id.allinfo);
-//        if(owner.getEmail().equals(thisuser)//dk how to do will research
-//        {
-//            allInfo.setFocusable(true);
-//        }
-//        else
-//        {
-//            allInfo.setFocusable(false);
-//        }
+                EditText allInfo = findViewById(R.id.allinfo);
+        if(owner.getEmail().equals(User.getEmail()))//dk how to do will research
+        {
+            allInfo.setFocusable(true);
+        }
+        else
+        {
+            allInfo.setFocusable(false);
+        }
 
         //stars.setBackgroundResource(Review.getResource(Review.calculateStarAverage(owner)));
 
