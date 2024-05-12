@@ -41,6 +41,7 @@ public class ReviewMain extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_review_main);
 
+
         saveReview = findViewById(R.id.button7);
         fStore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
@@ -58,8 +59,8 @@ public class ReviewMain extends AppCompatActivity {
                 review = new HashMap<>();
                 review.put("Star", rating);
                 review.put("Comment", reviewString);
-                review.put("Employer", auth.getCurrentUser().getEmail());
-                review.put("Employee", "DENEME");
+                review.put("CareTaker", auth.getCurrentUser().getEmail());
+                review.put("PetOwner", "DENEME");
 
                 fStore.collection("Reviews").document().set(review)
                         .addOnCompleteListener(ReviewMain.this, new OnCompleteListener<Void>() {
@@ -74,27 +75,20 @@ public class ReviewMain extends AppCompatActivity {
             }
             });
 }
-    public float getNoOfStar() {
-        return rating;
-    }
-
-    public String getReviewString() {
-        return reviewString;
-    }
-
-    public static double calculateStarAverage(User user)
+ public static double calculateStarAverage(String email)
     {
-        if(user.getReviews().size() == 0)
+        User.getReviews(email);
+        if(User.getFilledAL().isEmpty())
         {
             return 0;
         }
         double sumOfStars = 0;
-        for(int i = 0; i < user.getReviews().size(); i++)
+        for(int i = 0; i < User.getFilledAL().size(); i++)
         {
-            sumOfStars+= user.getStars().get(i);
+            sumOfStars+= User.getFilledAL().get(i).getStar();
         }
         double sumOfStarsTimesTwo = 2 * sumOfStars;
-        double averageStarsTimesTwo = sumOfStarsTimesTwo / user.getReviews().size();
+        double averageStarsTimesTwo = sumOfStarsTimesTwo / User.getFilledAL().size();
         double averageStarsTimesTwoRounded = Math.round(averageStarsTimesTwo);
         return  averageStarsTimesTwoRounded/2;
     }
