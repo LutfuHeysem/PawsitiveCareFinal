@@ -1,9 +1,12 @@
 package com.example.pawsitive.acitvities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.util.Base64;
 import android.view.View;
@@ -26,13 +29,37 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 public class ProfilePage1 extends AppCompatActivity {
     ImageView profileImageView;
     TextView allInfoView, locationView, nameView;
     String userEmail, profileImageStr, name, location, gender;
     String careTakerInfo;
     Bitmap profileImageBitmap;
-    Button backButtonProfilePage, editButtonProfilePage, calendarButton;
+    Button backButtonProfilePage, editButtonProfilePage, calendarButton, saveButton;
+    public final int GET_FROM_GALLERY = 3;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode==GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
+            Uri selectedImage = data.getData();
+            Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+                profileImageView.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +76,7 @@ public class ProfilePage1 extends AppCompatActivity {
         backButtonProfilePage = (Button) findViewById(R.id.backButtonProfilePage);
         editButtonProfilePage = findViewById(R.id.editButtonProfile);
         calendarButton = findViewById(R.id.EditCalendarButton);
+        saveButton = findViewById(R.id.saveButton);
 
         profileImageView = findViewById(R.id.profileImage);
 
@@ -140,6 +168,21 @@ public class ProfilePage1 extends AppCompatActivity {
 
                 allInfoView.setClickable(true);
                 allInfoView.setEditableFactory(new Editable.Factory());
+
+                editButtonProfilePage.setVisibility(View.INVISIBLE);
+                saveButton.setVisibility(View.VISIBLE);
+            }
+        });
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+            }
+        });
+        profileImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
             }
         });
         calendarButton.setOnClickListener(new View.OnClickListener() {
