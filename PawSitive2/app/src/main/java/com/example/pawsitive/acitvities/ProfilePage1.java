@@ -23,6 +23,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.pawsitive.R;
+import com.example.pawsitive.classes.Review;
 import com.example.pawsitive.classes.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -37,6 +38,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 
+import java.util.ArrayList;
+
 public class ProfilePage1 extends AppCompatActivity {
     ImageView profileImageView;
     private HashMap<String, Object> jobData, userData;
@@ -46,6 +49,7 @@ public class ProfilePage1 extends AppCompatActivity {
     Bitmap profileImageBitmap;
     Button backButtonProfilePage, editButtonProfilePage, calendarButton, saveButton;
     public final int GET_FROM_GALLERY = 3;
+    private User owner;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -182,6 +186,21 @@ public class ProfilePage1 extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    Intent intent = getIntent();
+
+    String email = intent.getStringExtra("email");
+
+    this.owner = new User(email, new User.OnUserLoadListener() {
+        @Override
+        public void onUserLoaded(User user) {
+            // User and reviews are loaded successfully
+            ArrayList<Review> reviews = User.getReviewArrayList();
+            // Proceed with using reviews and user data
+        }
+    });
+
+        Button editButtonProfilePage = findViewById(R.id.editButtonProfile);
+
         editButtonProfilePage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

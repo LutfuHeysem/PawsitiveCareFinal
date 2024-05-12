@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pawsitive.R;
+import com.example.pawsitive.classes.Review;
 import com.example.pawsitive.classes.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -22,6 +23,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,9 +41,9 @@ public class ReviewMain extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_review_main);
-
 
         saveReview = findViewById(R.id.button7);
         fStore = FirebaseFirestore.getInstance();
@@ -75,21 +78,24 @@ public class ReviewMain extends AppCompatActivity {
             }
             });
 }
- public static double calculateStarAverage(String email)
+ public static float calculateStarAverage(String email)
     {
-        User.getReviews(email);
-        if(User.getFilledAL().isEmpty())
+        System.out.println("email" + email);
+
+        if(User.getReviewArrayList().isEmpty())
         {
             return 0;
         }
-        double sumOfStars = 0;
-        for(int i = 0; i < User.getFilledAL().size(); i++)
+        float sumOfStars = 0;
+        System.out.println("adksjfbasdkljfnalijadsnfalsdkjfnadsfKLDJSFNALKJds");
+        for(Review value : User.getReviewArrayList())
         {
-            sumOfStars+= User.getFilledAL().get(i).getStar();
+            System.out.println("adksjfbasdkljfnads");
+            sumOfStars += value.getStar();
         }
-        double sumOfStarsTimesTwo = 2 * sumOfStars;
-        double averageStarsTimesTwo = sumOfStarsTimesTwo / User.getFilledAL().size();
-        double averageStarsTimesTwoRounded = Math.round(averageStarsTimesTwo);
+        float sumOfStarsTimesTwo = 2 * sumOfStars;
+        float averageStarsTimesTwo = sumOfStarsTimesTwo / User.getFilledAL().size();
+        float averageStarsTimesTwoRounded = Math.round(averageStarsTimesTwo);
         return  averageStarsTimesTwoRounded/2;
     }
 

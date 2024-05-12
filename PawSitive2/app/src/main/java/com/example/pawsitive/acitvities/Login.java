@@ -13,12 +13,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pawsitive.R;
+import com.example.pawsitive.classes.Review;
 import com.example.pawsitive.classes.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.ArrayList;
 
 public class Login extends AppCompatActivity {
 
@@ -79,20 +82,30 @@ public class Login extends AppCompatActivity {
                                     {
                                     Toast.makeText(Login.this, "Successful Login!", Toast.LENGTH_SHORT).show();
                                     //TEMPORARY
-                                        User loggedUser = new User(logEmail);
-                                        Toast.makeText(Login.this, "Successful Login!", Toast.LENGTH_SHORT).show();
+                                        new User(logEmail, new User.OnUserLoadListener() {
+                                            @Override
+                                            public void onUserLoaded(User user) {
+                                                Toast.makeText(Login.this, "Successful Login!", Toast.LENGTH_SHORT).show();
+
+                                                //TEMPORARY
+                                                Intent homeIntent = new Intent(Login.this, HomePage.class);
+                                                Intent editPetIntent = new Intent(Login.this, AddEditPet.class).putExtra("PetName", "Venus");
+                                                //WILL GET PET NAME WHEN EDITING
+                                                Intent addPetIntent = new Intent(Login.this, AddEditPet.class);
+                                                Intent chatIntent = new Intent(Login.this, UsersActivity.class);
+                                                Intent reviewIntent = new Intent(Login.this, ReviewMain.class);
+                                                Intent profileIntent = new Intent(Login.this, ProfilePage1.class);
+
+                                                System.out.println("array+  " + User.getReviewArrayList());
+                                                for(float star: User.stars){
+                                                    System.out.println("array+  stars" + star);
+                                                }
+
+                                                startActivity(reviewIntent);
+                                            }
+                                        });
 
 
-                                        //TEMPORARY
-                                        Intent homeIntent = new Intent(Login.this, HomePage.class);
-                                        Intent editPetIntent = new Intent(Login.this, AddEditPet.class).putExtra("PetName", "Venus");
-                                        //WILL GET PET NAME WHEN EDITING
-                                        Intent addPetIntent = new Intent(Login.this, AddEditPet.class);
-                                        Intent chatIntent = new Intent(Login.this, UsersActivity.class);
-                                        Intent reviewIntent = new Intent(Login.this, ReviewMain.class);
-                                        Intent profileIntent = new Intent(Login.this, ProfilePage1.class);
-
-                                        startActivity(profileIntent);
 
                                     }
                                     else if(currUser != null && !currUser.isEmailVerified())

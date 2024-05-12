@@ -1,5 +1,6 @@
 package com.example.pawsitive.classes;
 
+import com.example.pawsitive.acitvities.ReviewListActivity;
 import com.example.pawsitive.utilities.Constants;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -21,6 +22,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import androidx.annotation.NonNull;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -37,10 +39,25 @@ public class User {
     private static ArrayList<Review> reviewArrayList;
     private ArrayList<Pet> pets;
     private static ArrayList<String> chatUsers;
+    public static ArrayList<Float> stars = new ArrayList<>();;
 
-    public User(String email) {
+    public User(String email, OnUserLoadListener listener) {
         User.email = email;
         getChatUsersFromDatabase();
+
+        ReviewListActivity.getReviews(email, new OnSuccessListener<ArrayList<Review>>() {
+            @Override
+            public void onSuccess(ArrayList<Review> reviews) {
+                setReviewArrayList(reviews);
+                listener.onUserLoaded(User.this);
+            }
+        }, new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // Handle failure if needed
+            }
+        });
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         TaskCompletionSource<DocumentSnapshot> source = new TaskCompletionSource<>();
         Task<DocumentSnapshot> task = source.getTask();
@@ -88,6 +105,8 @@ public class User {
             }
 
         });
+
+//        setReviewArrayList(ReviewListActivity.getReviews(email));
     }
 // dkjbvhy3wbhvr@yahoo.com
 // 016956216532
@@ -133,36 +152,12 @@ public static boolean searchInsidefChat(String key) {
         }
     }
 
-    public static void getReviews(String email)
-    {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection("Reviews")
-                .whereEqualTo("CareTaker", email)
-                .addSnapshotListener(eventListenerForReview);
+     static void setReviewArrayList(ArrayList<Review> reviewArrayList) {
+        User.reviewArrayList = reviewArrayList;
     }
-    private static final EventListener<QuerySnapshot> eventListenerForReview = (value, error) -> {
-        if(error != null)
-            return;
-        if(value != null) {
-            int count = reviewArrayList.size();
-            for (DocumentChange documentChange : value.getDocumentChanges()) {
-                System.out.println("Fora girdim Review için");
-                if (documentChange.getType() == DocumentChange.Type.ADDED) {
-                    System.out.println("if e girdim");
-                    Review rev = new Review();
-                    rev.star = documentChange.getDocument().getDouble("Star").floatValue();
-                    rev.caretaker = documentChange.getDocument().getString("CareTaker");
-                    rev.petOwner = documentChange.getDocument().getString("PetOwner");
-                    rev.comment = documentChange.getDocument().getString("Comment");
-                    reviewArrayList.add(rev);
-                }
-                for (int i = 0; i < reviewArrayList.size(); i++)
-                    System.out.println(reviewArrayList.get(i));
-            }
-        }
-    };
-
+    public static ArrayList<Review> getReviewArrayList() {
+        return User.reviewArrayList;
+    }
     public static void addUserToChatPage(String user){
         chatUsers.add(user);
     }
@@ -182,7 +177,7 @@ public static boolean searchInsidefChat(String key) {
         return email;
     }
 
-    public static ArrayList<Review> getFilledAL(){return reviewArrayList;}
+    public static ArrayList<Review> getFilledAL(){ return reviewArrayList; }
 
     public static String getLocation() {
         return location;
