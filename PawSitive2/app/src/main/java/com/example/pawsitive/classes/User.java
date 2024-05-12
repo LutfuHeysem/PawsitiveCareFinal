@@ -26,7 +26,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class User {
-    private static String name, gender, age;
+    private static String name, gender, age, image;
     private static String password;
     private static String email;
     public static String location;
@@ -76,6 +76,8 @@ public class User {
                         expirationDate = document.getString("Expiration Date");
                         gender = document.getString("Gender");
                         age = document.getString("Age");
+                        image = document.getString("Profile Photo");
+
 
                     } else {
                         Log.d("User", "No such document");
@@ -211,6 +213,7 @@ public static boolean searchInsidefChat(String key) {
     public String getAge(){
         return age;
     }
+    public String getImage(){return image;}
 
     public interface OnUserLoadListener {
         void onUserLoaded(User user);
