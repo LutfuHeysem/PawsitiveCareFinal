@@ -138,6 +138,7 @@
                 android:id="@+id/heart_icon"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
+                android:layout_gravity="center"
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
                 android:scaleType="fitCenter"
@@ -169,6 +170,7 @@
                 android:id="@+id/chat_icon"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
+                android:layout_gravity="center"
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/message_icon" />
@@ -186,6 +188,7 @@
                 android:id="@+id/profile_icon"
                 android:layout_width="0dp"
                 android:layout_height="46dp"
+                android:layout_gravity="center"
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/profile_icon" />

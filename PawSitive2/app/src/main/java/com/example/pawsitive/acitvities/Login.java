@@ -90,7 +90,7 @@ public class Login extends AppCompatActivity {
                                         Intent chatIntent = new Intent(Login.this, UsersActivity.class);
                                         Intent reviewIntent = new Intent(Login.this, ReviewMain.class);
                                         Intent profileIntent = new Intent(Login.this, ProfilePage1.class);
-                                        
+
                                         startActivity(homeIntent);
 
                                     }
