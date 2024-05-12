@@ -1,10 +1,13 @@
 package com.example.pawsitive.classes;
 
+import com.example.pawsitive.utilities.Constants;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.android.gms.tasks.Task;
@@ -12,12 +15,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.TaskCompletionSource;
 
 import android.util.Log;
+import android.view.View;
 
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class User {
@@ -29,14 +34,11 @@ public class User {
     private static String cardNumber;
     private static String cvv;
     private static String expirationDate;
-    private static ArrayList<String> comments;
-    private static ArrayList<Float> stars;
+    private static ArrayList<Review> reviewArrayList;
     private ArrayList<Pet> pets;
     private static ArrayList<String> chatUsers;
 
     public User(String email) {
-        comments = new ArrayList<>();
-        stars = new ArrayList<>();
         User.email = email;
         getChatUsersFromDatabase();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -126,6 +128,36 @@ public static boolean searchInsidefChat(String key) {
         }
     }
 
+    public static void getReviews(String email)
+    {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("Reviews")
+                .whereEqualTo("CareTaker", email)
+                .addSnapshotListener(eventListenerForReview);
+    }
+    private static final EventListener<QuerySnapshot> eventListenerForReview = (value, error) -> {
+        if(error != null)
+            return;
+        if(value != null) {
+            int count = reviewArrayList.size();
+            for (DocumentChange documentChange : value.getDocumentChanges()) {
+                System.out.println("Fora girdim Review için");
+                if (documentChange.getType() == DocumentChange.Type.ADDED) {
+                    System.out.println("if e girdim");
+                    Review rev = new Review();
+                    rev.star = documentChange.getDocument().getDouble("Star").floatValue();
+                    rev.caretaker = documentChange.getDocument().getString("CareTaker");
+                    rev.petOwner = documentChange.getDocument().getString("PetOwner");
+                    rev.comment = documentChange.getDocument().getString("Comment");
+                    reviewArrayList.add(rev);
+                }
+                for (int i = 0; i < reviewArrayList.size(); i++)
+                    System.out.println(reviewArrayList.get(i));
+            }
+        }
+    };
+
     public static void addUserToChatPage(String user){
         chatUsers.add(user);
     }
@@ -137,9 +169,6 @@ public static boolean searchInsidefChat(String key) {
         User.chatUsers = chatUsers;
     }
 
-    public static ArrayList<String> getReviews() {return comments;}
-    public static ArrayList<Float> getStars() {return stars;}
-
     public static String getPassword() {
         return password;
     }
@@ -147,6 +176,8 @@ public static boolean searchInsidefChat(String key) {
     public static String getEmail() {
         return email;
     }
+
+    public static ArrayList<Review> getFilledAL(){return reviewArrayList;}
 
     public static String getLocation() {
         return location;
