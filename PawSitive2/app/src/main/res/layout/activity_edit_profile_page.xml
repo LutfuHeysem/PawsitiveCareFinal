@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/material_dynamic_primary80"
-    tools:context=".acitvities.ProfilePage1">
+    tools:context=".acitvities.EditProfilePage">
 
     <TextView
         android:id="@+id/WhiteBackground2"
@@ -141,14 +141,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/editButtonProfile"
+        android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="22dp"
         android:layout_marginEnd="8dp"
-        android:text="Edit"
+        android:text="Save"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.565"
         app:layout_constraintStart_toEndOf="@+id/profileImage"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -176,16 +176,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profileImage" />
 
-    <Button
-        android:id="@+id/reviewsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:text="Reviews"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileUserName" />
-
     <EditText
         android:id="@+id/locationText"
         android:layout_width="wrap_content"
@@ -196,39 +186,8 @@
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/myAnimalButton" />
+        app:layout_constraintTop_toBottomOf="@+id/profileUserName" />
 
-    <Button
-        android:id="@+id/myAnimalButton"
-        android:layout_width="160dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="130dp"
-        android:text="My Animals"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileImage" />
-
-    <RatingBar
-        android:id="@+id/ratingBar2"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginStart="10dp"
-        android:clickable="false"
-        app:layout_constraintStart_toEndOf="@+id/reviewsButton"
-        app:layout_constraintTop_toTopOf="@+id/reviewsButton" />
-
-    <Button
-        android:id="@+id/EditCalendarButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:text="Edit Calendar"
-        app:layout_constraintBottom_toBottomOf="@+id/profileImage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/profileImage"
-        app:layout_constraintTop_toTopOf="@+id/profileImage" />
 
     <EditText
         android:id="@+id/priceInfo"

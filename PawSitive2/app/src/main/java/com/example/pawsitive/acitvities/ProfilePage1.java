@@ -1,19 +1,14 @@
 package com.example.pawsitive.acitvities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.text.Editable;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -25,51 +20,23 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.pawsitive.R;
 import com.example.pawsitive.classes.Review;
 import com.example.pawsitive.classes.User;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.HashMap;
 
 import java.util.ArrayList;
 
 public class ProfilePage1 extends AppCompatActivity {
     ImageView profileImageView;
-    private HashMap<String, Object> jobData, userData;
 
     TextView locationView, nameView, priceInfo, locationInfo, experienceInfo, languagesInfo;
     String userEmail, profileImageStr, name, location, gender;
     Bitmap profileImageBitmap;
-    Button backButtonProfilePage, editButtonProfilePage, calendarButton, saveButton;
+    Button backButtonProfilePage, editButtonProfilePage, calendarButton;
     public final int GET_FROM_GALLERY = 3;
     private User owner;
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode==GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
-            Uri selectedImage = data.getData();
-            Bitmap bitmap = null;
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
-                profileImageView.setImageBitmap(bitmap);
-            } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,9 +53,9 @@ public class ProfilePage1 extends AppCompatActivity {
         backButtonProfilePage = (Button) findViewById(R.id.backButtonProfilePage);
         editButtonProfilePage = findViewById(R.id.editButtonProfile);
         calendarButton = findViewById(R.id.EditCalendarButton);
-        saveButton = findViewById(R.id.saveButton);
 
         profileImageView = findViewById(R.id.profileImage);
+
         priceInfo = findViewById(R.id.priceInfo);
         locationInfo = findViewById(R.id.locationPropertiesInfo);
         experienceInfo = findViewById(R.id.experienceInfo);
@@ -199,79 +166,16 @@ public class ProfilePage1 extends AppCompatActivity {
         }
     });
 
-        Button editButtonProfilePage = findViewById(R.id.editButtonProfile);
+        editButtonProfilePage = findViewById(R.id.editButtonProfile);
 
         editButtonProfilePage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeEditable(true);
-
-                editButtonProfilePage.setVisibility(View.INVISIBLE);
-                saveButton.setVisibility(View.VISIBLE);
+                Intent intent = new Intent(ProfilePage1.this, EditProfilePage.class);
+                startActivity(intent);
             }
         });
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-                userEmail = User.getEmail();
-
-                jobData = new HashMap<>();
-                jobData.put("Price", priceInfo.getText().toString());
-                jobData.put("Location Properties", locationInfo.getText().toString());
-                jobData.put("Experience", experienceInfo.getText().toString());
-                jobData.put("Languages", languagesInfo.getText().toString());
-
-                userData = new HashMap<>();
-                userData.put("Name", nameView.getText().toString().substring(0, nameView.getText().toString().indexOf("(")));
-                userData.put("Location", locationView.getText().toString());
-
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                profileImageBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                byte[] byteArray = byteArrayOutputStream .toByteArray();
-                profileImageStr = Base64.encodeToString(byteArray, Base64.DEFAULT);
-
-                userData.put("Profile Photo", profileImageStr);
-
-                db.collection("Jobs").document(userEmail).update(jobData).
-                        addOnCompleteListener(ProfilePage1.this, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()) {
-                            Toast.makeText(ProfilePage1.this, "Job save successful", Toast.LENGTH_SHORT).show();
-                        }
-                        else{
-                            Toast.makeText(ProfilePage1.this, "Job save failed", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-
-                db.collection("Users").document(userEmail).update(userData).
-                        addOnCompleteListener(ProfilePage1.this, new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if(task.isSuccessful()) {
-                                    Toast.makeText(ProfilePage1.this, "User save successful", Toast.LENGTH_SHORT).show();
-                                }
-                                else{
-                                    Toast.makeText(ProfilePage1.this, "User save failed", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                       });
-
-                changeEditable(false);
-
-                editButtonProfilePage.setVisibility(View.VISIBLE);
-                saveButton.setVisibility(View.INVISIBLE);
-            }
-        });
-        profileImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
-            }
-        });
         calendarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -282,8 +186,10 @@ public class ProfilePage1 extends AppCompatActivity {
     }
 
     private void changeEditable(boolean trueOrFalse){
+        System.out.println("changeEditable " + trueOrFalse);
         profileImageView.setFocusable(trueOrFalse);
         profileImageView.setClickable(trueOrFalse);
+        System.out.println(profileImageView.isClickable());
 
         priceInfo.setFocusable(trueOrFalse);
         priceInfo.setClickable(trueOrFalse);
