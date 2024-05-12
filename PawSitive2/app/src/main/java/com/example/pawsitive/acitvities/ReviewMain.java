@@ -15,16 +15,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.pawsitive.R;
 import com.example.pawsitive.classes.User;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class ReviewMain extends AppCompatActivity {
 
+    private HashMap<String, Object> review;
     private String reviewString;
-    private HashMap<String, Object> userComment, userStar;
     private float rating;
     private RatingBar star;
     private EditText comment;
@@ -44,45 +48,29 @@ public class ReviewMain extends AppCompatActivity {
         comment = findViewById(R.id.editTextText2);
         star = findViewById(R.id.ratingBar);
 
-        userComment = new HashMap<>();
-        userStar = new HashMap<>();
+        review = new HashMap<>();
         saveReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 reviewString = comment.getText().toString();
                 rating = star.getRating();
 
-                userStar.put("Stars", rating);
-                userComment.put("Comment", reviewString);
+                review.put("Stars", FieldValue.arrayUnion(rating));
+                review.put("Comments", FieldValue.arrayUnion(reviewString));
 
-                fStore.collection("Users").document(auth.getCurrentUser().getEmail()).collection("Reviews").document("Comments")
-                        .set(userComment).addOnCompleteListener(ReviewMain.this, new OnCompleteListener<Void>() {
+                fStore.collection("Users").document(auth.getCurrentUser().getEmail()).update(review)
+                        .addOnCompleteListener(ReviewMain.this, new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                if(task.isSuccessful())
-                                {
-                                    fStore.collection("Users").document(auth.getCurrentUser().getEmail()).collection("Reviews").document("Stars")
-                                            .set(userStar).addOnCompleteListener(ReviewMain.this, new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    if(task.isSuccessful())
-                                                    {
-                                                        Toast.makeText(ReviewMain.this, "Your review is saved successfully!", Toast.LENGTH_SHORT).show();
-                                                        startActivity(new Intent(ReviewMain.this, ResetPassword.class));
-                                                    }
-                                                    else
-                                                        Toast.makeText(ReviewMain.this, "Error in adding stars! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                                }
-                                            });
-                                }
-                                else
-                                    Toast.makeText(ReviewMain.this, "Error in adding comment! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(ReviewMain.this, "Your review is saved successfully!", Toast.LENGTH_SHORT).show();
+                                } else
+                                    Toast.makeText(ReviewMain.this, "Error in adding review", Toast.LENGTH_SHORT).show();
                             }
                         });
             }
-        });
-
-    }
+            });
+}
     public float getNoOfStar() {
         return rating;
     }

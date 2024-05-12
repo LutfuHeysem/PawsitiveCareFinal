@@ -18,6 +18,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class User {
     private static String name;
@@ -28,12 +29,14 @@ public class User {
     private static String cardNumber;
     private static String cvv;
     private static String expirationDate;
-    private ArrayList<String> reviews;
-    private ArrayList<Float> stars;
+    private static ArrayList<String> comments;
+    private static ArrayList<Float> stars;
     private ArrayList<Pet> pets;
     private static ArrayList<String> chatUsers;
 
     public User(String email) {
+        comments = new ArrayList<>();
+        stars = new ArrayList<>();
         User.email = email;
         getChatUsersFromDatabase();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -79,36 +82,26 @@ public class User {
 
         });
 
-        db.collection("Users").document(email).collection("Reviews").document("Comments")
+        db.collection("Users").document(email)
                 .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if(documentSnapshot.exists())
                         {
-                            String com = documentSnapshot.getString("Comment");
-                            reviews.add(com);
-                        }
-                        else
-                            Log.d("User", "No comments document exists!");
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("User", "Error fetching comments", e);
-                    }
-                });
+                            List<String> com = (List<String>) documentSnapshot.get("Comments");
+                            List<Float> star = (List<Float>) documentSnapshot.get("Stars");
 
-        db.collection("Users").document(email).collection("Reviews").document("Stars")
-                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if(documentSnapshot.exists())
-                        {
-                            Float sta = documentSnapshot.getDouble("Stars").floatValue();
-                            stars.add(sta);
+                            if(com != null && star != null)
+                            {
+                                for(int i = 0; i < com.size(); i++)
+                                {
+                                    comments.add(com.get(i));
+                                    stars.add(star.get(i));
+                                }
+                            }
                         }
                         else
-                            Log.d("User", "No stars document exists!");
+                            Log.d("User", "Filling data exception!!");
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -172,8 +165,8 @@ public static boolean searchInsidefChat(String key) {
         User.chatUsers = chatUsers;
     }
 
-    public ArrayList<String> getReviews() {return reviews;}
-    public ArrayList<Float> getStars() {return stars;}
+    public static ArrayList<String> getReviews() {return comments;}
+    public static ArrayList<Float> getStars() {return stars;}
 
     public static String getPassword() {
         return password;
