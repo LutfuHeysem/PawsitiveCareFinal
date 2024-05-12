@@ -6,6 +6,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,8 +27,10 @@ public class CreditCardInfo extends AppCompatActivity {
     private Button back, confirm;
     private String[] date = new String[2];
     private int month, year;
-    private String nameCard, number, exp, cvv, nameC, passC, locC, mailC, imageStrC;
-    private EditText editNameCard, editNum, editCvv, editExp;
+    private String nameCard, number, exp, cvv, age, lang, gender, nameC, passC, locC, mailC, imageStrC;
+    private EditText editNameCard, editNum, editCvv, editExp, editAge, editLang;
+    private RadioButton mal, fem, oth;
+    private RadioGroup genderRadio;
     private FirebaseAuth auth;
     private HashMap<String, Object> userData;
     private FirebaseFirestore fStore;
@@ -48,6 +52,27 @@ public class CreditCardInfo extends AppCompatActivity {
         editCvv = (EditText) findViewById(R.id.editTextCVV);
         editNum = (EditText) findViewById(R.id.editTextNumber);
         editExp = (EditText) findViewById(R.id.editTextExp);
+        editAge = (EditText) findViewById(R.id.ageEdit);
+        editLang = (EditText) findViewById(R.id.langEdit);
+
+        genderRadio = findViewById(R.id.radioGroup);
+        mal = findViewById(R.id.radioButton1);
+        fem = findViewById(R.id.radioButton2);
+        oth = findViewById(R.id.radioButton3);
+
+        genderRadio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                if(checkedId == mal.getId())
+                    gender = "male";
+                else if(checkedId == fem.getId())
+                    gender = "female";
+                else
+                    gender = "other";
+            }
+        });
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,13 +96,15 @@ public class CreditCardInfo extends AppCompatActivity {
                 exp = editExp.getText().toString();
                 number = editNum.getText().toString();
                 cvv = editCvv.getText().toString();
+                age = editAge.getText().toString();
+                lang = editLang.getText().toString();
 
                 date = exp.split("/");
 
                 month = Integer.parseInt(date[0]);
                 year = Integer.parseInt(date[1]);
 
-                if(TextUtils.isEmpty(nameCard) || TextUtils.isEmpty(exp) || TextUtils.isEmpty(number) || TextUtils.isEmpty(String.valueOf(cvv))) {
+                if(TextUtils.isEmpty(nameCard) || TextUtils.isEmpty(exp) || TextUtils.isEmpty(number) || TextUtils.isEmpty(String.valueOf(cvv)) || TextUtils.isEmpty(lang) || TextUtils.isEmpty(age) || genderRadio.getCheckedRadioButtonId() == -1)  {
                     Toast.makeText(CreditCardInfo.this, "You need to fill all the information", Toast.LENGTH_SHORT).show();
                 }
                 else if (exp.length() != 7 || cvv.length() != 3 || number.length() != 16){
@@ -109,6 +136,9 @@ public class CreditCardInfo extends AppCompatActivity {
                                             userData.put("CVV", cvv);
                                             userData.put("Expiration Date", exp);
                                             userData.put("Profile Photo", imageStrC);
+                                            userData.put("Age", age);
+                                            userData.put("Language(s)", lang);
+                                            userData.put("Gender", gender.toUpperCase());
 
                                             fStore.collection("Users").document(auth.getCurrentUser().getEmail())
                                                     .set(userData).addOnCompleteListener(CreditCardInfo.this, new OnCompleteListener<Void>() {

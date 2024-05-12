@@ -12,7 +12,7 @@
         android:id="@+id/textView14"
         android:layout_width="430dp"
         android:layout_height="733dp"
-        android:layout_marginTop="95dp"
+        android:layout_marginTop="92dp"
         android:background="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -59,8 +59,8 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
-        android:text="Credit Card Information"
+        android:layout_marginTop="15dp"
+        android:text="Extra Information"
         android:textSize="27sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -71,8 +71,8 @@
         android:id="@+id/oldPass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="65dp"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="35dp"
         android:text="NAME OF THE OWNER"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
@@ -112,7 +112,7 @@
         android:id="@+id/confirmBut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="25dp"
+        android:layout_marginBottom="15dp"
         android:text="Confirm"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -152,7 +152,7 @@
     <TextView
         android:id="@+id/textViewEXP"
         android:layout_width="157dp"
-        android:layout_height="77dp"
+        android:layout_height="75dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="25dp"
         android:background="@color/material_dynamic_primary80"
@@ -181,5 +181,111 @@
         android:text="Expiration Date"
         app:layout_constraintBottom_toTopOf="@+id/textViewEXP"
         app:layout_constraintStart_toEndOf="@+id/textView15" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="106dp"
+        android:layout_height="146dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginBottom="80dp"
+        android:background="@color/material_dynamic_primary80"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView5"
+        app:layout_constraintTop_toBottomOf="@+id/textView5">
+
+        <RadioButton
+            android:id="@+id/radioButton1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Female" />
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Male" />
+
+        <RadioButton
+            android:id="@+id/radioButton3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Other" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Gender"
+        app:layout_constraintStart_toStartOf="@+id/textView15"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <TextView
+        android:id="@+id/age"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="10dp"
+        android:text="Age"
+        app:layout_constraintStart_toEndOf="@+id/gender"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <TextView
+        android:id="@+id/textAge"
+        android:layout_width="191dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="25dp"
+        android:background="@color/material_dynamic_primary80"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/radioGroup"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <EditText
+        android:id="@+id/ageEdit"
+        android:layout_width="183dp"
+        android:layout_height="55dp"
+        android:ems="10"
+        android:hint="Enter Age"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/textAge"
+        app:layout_constraintEnd_toEndOf="@+id/textAge"
+        app:layout_constraintStart_toStartOf="@+id/textAge"
+        app:layout_constraintTop_toTopOf="@+id/textAge" />
+
+    <TextView
+        android:id="@+id/textView27"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Preferred Languages"
+        app:layout_constraintStart_toStartOf="@+id/textAge"
+        app:layout_constraintTop_toBottomOf="@+id/textAge" />
+
+    <TextView
+        android:id="@+id/textLang"
+        android:layout_width="191dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="85dp"
+        android:background="@color/material_dynamic_primary80"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/radioGroup" />
+
+    <EditText
+        android:id="@+id/langEdit"
+        android:layout_width="186dp"
+        android:layout_height="56dp"
+        android:ems="10"
+        android:hint="Lang1,Lang2,..."
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="@+id/textLang"
+        app:layout_constraintEnd_toEndOf="@+id/textLang"
+        app:layout_constraintStart_toStartOf="@+id/textLang"
+        app:layout_constraintTop_toTopOf="@+id/textLang" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
