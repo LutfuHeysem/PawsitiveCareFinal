@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
-    private static String name;
+    private static String name, gender, age;
     private static String password;
     private static String email;
     public static String location;
@@ -72,6 +72,9 @@ public class User {
                         cardNumber = document.getString("Card Number");
                         cvv = document.getString("CVV");
                         expirationDate = document.getString("Expiration Date");
+                        gender = document.getString("Gender");
+                        age = document.getString("Age");
+
                     } else {
                         Log.d("User", "No such document");
                     }
@@ -169,6 +172,13 @@ public static boolean searchInsidefChat(String key) {
     }
     public ArrayList<Pet> getPets() {
         return pets;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+    public String getAge(){
+        return age;
     }
 
     public interface OnUserLoadListener {

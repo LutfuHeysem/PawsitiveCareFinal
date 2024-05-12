@@ -18,12 +18,7 @@ import java.util.ArrayList;
 
 public class HomePage extends AppCompatActivity {
 
-    private ArrayList<User> usersOnDisplay;
 
-
-    public HomePage(){
-        this.usersOnDisplay = new ArrayList<>();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

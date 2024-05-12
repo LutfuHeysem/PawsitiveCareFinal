@@ -34,8 +34,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="dollar_design" />
-                            <entry key="sourceFile" value="$USER_HOME$/Downloads/dollar-sign-svgrepo-com.svg" />
+                            <entry key="outputName" value="location_sign_svgrepo_com" />
+                            <entry key="sourceFile" value="$USER_HOME$/Downloads/location-sign-svgrepo-com.svg" />
                           </map>
                         </option>
                       </PersistentState>
