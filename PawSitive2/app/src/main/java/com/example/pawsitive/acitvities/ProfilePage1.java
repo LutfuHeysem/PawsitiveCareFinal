@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -23,18 +24,24 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.pawsitive.R;
 import com.example.pawsitive.classes.User;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class ProfilePage1 extends AppCompatActivity {
     ImageView profileImageView;
-    TextView allInfoView, locationView, nameView;
+    private HashMap<String, Object> jobData, userData;
+
+    TextView locationView, nameView, priceInfo, locationInfo, experienceInfo, languagesInfo;
     String userEmail, profileImageStr, name, location, gender;
     String careTakerInfo;
     Bitmap profileImageBitmap;
@@ -80,7 +87,10 @@ public class ProfilePage1 extends AppCompatActivity {
 
         profileImageView = findViewById(R.id.profileImage);
 
-        allInfoView = findViewById(R.id.allInfo);
+        priceInfo = findViewById(R.id.priceInfo);
+        locationInfo = findViewById(R.id.locationPropertiesInfo);
+        experienceInfo = findViewById(R.id.experienceInfo);
+        languagesInfo = findViewById(R.id.languagesInfo);
         locationView = findViewById(R.id.locationText);
         nameView = findViewById(R.id.profileUserName);
 
@@ -89,22 +99,29 @@ public class ProfilePage1 extends AppCompatActivity {
 
             userEmail = User.getEmail();
             DocumentReference userData = db.collection("Users").document(userEmail);
+            System.out.println(userEmail);
 
             userData.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    System.out.println("saaa");
+
                     name = documentSnapshot.getString("Name");
                     gender = documentSnapshot.getString("Gender");
+                    System.out.println("sa");
 
-                    profileImageStr = documentSnapshot.getString("Image");
+                    profileImageStr = documentSnapshot.getString("Profile Photo");
                     byte[] decodedString = Base64.decode(profileImageStr, Base64.DEFAULT);
                     profileImageBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                    System.out.println("sa1");
+
 
                     location = documentSnapshot.getString("Location");
 
                     locationView.setText(location);
                     String nameAndGender = name + "(" + gender + ")";
                     nameView.setText(nameAndGender);
+                    System.out.println("sa2");
 
                     profileImageView.setImageBitmap(profileImageBitmap);
                     profileImageView.setVisibility(View.VISIBLE);
@@ -115,17 +132,22 @@ public class ProfilePage1 extends AppCompatActivity {
                         careTakerJobData.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                System.out.println("sa5");
+
                                 String price = "Price: " + documentSnapshot.getString("Price");
-                                String location = "Location: " + documentSnapshot.getString("Location");
                                 String locationProperties = "Location Properties: " + documentSnapshot.getString("Properties");
                                 String experienceLevel = "Experience: " + documentSnapshot.getString("Experience");
                                 String spokenLanguages = "Languages: " + documentSnapshot.getString("Languages");
                                 //date available
+                                System.out.println("sa6");
 
-                                careTakerInfo = price + "\n" + location + "\n" + locationProperties + "\n" + experienceLevel + "\n" +
-                                                spokenLanguages;
+                                priceInfo.setText(price);
+                                locationInfo.setText(locationProperties);
+                                experienceInfo.setText(experienceLevel);
+                                languagesInfo.setText(spokenLanguages);
 
-                                allInfoView.setText(careTakerInfo);
+                                System.out.println("sa7");
+
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -134,6 +156,10 @@ public class ProfilePage1 extends AppCompatActivity {
                             }
                         });
                     }catch(Exception e){
+                        priceInfo.setText("");
+                        locationInfo.setText("");
+                        experienceInfo.setText("");
+                        languagesInfo.setText("");
                         System.out.println("Error: " + e.getMessage());
                     }
 
@@ -166,8 +192,17 @@ public class ProfilePage1 extends AppCompatActivity {
                 locationView.setClickable(true);
                 locationView.setEditableFactory(new Editable.Factory());
 
-                allInfoView.setClickable(true);
-                allInfoView.setEditableFactory(new Editable.Factory());
+                priceInfo.setClickable(true);
+                priceInfo.setEditableFactory(new Editable.Factory());
+
+                locationInfo.setClickable(true);
+                locationInfo.setEditableFactory(new Editable.Factory());
+
+                experienceInfo.setClickable(true);
+                experienceInfo.setEditableFactory(new Editable.Factory());
+
+                languagesInfo.setClickable(true);
+                languagesInfo.setEditableFactory(new Editable.Factory());
 
                 editButtonProfilePage.setVisibility(View.INVISIBLE);
                 saveButton.setVisibility(View.VISIBLE);
@@ -176,7 +211,52 @@ public class ProfilePage1 extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                userEmail = User.getEmail();
+
+                jobData = new HashMap<>();
+                jobData.put("Price", priceInfo.getText().toString());
+                jobData.put("Location Properties", locationInfo.getText().toString());
+                jobData.put("Experience", experienceInfo.getText().toString());
+                jobData.put("Languages", languagesInfo.getText().toString());
+
+                userData = new HashMap<>();
+                userData.put("Name", nameView.getText().toString());
+                userData.put("Location", locationView.getText().toString());
+
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                profileImageBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                byte[] byteArray = byteArrayOutputStream .toByteArray();
+                profileImageStr = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+                userData.put("Profile Photo", profileImageStr);
+
+                db.collection("Jobs").document(userEmail).update(jobData).
+                        addOnCompleteListener(ProfilePage1.this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()) {
+                            Toast.makeText(ProfilePage1.this, "Job save successful", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Toast.makeText(ProfilePage1.this, "Job save failed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                db.collection("Users").document(userEmail).update(userData).
+                        addOnCompleteListener(ProfilePage1.this, new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()) {
+                                    Toast.makeText(ProfilePage1.this, "User save successful", Toast.LENGTH_SHORT).show();
+                                }
+                                else{
+                                    Toast.makeText(ProfilePage1.this, "User save failed", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                       });
             }
         });
         profileImageView.setOnClickListener(new View.OnClickListener() {

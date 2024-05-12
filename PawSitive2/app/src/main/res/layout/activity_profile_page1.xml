@@ -183,6 +183,7 @@
         android:layout_marginTop="10dp"
         android:ems="10"
         android:inputType="text"
+        android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profileImage" />
@@ -205,6 +206,7 @@
         android:editable="false"
         android:ems="10"
         android:inputType="text"
+        android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/myAnimalButton" />
@@ -229,20 +231,6 @@
         app:layout_constraintStart_toEndOf="@+id/reviewsButton"
         app:layout_constraintTop_toTopOf="@+id/reviewsButton" />
 
-    <EditText
-        android:id="@+id/allInfo"
-        android:layout_width="258dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:clickable="false"
-        android:ems="10"
-        android:gravity="start|top"
-        android:inputType="textMultiLine"
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/locationText" />
-
     <Button
         android:id="@+id/EditCalendarButton"
         android:layout_width="0dp"
@@ -254,5 +242,65 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/profileImage"
         app:layout_constraintTop_toTopOf="@+id/profileImage" />
+
+    <EditText
+        android:id="@+id/priceInfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:clickable="false"
+        android:editable="false"
+        android:ems="10"
+        android:hint="Price"
+        android:inputType="text"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/locationText" />
+
+    <EditText
+        android:id="@+id/locationPropertiesInfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:editable="false"
+        android:ems="10"
+        android:hint="Location Properties"
+        android:inputType="text"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="@+id/priceInfo"
+        app:layout_constraintStart_toStartOf="@+id/priceInfo"
+        app:layout_constraintTop_toBottomOf="@+id/priceInfo" />
+
+    <EditText
+        android:id="@+id/languagesInfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:editable="false"
+        android:ems="10"
+        android:hint="Languages"
+        android:inputType="text"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="@+id/locationPropertiesInfo"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/locationPropertiesInfo"
+        app:layout_constraintTop_toBottomOf="@+id/locationPropertiesInfo" />
+
+    <EditText
+        android:id="@+id/experienceInfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:editable="false"
+        android:ems="10"
+        android:hint="Experience: animal, times"
+        android:inputType="text"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="@+id/languagesInfo"
+        app:layout_constraintStart_toStartOf="@+id/languagesInfo"
+        app:layout_constraintTop_toBottomOf="@+id/languagesInfo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

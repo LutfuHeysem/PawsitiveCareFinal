@@ -82,7 +82,6 @@ public class Login extends AppCompatActivity {
                                         User loggedUser = new User(logEmail);
                                         Toast.makeText(Login.this, "Successful Login!", Toast.LENGTH_SHORT).show();
 
-                                        User.getReviews(User.getEmail());
 
                                         //TEMPORARY
                                         Intent homeIntent = new Intent(Login.this, HomePage.class);
@@ -93,7 +92,7 @@ public class Login extends AppCompatActivity {
                                         Intent reviewIntent = new Intent(Login.this, ReviewMain.class);
                                         Intent profileIntent = new Intent(Login.this, ProfilePage1.class);
 
-                                        startActivity(reviewIntent);
+                                        startActivity(profileIntent);
 
                                     }
                                     else if(currUser != null && !currUser.isEmailVerified())
