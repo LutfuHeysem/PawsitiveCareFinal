@@ -3,13 +3,10 @@ package com.example.pawsitive.acitvities;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.provider.DocumentsContract;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,8 +21,6 @@ import com.example.pawsitive.R;
 import com.example.pawsitive.classes.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -52,7 +47,7 @@ public class ProfilePage1 extends AppCompatActivity {
 
         backButtonProfilePage = (Button) findViewById(R.id.backButtonProfilePage);
         editButtonProfilePage = findViewById(R.id.editButtonProfile);
-        calendarButton = findViewById(R.id.ViewCalendar);
+        calendarButton = findViewById(R.id.EditCalendarButton);
 
         profileImageView = findViewById(R.id.profileImage);
 
@@ -135,8 +130,7 @@ public class ProfilePage1 extends AppCompatActivity {
         editButtonProfilePage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ProfilePageEdit.class);
-                startActivity(intent);
+
             }
         });
         calendarButton.setOnClickListener(new View.OnClickListener() {
