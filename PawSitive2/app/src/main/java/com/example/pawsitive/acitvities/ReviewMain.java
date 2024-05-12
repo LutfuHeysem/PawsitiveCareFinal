@@ -45,20 +45,23 @@ public class ReviewMain extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
 
+
         comment = findViewById(R.id.editTextText2);
         star = findViewById(R.id.ratingBar);
 
-        review = new HashMap<>();
         saveReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 reviewString = comment.getText().toString();
                 rating = star.getRating();
 
-                review.put("Stars", FieldValue.arrayUnion(rating));
-                review.put("Comments", FieldValue.arrayUnion(reviewString));
+                review = new HashMap<>();
+                review.put("Star", rating);
+                review.put("Comment", reviewString);
+                review.put("Employer", auth.getCurrentUser().getEmail());
+                review.put("Employee", "DENEME");
 
-                fStore.collection("Users").document(auth.getCurrentUser().getEmail()).update(review)
+                fStore.collection("Reviews").document().set(review)
                         .addOnCompleteListener(ReviewMain.this, new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {

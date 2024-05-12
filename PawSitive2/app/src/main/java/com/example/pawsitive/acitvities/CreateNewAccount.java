@@ -113,7 +113,7 @@ public class CreateNewAccount extends AppCompatActivity {
             {
                 name = editName.getText().toString();
                 pass = editPass.getText().toString();
-                email = editEmail.getText().toString();
+                email = editEmail.getText().toString().toLowerCase();
                 loc = editLoc.getText().toString().toUpperCase();
 
                 if(TextUtils.isEmpty(name) || TextUtils.isEmpty(pass) || TextUtils.isEmpty(email) || TextUtils.isEmpty(loc))

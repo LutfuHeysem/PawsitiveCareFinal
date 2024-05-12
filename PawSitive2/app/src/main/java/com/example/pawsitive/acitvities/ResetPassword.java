@@ -93,29 +93,12 @@ public class ResetPassword extends AppCompatActivity {
                             startActivity(new Intent(ResetPassword.this, Login.class));
                         }
                     });
-                    userData.put("Password", newP);
-                    assert mUser != null;
-                    updateInfo(userData, mUser.getEmail());
+                    //userData.put("Password", newP);
+                    //assert mUser != null;
+                    //updateInfo(userData, mUser.getEmail());
                 }
             }
         });
-    }
-
-    private void updateInfo(HashMap<String, Object> hashMap, final String email) {
-        fStore.collection("Users")
-                .document(email) // Use the email as the document ID
-                .update(hashMap)
-                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(ResetPassword.this, "Password changed successfully", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(ResetPassword.this, Login.class));
-                        } else {
-                            Toast.makeText(ResetPassword.this, "Failed to update password", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
     }
 
 }

@@ -81,34 +81,6 @@ public class User {
             }
 
         });
-
-        db.collection("Users").document(email)
-                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if(documentSnapshot.exists())
-                        {
-                            List<String> com = (List<String>) documentSnapshot.get("Comments");
-                            List<Float> star = (List<Float>) documentSnapshot.get("Stars");
-
-                            if(com != null && star != null)
-                            {
-                                for(int i = 0; i < com.size(); i++)
-                                {
-                                    comments.add(com.get(i));
-                                    stars.add(star.get(i));
-                                }
-                            }
-                        }
-                        else
-                            Log.d("User", "Filling data exception!!");
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("User", "Error fetching stars", e);
-                    }
-                });
     }
 // dkjbvhy3wbhvr@yahoo.com
 // 016956216532
