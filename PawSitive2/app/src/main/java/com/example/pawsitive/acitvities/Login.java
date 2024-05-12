@@ -84,11 +84,18 @@ public class Login extends AppCompatActivity {
 
                                         //TEMPORARY
                                         Intent homeIntent = new Intent(Login.this, HomePage.class);
-                                        Intent petIntent = new Intent(Login.this, AddEditPet.class);
+                                        Intent editPetIntent = new Intent(Login.this, AddEditPet.class).putExtra("PetName", "Venus");
+                                        //WILL GET PET NAME WHEN EDITING
+                                        Intent addPetIntent = new Intent(Login.this, AddEditPet.class);
                                         Intent chatIntent = new Intent(Login.this, UsersActivity.class);
                                         Intent reviewIntent = new Intent(Login.this, ReviewMain.class);
                                         Intent profileIntent = new Intent(Login.this, ProfilePage1.class);
+<<<<<<< Updated upstream
                                         startActivity(reviewIntent);
+=======
+
+                                        startActivity(homeIntent);
+>>>>>>> Stashed changes
                                     }
                                     else if(currUser != null && !currUser.isEmailVerified())
                                         Toast.makeText(Login.this, "Verify your email first!", Toast.LENGTH_SHORT).show();

@@ -1,8 +1,11 @@
 package com.example.pawsitive.acitvities;
 
+import android.util.Base64;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -26,20 +29,26 @@ import android.widget.Toast;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Base64;
 import java.util.HashMap;
 
 import com.example.pawsitive.classes.Pet;
 import com.example.pawsitive.R;
+import com.example.pawsitive.classes.User;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public class AddEditPet extends AppCompatActivity {
     private HashMap<String, Object> petData;
     private FirebaseFirestore fStore;
+    private boolean isEdit = false;
+    private String editingPetName;
 
     Button UploadImageButton, SaveButton, BackButton;
     ImageView UploadImageView;
@@ -49,7 +58,7 @@ public class AddEditPet extends AppCompatActivity {
     Spinner spinnerNumberOfWalksSelector, spinnerFeedingConditionerSelector,
             spinnerEnergyLevelSelector, spinnerGenderSelector, spinnerTypeSelector;
     private String typeSelection, genderSelection, energyLevelSelection, feedingConditionSelection,
-            numberOfWalksSelection, name, additionalNotes, type, gender, imageStr;
+            numberOfWalksSelection, name, additionalNotes, imageStr;
     private int age, weight;
     private byte[] imageInBase64;
     private boolean imageClicked = false;
@@ -80,6 +89,11 @@ public class AddEditPet extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Intent intent = getIntent();
+        String petName = intent.getStringExtra("PetName");
+        editMode(petName);
+
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_add_edit_pet);
@@ -131,8 +145,56 @@ public class AddEditPet extends AppCompatActivity {
         CanBeLeftAlone = findViewById(R.id.LeftAloneCheck);
         HouseTrained = findViewById(R.id.HouseTrainedCheck);
 
-        fStore = FirebaseFirestore.getInstance();
-        auth = FirebaseAuth.getInstance();
+        if(isEdit){
+            try {
+                FirebaseAuth auth = FirebaseAuth.getInstance();
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                DocumentReference petData = db.collection("Users")
+                        .document(User.getEmail())
+                        .collection("Pets").document(editingPetName);
+
+                petData.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                        spinnerTypeSelector.setSelection(adapter.getPosition(documentSnapshot.getString("Type")));
+                        spinnerGenderSelector.setSelection(adapter2.getPosition(documentSnapshot.getString("Gender")));
+                        spinnerEnergyLevelSelector.setSelection(adapter3.getPosition(documentSnapshot.getString("Energy Level")));
+                        spinnerFeedingConditionerSelector.setSelection(adapter4.getPosition(documentSnapshot.getString("Feeding Condition")));
+                        spinnerNumberOfWalksSelector.setSelection(adapter5.getPosition(documentSnapshot.getString("Number Of Walks")));
+
+                        String image64 = documentSnapshot.getString("Image");
+                        byte[] decodedString = Base64.decode(image64, Base64.DEFAULT);
+                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                        //UploadImageView.setBackground(d);
+                        UploadImageView.setImageBitmap(decodedByte);
+                        UploadImageView.setVisibility(View.VISIBLE);
+
+                        Notes.setText(documentSnapshot.getString("Additional Notes"));
+                        Name.setText(editingPetName);
+
+                        Age.setText(documentSnapshot.get("Age").toString());
+                        Weight.setText(documentSnapshot.get("Weight").toString());
+
+                        Neutered.setChecked(documentSnapshot.get("Neutered").toString().equals("true"));
+                        Microchipped.setChecked(documentSnapshot.get("Microchipped").toString().equals("true"));
+                        Friendly.setChecked(documentSnapshot.get("Friendly").toString().equals("true"));
+                        CanBeLeftAlone.setChecked(documentSnapshot.get("Can Be Left Alone").toString().equals("true"));
+                        HouseTrained.setChecked(documentSnapshot.get("House Trained").toString().equals("true"));
+
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        System.out.println("Failed to fetch pet data from Firebase: " + e.getMessage());
+                    }
+                });
+            } catch (Exception e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+        }
 
         SaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,6 +248,7 @@ public class AddEditPet extends AppCompatActivity {
                     petData.put("Can Be Left Alone", canBeLeftAlone);
                     petData.put("House Trained", houseTrained);
                     petData.put("Image", imageStr);
+                    petData.put("Additional Notes", additionalNotes);
 
                     fStore.collection("Users").document(auth.getCurrentUser().getEmail())
                             .collection("Pets").document(name).set(petData)
@@ -228,7 +291,7 @@ public class AddEditPet extends AppCompatActivity {
                     ByteArrayOutputStream bos = new ByteArrayOutputStream();
                     photo.compress(Bitmap.CompressFormat.PNG, 100, bos);
                     imageInBase64 = bos.toByteArray();
-                    imageStr = Base64.getEncoder().encodeToString(imageInBase64);
+                    imageStr = Base64.encodeToString(imageInBase64, Base64.DEFAULT);
                 }
 
             }
@@ -242,6 +305,11 @@ public class AddEditPet extends AppCompatActivity {
                 startActivity(homePage);
             }
         });
+    }
+
+    public void editMode(String petName){
+        isEdit = true;
+        editingPetName = petName;
     }
 
 }
