@@ -31,6 +31,8 @@ public class ProfilePageEdit extends AppCompatActivity {
         TextView textView41,textView42,textView43,textView44,textView45,textView46,textView47;
         TextView textView51,textView52,textView53,textView54,textView55,textView56,textView57;
 
+
+
         textView11 =  findViewById(R.id.editable1_1);textView11.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -246,6 +248,18 @@ public class ProfilePageEdit extends AppCompatActivity {
             }
         });
 
-
+        TextView[][] redBoxesArray =
+                {{textView11,textView12,textView13,textView14,textView15,textView16,textView17},
+                        {textView21,textView22,textView23,textView24,textView25,textView26,textView27},
+                        {textView31,textView32,textView33,textView34,textView35,textView36,textView37},
+                        {textView41,textView42,textView43,textView44,textView45,textView46,textView47},
+                        {textView51,textView52,textView53,textView54,textView55,textView56,textView57}
+                };
+//        for(int i = 0; i < redBoxesArray.length; i++)
+//        {
+//            for (int j = 0; j < redBoxesArray[].length; j++) {
+//
+//            }
+//        }
     }
 }
