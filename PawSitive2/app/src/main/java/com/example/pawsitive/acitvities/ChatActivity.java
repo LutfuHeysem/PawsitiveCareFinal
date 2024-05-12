@@ -97,36 +97,39 @@ public class ChatActivity extends AppCompatActivity {
                 .document(User.getEmail())
                 .collection("Offers")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
-                        if (e != null) {
-                            System.out.println("Listen failed: " + e.getMessage());
-                            return;
-                        }
+            @Override
+            public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+                try {
+                    if (e != null) {
+                        System.out.println("Listen failed: " + e.getMessage());
+                        return;
+                    }
 
-                        for (DocumentChange dc : snapshot.getDocumentChanges()) {
-                            switch (dc.getType()) {
-                                case ADDED:
-                                    DocumentSnapshot document = dc.getDocument();
-                                    String userEmail = document.getId();
-                                    System.out.println("userEmail: " + userEmail);
-                                    String amount = document.getString("amount");
-                                    System.out.println("amount: " + amount);
-                                    AcceptOfferDialog dialog = new AcceptOfferDialog();
-                                    dialog.setAmount(amount);
-                                    dialog.setReceiverUserEmail(receiverUser.email);
-                                    dialog.show(getSupportFragmentManager(), "AcceptOfferDialog");
-                                    break;
-                                case MODIFIED:
-                                    break;
-                                case REMOVED:
-                                    break;
-                            }
+                    for (DocumentChange dc : snapshot.getDocumentChanges()) {
+                        switch (dc.getType()) {
+                            case ADDED:
+                                DocumentSnapshot document = dc.getDocument();
+                                String userEmail = document.getId();
+                                System.out.println("userEmail: " + userEmail);
+                                String amount = document.getString("amount");
+                                System.out.println("amount: " + amount);
+                                AcceptOfferDialog dialog = new AcceptOfferDialog();
+                                dialog.setAmount(amount);
+                                dialog.setReceiverUserEmail(receiverUser.email);
+                                dialog.show(getSupportFragmentManager(), "AcceptOfferDialog");
+                                break;
+                            case MODIFIED:
+                                break;
+                            case REMOVED:
+                                break;
                         }
                     }
-                });
-
-
+                } catch (Exception ex) {
+                    // Handle any exceptions here
+                    System.out.println("Exception occurred: " + ex.getMessage());
+                }
+            }
+        });
 
         System.out.println("test" + receiverUser.id);
         System.out.println("au" + User.getEmail());

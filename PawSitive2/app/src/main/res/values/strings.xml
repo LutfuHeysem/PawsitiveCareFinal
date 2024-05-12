@@ -54,5 +54,8 @@
     <string name="offer_amount_x">Offer Amount: X$</string>
     <string name="offer_amount">"Offer Amount: "</string>
     <string name="location">"Location: "</string>
+    <string name="username">UserName</string>
+    <string name="reviews">Reviews</string>
+    <string name="x_5">x/5</string>
 
 </resources>
