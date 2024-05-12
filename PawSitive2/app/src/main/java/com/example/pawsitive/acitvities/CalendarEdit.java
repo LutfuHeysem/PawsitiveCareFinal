@@ -262,124 +262,304 @@ public class CalendarEdit extends AppCompatActivity {
         });
         textView32 =  findViewById(R.id.editable3_2);textView32.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                changeColor(textView32);
+            public void onClick(View v)
+            {
+                if(isRed[2][1])
+                {
+                    textView32.setBackgroundColor(Color.RED);
+                }
+                else
+                {
+                    textView32.setBackgroundColor(Color.WHITE);
+                }
+                isRed[2][1] = !isRed[2][1];
             }
         });
         textView33 =  findViewById(R.id.editable3_3);textView33.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                changeColor(textView33);
+            public void onClick(View v)
+            {
+                if(isRed[2][2])
+                {
+                    textView33.setBackgroundColor(Color.RED);
+                }
+                else
+                {
+                    textView33.setBackgroundColor(Color.WHITE);
+                }
+                isRed[2][2] = !isRed[2][2];
             }
         });
         textView34 =  findViewById(R.id.editable3_4);textView24.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                changeColor(textView34);
+            public void onClick(View v)
+            {
+                if(isRed[2][3])
+                {
+                    textView34.setBackgroundColor(Color.RED);
+                }
+                else
+                {
+                    textView34.setBackgroundColor(Color.WHITE);
+                }
+                isRed[2][3] = !isRed[2][3];
             }
         });
         textView35 =  findViewById(R.id.editable3_5);textView25.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                changeColor(textView35);
+            public void onClick(View v)
+            {
+                if(isRed[2][4])
+                {
+                    textView35.setBackgroundColor(Color.RED);
+                }
+                else
+                {
+                    textView35.setBackgroundColor(Color.WHITE);
+                }
+                isRed[2][4] = !isRed[2][4];
             }
         });
         textView36 =  findViewById(R.id.editable3_6);textView36.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                changeColor(textView36);
+            public void onClick(View v)
+            {
+                if(isRed[2][5])
+                {
+                    textView36.setBackgroundColor(Color.RED);
+                }
+                else
+                {
+                    textView36.setBackgroundColor(Color.WHITE);
+                }
+                isRed[2][5] = !isRed[2][5];
             }
         });
         textView37 =  findViewById(R.id.editable3_7);textView37.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                changeColor(textView37);
+            public void onClick(View v)
+            {
+                if(isRed[2][6])
+                {
+                    textView37.setBackgroundColor(Color.RED);
+                }
+                else
+                {
+                    textView37.setBackgroundColor(Color.WHITE);
+                }
+                isRed[2][6] = !isRed[2][6];
             }
         });
 
         textView41 =  findViewById(R.id.editable4_1);textView41.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                changeColor(textView41);
+            public void onClick(View v)
+            {
+                if(isRed[3][0])
+                {
+                    textView41.setBackgroundColor(Color.RED);
+                }
+                else
+                {
+                    textView41.setBackgroundColor(Color.WHITE);
+                }
+                isRed[3][0] = !isRed[3][0];
             }
         });
         textView42 =  findViewById(R.id.editable4_2);textView42.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                changeColor(textView42);
+            public void onClick(View v)
+            {
+                if(isRed[3][1])
+                {
+                    textView42.setBackgroundColor(Color.RED);
+                }
+                else
+                {
+                    textView42.setBackgroundColor(Color.WHITE);
+                }
+                isRed[3][1] = !isRed[3][1];
             }
         });
         textView43 =  findViewById(R.id.editable4_3);textView43.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                changeColor(textView43);
+            public void onClick(View v)
+            {
+                if(isRed[3][2])
+                {
+                    textView43.setBackgroundColor(Color.RED);
+                }
+                else
+                {
+                    textView43.setBackgroundColor(Color.WHITE);
+                }
+                isRed[3][2] = !isRed[3][2];
             }
         });
         textView44 =  findViewById(R.id.editable4_4);textView44.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                changeColor(textView44);
+            public void onClick(View v)
+            {
+                if(isRed[3][3])
+                {
+                    textView44.setBackgroundColor(Color.RED);
+                }
+                else
+                {
+                    textView44.setBackgroundColor(Color.WHITE);
+                }
+                isRed[3][3] = !isRed[3][3];
             }
         });
         textView45 =  findViewById(R.id.editable4_5);textView45.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                changeColor(textView45);
+            public void onClick(View v)
+            {
+                if(isRed[3][4])
+                {
+                    textView45.setBackgroundColor(Color.RED);
+                }
+                else
+                {
+                    textView45.setBackgroundColor(Color.WHITE);
+                }
+                isRed[3][4] = !isRed[3][4];
             }
         });
         textView46 =  findViewById(R.id.editable4_6);textView46.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                changeColor(textView46);
+            public void onClick(View v)
+            {
+                if(isRed[3][5])
+                {
+                    textView46.setBackgroundColor(Color.RED);
+                }
+                else
+                {
+                    textView46.setBackgroundColor(Color.WHITE);
+                }
+                isRed[3][5] = !isRed[3][5];
             }
         });
         textView47 =  findViewById(R.id.editable4_7);textView47.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                changeColor(textView47);
+            public void onClick(View v)
+            {
+                if(isRed[3][6])
+                {
+                    textView47.setBackgroundColor(Color.RED);
+                }
+                else
+                {
+                    textView47.setBackgroundColor(Color.WHITE);
+                }
+                isRed[3][6] = !isRed[3][6];
             }
         });
 
         textView51 =  findViewById(R.id.editable5_1);textView51.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                changeColor(textView51);
+            public void onClick(View v)
+            {
+                if(isRed[4][0])
+                {
+                    textView51.setBackgroundColor(Color.RED);
+                }
+                else
+                {
+                    textView51.setBackgroundColor(Color.WHITE);
+                }
+                isRed[4][0] = !isRed[4][0];
             }
         });
         textView52 =  findViewById(R.id.editable5_2);textView52.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                changeColor(textView52);
+            public void onClick(View v)
+            {
+                if(isRed[4][1])
+                {
+                    textView52.setBackgroundColor(Color.RED);
+                }
+                else
+                {
+                    textView52.setBackgroundColor(Color.WHITE);
+                }
+                isRed[4][1] = !isRed[4][1];
             }
         });
         textView53 =  findViewById(R.id.editable5_3);textView53.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                changeColor(textView53);
+            public void onClick(View v)
+            {
+                if(isRed[4][2])
+                {
+                    textView53.setBackgroundColor(Color.RED);
+                }
+                else
+                {
+                    textView53.setBackgroundColor(Color.WHITE);
+                }
+                isRed[4][2] = !isRed[4][2];
             }
         });
         textView54 =  findViewById(R.id.editable5_4);textView54.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                changeColor(textView54);
+            public void onClick(View v)
+            {
+                if(isRed[4][3])
+                {
+                    textView54.setBackgroundColor(Color.RED);
+                }
+                else
+                {
+                    textView54.setBackgroundColor(Color.WHITE);
+                }
+                isRed[4][3] = !isRed[4][3];
             }
         });
         textView55 =  findViewById(R.id.editable5_5);textView55.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                changeColor(textView55);
+            public void onClick(View v)
+            {
+                if(isRed[4][4])
+                {
+                    textView55.setBackgroundColor(Color.RED);
+                }
+                else
+                {
+                    textView55.setBackgroundColor(Color.WHITE);
+                }
+                isRed[4][4] = !isRed[4][4];
             }
         });
         textView56 =  findViewById(R.id.editable5_6);textView56.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                changeColor(textView56);
+            public void onClick(View v)
+            {
+                if(isRed[4][5])
+                {
+                    textView56.setBackgroundColor(Color.RED);
+                }
+                else
+                {
+                    textView56.setBackgroundColor(Color.WHITE);
+                }
+                isRed[4][5] = !isRed[4][5];
             }
         });
         textView57 =  findViewById(R.id.editable5_7);textView57.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                changeColor(textView57);
+            public void onClick(View v)
+            {
+                if(isRed[4][6])
+                {
+                    textView57.setBackgroundColor(Color.RED);
+                }
+                else
+                {
+                    textView57.setBackgroundColor(Color.WHITE);
+                }
+                isRed[4][6] = !isRed[4][6];
             }
         });
 
