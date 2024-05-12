@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
@@ -130,7 +131,15 @@ public class ProfilePage1 extends AppCompatActivity {
         editButtonProfilePage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                profileImageView.setClickable(true);
+                nameView.setClickable(true);
+                nameView.setEditableFactory(new Editable.Factory());
 
+                locationView.setClickable(true);
+                locationView.setEditableFactory(new Editable.Factory());
+
+                allInfoView.setClickable(true);
+                allInfoView.setEditableFactory(new Editable.Factory());
             }
         });
         calendarButton.setOnClickListener(new View.OnClickListener() {
