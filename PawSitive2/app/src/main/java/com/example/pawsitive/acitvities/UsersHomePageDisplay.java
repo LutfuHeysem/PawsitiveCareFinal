@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class UsersHomePageDisplay {
     private ArrayList<User> usersOnDisplay;
-    private FirebaseFirestore db;
+
 
     public UsersHomePageDisplay(){
         this.usersOnDisplay = new ArrayList<>();

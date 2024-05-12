@@ -10,11 +10,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pawsitive.R;
+import com.example.pawsitive.adapters.HomePageDisplayAdapter;
 import com.example.pawsitive.classes.User;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomePage extends AppCompatActivity {
 
@@ -27,6 +31,14 @@ public class HomePage extends AppCompatActivity {
         setContentView(R.layout.activity_home_page);
 
         initializeImageViews();
+
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+
+        List<User> users = new ArrayList<User>();
+
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new HomePageDisplayAdapter(getApplicationContext(),users));
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
