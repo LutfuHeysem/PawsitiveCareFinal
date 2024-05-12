@@ -51,7 +51,7 @@ public class MakeOfferDialog extends DialogFragment {
             FirebaseAuth auth = FirebaseAuth.getInstance();
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             HashMap<String, String> userData = new HashMap<>();
-            userData.put(User.getEmail(), amount);
+            userData.put("amount", amount);
 
             db.collection("Users").document(receiverUserEmail)
                     .collection("Offers").document(User.getEmail()).set(userData);

@@ -9,7 +9,7 @@
     <color name="primary_text">#3A3B3C</color> <!-- Black color -->
     <color name="accent_color">#FF4081</color> <!-- Pink accent color -->
     <color name="secondary_text">#808080</color> <!-- Light gray color -->
-    <color name="red_color">#FF0000</color>
+    <color name="red_color">#761515</color>
     <color name="green_color">#00FF00</color>
     <color name="yellow_color">#FFFF00</color>
 </resources>

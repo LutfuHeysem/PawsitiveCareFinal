@@ -9,8 +9,10 @@ import android.view.View;
 
 import java.util.Collections;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.pawsitive.classes.AcceptOfferDialog;
 import com.example.pawsitive.classes.ChatMessage;
 import com.example.pawsitive.classes.MakeOfferDialog;
 import com.example.pawsitive.classes.User;
@@ -20,8 +22,10 @@ import com.example.pawsitive.databinding.ActivityChatBinding;
 import com.example.pawsitive.utilities.Constants;
 import com.example.pawsitive.utilities.PreferenceManager;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
@@ -87,6 +91,43 @@ public class ChatActivity extends AppCompatActivity {
                 .whereEqualTo(Constants.KEY_SENDER_ID, receiverUser.id)
                 .whereEqualTo(Constants.KEY_RECEIVER_ID, User.getEmail())
                 .addSnapshotListener(eventListener);
+
+
+        db.collection("Users")
+                .document(User.getEmail())
+                .collection("Offers")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            System.out.println("Listen failed: " + e.getMessage());
+                            return;
+                        }
+
+                        for (DocumentChange dc : snapshot.getDocumentChanges()) {
+                            switch (dc.getType()) {
+                                case ADDED:
+                                    DocumentSnapshot document = dc.getDocument();
+                                    String userEmail = document.getId();
+                                    System.out.println("userEmail: " + userEmail);
+                                    String amount = document.getString("amount");
+                                    System.out.println("amount: " + amount);
+                                    AcceptOfferDialog dialog = new AcceptOfferDialog();
+                                    dialog.setAmount(amount);
+                                    dialog.setReceiverUserEmail(receiverUser.email);
+                                    dialog.show(getSupportFragmentManager(), "AcceptOfferDialog");
+                                    break;
+                                case MODIFIED:
+                                    break;
+                                case REMOVED:
+                                    break;
+                            }
+                        }
+                    }
+                });
+
+
+
         System.out.println("test" + receiverUser.id);
         System.out.println("au" + User.getEmail());
     }

@@ -48,5 +48,10 @@
     <string name="type_a_message">Type a message</string>
     <string name="enter_offer_amount">Enter offer amount</string>
     <string name="send_offer">Send Offer</string>
+    <string name="deny">Deny</string>
+    <string name="accept">Accept</string>
+    <string name="do_you_want_to_accept_this_offer">Do you want to accept this offer?</string>
+    <string name="offer_amount_x">Offer Amount: X$</string>
+    <string name="offer_amount">"Offer Amount: "</string>
 
 </resources>
