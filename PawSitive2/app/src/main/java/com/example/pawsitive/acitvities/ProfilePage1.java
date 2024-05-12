@@ -49,6 +49,16 @@ public class ProfilePage1 extends AppCompatActivity {
             }
         });
 
+        Button editButtonProfilePage = findViewById(R.id.editButtonProfile);
+
+        editButtonProfilePage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ProfilePageEdit.class);
+                startActivity(intent);
+            }
+        });
+
         profileImage = (ImageView) findViewById(R.id.profileImage);
         profileUserName = (TextView) findViewById(R.id.profileUserName);
         //will be done when we learn how to get data from firebase

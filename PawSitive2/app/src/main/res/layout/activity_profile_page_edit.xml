@@ -24,27 +24,34 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Edit Caretaking Job"
+        app:layout_constraintBottom_toTopOf="@+id/calendarView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="16dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editTextTextMultiLine"
-        android:layout_width="310dp"
-        android:layout_height="383dp"
+        android:layout_width="308dp"
+        android:layout_height="347dp"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.744" />
 
     <CalendarView
         android:id="@+id/calendarView"
-        android:layout_width="281dp"
-        android:layout_height="295dp"
-        tools:layout_editor_absoluteX="65dp"
-        tools:layout_editor_absoluteY="48dp" />
+        android:layout_width="279dp"
+        android:layout_height="288dp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextTextMultiLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/editable1_1"
@@ -56,7 +63,7 @@
         app:layout_constraintHorizontal_bias="0.23"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/calendarView"
-        app:layout_constraintVertical_bias="0.367" />
+        app:layout_constraintVertical_bias="0.348" />
 
     <TextView
         android:id="@+id/editable1_2"
@@ -74,10 +81,13 @@
         android:id="@+id/editable1_3"
         android:layout_width="29dp"
         android:layout_height="34dp"
+        android:layout_marginStart="28dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="@+id/editable1_2"
+        app:layout_constraintEnd_toStartOf="@+id/editable1_4"
+        app:layout_constraintStart_toEndOf="@+id/editable1_1"
         app:layout_constraintTop_toTopOf="@+id/editable1_2"
-        tools:layout_editor_absoluteX="156dp" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/editable1_4"
@@ -85,8 +95,11 @@
         android:layout_height="34dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="@+id/editable1_3"
+        app:layout_constraintEnd_toStartOf="@+id/editable1_5"
+        app:layout_constraintHorizontal_bias="0.913"
+        app:layout_constraintStart_toEndOf="@+id/editable1_1"
         app:layout_constraintTop_toTopOf="@+id/editable1_3"
-        tools:layout_editor_absoluteX="191dp" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/editable1_5"
@@ -96,6 +109,8 @@
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="@+id/editable1_4"
         app:layout_constraintEnd_toStartOf="@+id/editable1_6"
+        app:layout_constraintHorizontal_bias="0.963"
+        app:layout_constraintStart_toEndOf="@+id/editable1_1"
         app:layout_constraintTop_toTopOf="@+id/editable1_4"
         app:layout_constraintVertical_bias="0.0" />
 
@@ -105,16 +120,23 @@
         android:layout_height="34dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="@+id/editable1_5"
+        app:layout_constraintEnd_toStartOf="@+id/editable1_7"
+        app:layout_constraintHorizontal_bias="0.933"
+        app:layout_constraintStart_toEndOf="@+id/editable1_1"
         app:layout_constraintTop_toTopOf="@+id/editable1_5"
-        tools:layout_editor_absoluteX="260dp" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/editable1_7"
         android:layout_width="29dp"
         android:layout_height="34dp"
         android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/editable1_6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.66"
+        app:layout_constraintStart_toEndOf="@+id/editable1_1"
         app:layout_constraintTop_toTopOf="@+id/editable1_6"
-        tools:layout_editor_absoluteX="297dp" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/editable2_1"
@@ -174,9 +196,10 @@
         android:layout_height="34dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="@+id/editable2_5"
+        app:layout_constraintEnd_toEndOf="@+id/editable1_6"
+        app:layout_constraintStart_toStartOf="@+id/editable1_6"
         app:layout_constraintTop_toTopOf="@+id/editable2_5"
-        app:layout_constraintVertical_bias="1.0"
-        tools:layout_editor_absoluteX="260dp" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/editable2_7"
@@ -184,9 +207,10 @@
         android:layout_height="34dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="@+id/editable2_6"
+        app:layout_constraintEnd_toEndOf="@+id/editable1_7"
+        app:layout_constraintStart_toStartOf="@+id/editable1_7"
         app:layout_constraintTop_toTopOf="@+id/editable2_6"
-        app:layout_constraintVertical_bias="1.0"
-        tools:layout_editor_absoluteX="297dp" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/editable3_1"
@@ -245,8 +269,9 @@
         android:layout_height="34dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="@+id/editable3_5"
-        app:layout_constraintTop_toTopOf="@+id/editable3_5"
-        tools:layout_editor_absoluteX="260dp" />
+        app:layout_constraintEnd_toEndOf="@+id/editable2_6"
+        app:layout_constraintStart_toStartOf="@+id/editable2_6"
+        app:layout_constraintTop_toTopOf="@+id/editable3_5" />
 
     <TextView
         android:id="@+id/editable3_7"
@@ -254,9 +279,10 @@
         android:layout_height="34dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="@+id/editable3_6"
+        app:layout_constraintEnd_toEndOf="@+id/editable2_7"
+        app:layout_constraintStart_toStartOf="@+id/editable2_7"
         app:layout_constraintTop_toTopOf="@+id/editable3_6"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="297dp" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/editable4_1"
@@ -327,9 +353,10 @@
         android:layout_height="34dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="@+id/editable4_6"
+        app:layout_constraintEnd_toEndOf="@+id/editable3_7"
+        app:layout_constraintStart_toStartOf="@+id/editable3_7"
         app:layout_constraintTop_toTopOf="@+id/editable4_6"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="297dp" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/editable5_1"
@@ -400,8 +427,9 @@
         android:layout_height="34dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="@+id/editable5_6"
+        app:layout_constraintEnd_toEndOf="@+id/editable4_7"
+        app:layout_constraintStart_toStartOf="@+id/editable4_7"
         app:layout_constraintTop_toTopOf="@+id/editable5_6"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="297dp" />
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
