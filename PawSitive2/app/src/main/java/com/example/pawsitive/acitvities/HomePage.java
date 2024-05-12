@@ -98,6 +98,7 @@ public class HomePage extends AppCompatActivity {
                 //handle click on profile image
                 //navigate to profile page
                 Intent intent = new Intent(HomePage.this, ProfilePage1.class);
+                intent.putExtra("email",User.getEmail());
                 startActivity(intent);
             }
         });

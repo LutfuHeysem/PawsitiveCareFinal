@@ -29,6 +29,7 @@ public class ProfilePage1 extends AppCompatActivity {
     private FirebaseUser mUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        System.out.println("123");
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_profile_page1);
@@ -36,11 +37,10 @@ public class ProfilePage1 extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
-
         });
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         Button backButtonProfilePage = (Button) findViewById(R.id.backButtonProfilePage);
-
+        System.out.println("2");
         backButtonProfilePage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,6 +48,11 @@ public class ProfilePage1 extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    Intent intent = getIntent();
+
+    String email = intent.getStringExtra("email");
+
+    this.owner = new User(email);
 
         Button editButtonProfilePage = findViewById(R.id.editButtonProfile);
 
@@ -58,27 +63,34 @@ public class ProfilePage1 extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        System.out.println("3");
         profileImage = (ImageView) findViewById(R.id.profileImage);
         profileUserName = (TextView) findViewById(R.id.profileUserName);
         //will be done when we learn how to get data from firebase
         //profileUserName.setText(user.getUsername);
+        System.out.println("4");
         stars = (TextView) findViewById(R.id.ratingStars);
 
         TextView location = (TextView) findViewById(R.id.locationText);
-        location.setText("Location: " + owner.getLocation());
+        location.setText(getString(R.string.location) + owner.getLocation());
+        System.out.println("112");
                 EditText allInfo = findViewById(R.id.allinfo);
+        System.out.println("113");
+        System.out.println(mUser);
+        System.out.println(owner);
+
         if(owner.getEmail().equals(mUser.getEmail()))//dk how to do will research
         {
             allInfo.setFocusable(true);
+
         }
         else
         {
             allInfo.setFocusable(false);
         }
-
-        stars.setBackgroundResource(ReviewMain.getResource(ReviewMain.calculateStarAverage(owner)));
-
+        System.out.println("12");
+        //stars.setBackgroundResource(ReviewMain.getResource(ReviewMain.calculateStarAverage(owner)));
+        System.out.println("5");
 
 
     }

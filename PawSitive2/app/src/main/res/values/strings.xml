@@ -53,5 +53,6 @@
     <string name="do_you_want_to_accept_this_offer">Do you want to accept this offer?</string>
     <string name="offer_amount_x">Offer Amount: X$</string>
     <string name="offer_amount">"Offer Amount: "</string>
+    <string name="location">"Location: "</string>
 
 </resources>
