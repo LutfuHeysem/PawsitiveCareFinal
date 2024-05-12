@@ -1,5 +1,6 @@
 package com.example.pawsitive.acitvities;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import java.util.Collections;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pawsitive.classes.ChatMessage;
+import com.example.pawsitive.classes.MakeOfferDialog;
 import com.example.pawsitive.classes.User;
 import com.example.pawsitive.classes.UserForChat;
 import com.example.pawsitive.adapters.ChatAdapter;
@@ -70,6 +72,12 @@ public class ChatActivity extends AppCompatActivity {
         binding.inputMessage.setText(null);
     }
 
+    private void makeOffer(){
+        MakeOfferDialog dialog = new MakeOfferDialog();
+        dialog.setReceiverUser(receiverUser.email);
+        dialog.show(getSupportFragmentManager(), "MakeOfferDialog");
+    }
+
     private void listenMessages(){
         db.collection(Constants.KEY_COLLECTION_CHAT)
                 .whereEqualTo(Constants.KEY_SENDER_ID, User.getEmail())
@@ -125,9 +133,14 @@ public class ChatActivity extends AppCompatActivity {
         binding.textName.setText(receiverUser.name);
     }
 
+    private void backPressed(){
+        Intent intent = new Intent(ChatActivity.this, UsersActivity.class);
+        startActivity(intent);
+    }
     private void setListeners(){
-        binding.imageBack.setOnClickListener(v -> onBackPressed());
+        binding.imageBack.setOnClickListener(v -> backPressed());
         binding.layoutSend.setOnClickListener(v -> sendMessage());
+        binding.layoutOffer.setOnClickListener(v-> makeOffer());
     }
 
     private String getReadableDateTime(Date date){

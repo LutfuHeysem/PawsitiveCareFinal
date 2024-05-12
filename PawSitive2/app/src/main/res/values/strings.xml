@@ -46,5 +46,7 @@
     <string name="title_notifications">Notifications</string>
     <string name="select_user">Chats</string>
     <string name="type_a_message">Type a message</string>
+    <string name="enter_offer_amount">Enter offer amount</string>
+    <string name="send_offer">Send Offer</string>
 
 </resources>

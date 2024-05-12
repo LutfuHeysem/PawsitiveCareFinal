@@ -5,6 +5,7 @@
     <color name="blue_color">#00008B</color>
     <color name="dark_blue">#00003A</color>
     <color name="dark_cyan">#5080C8</color>
+    <color name="dark_soft_cyan">#3B5D90</color>
     <color name="primary_text">#3A3B3C</color> <!-- Black color -->
     <color name="accent_color">#FF4081</color> <!-- Pink accent color -->
     <color name="secondary_text">#808080</color> <!-- Light gray color -->
