@@ -43,7 +43,6 @@ public class ProfilePage1 extends AppCompatActivity {
 
     TextView locationView, nameView, priceInfo, locationInfo, experienceInfo, languagesInfo;
     String userEmail, profileImageStr, name, location, gender;
-    String careTakerInfo;
     Bitmap profileImageBitmap;
     Button backButtonProfilePage, editButtonProfilePage, calendarButton, saveButton;
     public final int GET_FROM_GALLERY = 3;
@@ -86,13 +85,14 @@ public class ProfilePage1 extends AppCompatActivity {
         saveButton = findViewById(R.id.saveButton);
 
         profileImageView = findViewById(R.id.profileImage);
-
         priceInfo = findViewById(R.id.priceInfo);
         locationInfo = findViewById(R.id.locationPropertiesInfo);
         experienceInfo = findViewById(R.id.experienceInfo);
         languagesInfo = findViewById(R.id.languagesInfo);
         locationView = findViewById(R.id.locationText);
         nameView = findViewById(R.id.profileUserName);
+
+        changeEditable(false);
 
         try {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -119,7 +119,7 @@ public class ProfilePage1 extends AppCompatActivity {
                     location = documentSnapshot.getString("Location");
 
                     locationView.setText(location);
-                    String nameAndGender = name + "(" + gender + ")";
+                    String nameAndGender = name + " (" + gender + ")";
                     nameView.setText(nameAndGender);
                     System.out.println("sa2");
 
@@ -134,10 +134,10 @@ public class ProfilePage1 extends AppCompatActivity {
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                 System.out.println("sa5");
 
-                                String price = "Price: " + documentSnapshot.getString("Price");
-                                String locationProperties = "Location Properties: " + documentSnapshot.getString("Properties");
-                                String experienceLevel = "Experience: " + documentSnapshot.getString("Experience");
-                                String spokenLanguages = "Languages: " + documentSnapshot.getString("Languages");
+                                String price = documentSnapshot.getString("Price");
+                                String locationProperties = documentSnapshot.getString("Properties");
+                                String experienceLevel = documentSnapshot.getString("Experience");
+                                String spokenLanguages = documentSnapshot.getString("Languages");
                                 //date available
                                 System.out.println("sa6");
 
@@ -185,24 +185,7 @@ public class ProfilePage1 extends AppCompatActivity {
         editButtonProfilePage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                profileImageView.setClickable(true);
-                nameView.setClickable(true);
-                nameView.setEditableFactory(new Editable.Factory());
-
-                locationView.setClickable(true);
-                locationView.setEditableFactory(new Editable.Factory());
-
-                priceInfo.setClickable(true);
-                priceInfo.setEditableFactory(new Editable.Factory());
-
-                locationInfo.setClickable(true);
-                locationInfo.setEditableFactory(new Editable.Factory());
-
-                experienceInfo.setClickable(true);
-                experienceInfo.setEditableFactory(new Editable.Factory());
-
-                languagesInfo.setClickable(true);
-                languagesInfo.setEditableFactory(new Editable.Factory());
+                changeEditable(true);
 
                 editButtonProfilePage.setVisibility(View.INVISIBLE);
                 saveButton.setVisibility(View.VISIBLE);
@@ -222,7 +205,7 @@ public class ProfilePage1 extends AppCompatActivity {
                 jobData.put("Languages", languagesInfo.getText().toString());
 
                 userData = new HashMap<>();
-                userData.put("Name", nameView.getText().toString());
+                userData.put("Name", nameView.getText().toString().substring(0, nameView.getText().toString().indexOf("(")));
                 userData.put("Location", locationView.getText().toString());
 
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -257,6 +240,11 @@ public class ProfilePage1 extends AppCompatActivity {
                                 }
                             }
                        });
+
+                changeEditable(false);
+
+                editButtonProfilePage.setVisibility(View.VISIBLE);
+                saveButton.setVisibility(View.INVISIBLE);
             }
         });
         profileImageView.setOnClickListener(new View.OnClickListener() {
@@ -272,5 +260,28 @@ public class ProfilePage1 extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void changeEditable(boolean trueOrFalse){
+        profileImageView.setFocusable(trueOrFalse);
+        profileImageView.setClickable(trueOrFalse);
+
+        priceInfo.setFocusable(trueOrFalse);
+        priceInfo.setClickable(trueOrFalse);
+
+        locationInfo.setFocusable(trueOrFalse);
+        locationInfo.setClickable(trueOrFalse);
+
+        experienceInfo.setFocusable(trueOrFalse);
+        experienceInfo.setClickable(trueOrFalse);
+
+        languagesInfo.setFocusable(trueOrFalse);
+        languagesInfo.setClickable(trueOrFalse);
+
+        locationView.setFocusable(trueOrFalse);
+        locationView.setClickable(trueOrFalse);
+
+        nameView.setFocusable(trueOrFalse);
+        nameView.setClickable(trueOrFalse);
     }
 }
