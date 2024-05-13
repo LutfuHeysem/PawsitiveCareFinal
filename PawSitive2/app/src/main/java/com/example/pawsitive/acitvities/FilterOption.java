@@ -104,9 +104,9 @@ public class FilterOption extends AppCompatActivity {
                 .collect(Collectors.toList());
     }
 
-    protected void FilterRate(){
-        filtered = filtered.stream().sorted(str -> Comparator.comparing(ReviewMain::calculateStarAverage(str.getE)));
-    }
+//    protected void FilterRate(){
+//        filtered = filtered.stream().sorted(str -> Comparator.comparing(ReviewMain::calculateStarAverage(str.getE)));
+//    }
 
 
 

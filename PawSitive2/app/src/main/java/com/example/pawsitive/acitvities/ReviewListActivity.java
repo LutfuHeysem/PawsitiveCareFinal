@@ -60,7 +60,7 @@ public class ReviewListActivity extends AppCompatActivity {
         System.out.println("ReviewAdapter: " + reviewArrayList.size() + " items");
     }
 
-    private void fetchUserReviews(String x) {
+    private void fetchUserReviews(String userEmail) {
         System.out.println("Fetching reviews for user: " + userEmail);
         fStore.collection("Reviews")
                 .whereEqualTo("CareTaker", userEmail)
