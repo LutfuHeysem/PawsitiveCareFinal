@@ -49,7 +49,7 @@ public class HomePage extends AppCompatActivity {
         }
     private void initializeImageViews(){
         ImageView homeIcon = findViewById(R.id.homeIcon);
-        ImageView favourtiesIcon = findViewById(R.id.heart_icon);
+        ImageView favouritesIcon = findViewById(R.id.heart_icon);
         ImageView addIcon = findViewById(R.id.add_icon);
         ImageView chatIcon = findViewById(R.id.chat_icon);
         ImageView profileIcon = findViewById(R.id.profile_icon);
@@ -65,7 +65,7 @@ public class HomePage extends AppCompatActivity {
             }
         });
 
-        favourtiesIcon.setOnClickListener(new View.OnClickListener(){
+        favouritesIcon.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {

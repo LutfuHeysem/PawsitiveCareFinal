@@ -79,7 +79,9 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_centerVertical="true"
-        android:layout_marginRight="10dp"></ImageView>
+        android:layout_marginRight="10dp">
+
+    </ImageView>
 
     <LinearLayout
 

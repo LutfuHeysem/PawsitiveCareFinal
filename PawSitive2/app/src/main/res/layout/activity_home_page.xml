@@ -56,27 +56,17 @@
         app:layout_constraintTop_toBottomOf="@+id/logo">
 
         <androidx.appcompat.widget.SearchView
-            android:layout_width="0dp"
+            android:id="@+id/search"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
-            android:id="@+id/search"
+            android:focusable="false"
+            app:iconifiedByDefault="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:iconifiedByDefault="false"
-            app:searchHintIcon="@null"
             app:queryHint="Search Caretaker..."
-            android:focusable="false"
-            app:searchIcon="@drawable/search_14_64"
-            />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="12dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/search" />
+            app:searchHintIcon="@null"
+            app:searchIcon="@drawable/search_14_64" />
 
 
     </LinearLayout>
