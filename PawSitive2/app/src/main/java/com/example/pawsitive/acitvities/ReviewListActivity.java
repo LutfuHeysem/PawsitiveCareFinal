@@ -31,7 +31,7 @@ public class ReviewListActivity extends AppCompatActivity {
     private ArrayList<Review> reviewArrayList;
     private FirebaseFirestore fStore;
     TextView userNameTextView = findViewById(R.id.usernameTextView);
-    TextView rateTextView = findViewById(R.id.rateTextView);
+    TextView rateTextView = findViewById(R.id.userRateTextView);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
