@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pawsitive.R;
 import com.example.pawsitive.adapters.HomePageDisplayAdapter;
+import com.example.pawsitive.classes.AddDialog;
+import com.example.pawsitive.classes.MakeOfferDialog;
 import com.example.pawsitive.classes.User;
 
 import java.util.ArrayList;
@@ -39,12 +41,6 @@ public class HomePage extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new HomePageDisplayAdapter(getApplicationContext(),users));
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
         }
     private void initializeImageViews(){
@@ -82,8 +78,8 @@ public class HomePage extends AppCompatActivity {
             public void onClick(View v) {
                 //handle click on add image
                 //navigate to add/edit page
-                Intent intent = new Intent(HomePage.this, AddEditPet.class);
-                startActivity(intent);
+                AddDialog dialog = new AddDialog();
+                dialog.show(getSupportFragmentManager(), "AddDialog");
             }
         });
 

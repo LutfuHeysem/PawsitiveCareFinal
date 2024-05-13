@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:background="@color/material_dynamic_primary80">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/addJob"
+            android:layout_width="64pt"
+            android:layout_height="32pt"
+            android:text="@string/add_job"
+            android:layout_marginEnd="32dp"
+            android:backgroundTint="@color/dark_soft_cyan"
+             />
+
+        <Button
+            android:id="@+id/addPet"
+            android:backgroundTint="@color/dark_soft_cyan"
+            android:layout_width="64pt"
+            android:layout_height="32pt"
+            android:text="@string/add_pet"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

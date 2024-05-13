@@ -272,19 +272,16 @@ public class ProfilePage1 extends AppCompatActivity {
     private void fetchUserReviews() {
         FirebaseFirestore fStore = FirebaseFirestore.getInstance();
         reviewArrayList = new ArrayList<>();
-        System.out.println("buraya geloyom");
         fStore.collection("Reviews")
                 .whereEqualTo("CareTaker", User.getEmail())
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        System.out.println("bes bura?");
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Review review = new Review();
                             review.comment = document.getString("Comment");
 
                             review.star = document.getDouble("Star").floatValue();
-                            System.out.println("buraya da geloyom");
                             reviewArrayList.add(review);
 
                         }

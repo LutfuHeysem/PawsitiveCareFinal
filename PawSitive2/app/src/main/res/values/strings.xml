@@ -58,5 +58,7 @@
     <string name="reviews">Reviews</string>
     <string name="x_5">x/5</string>
     <string name="the_best_caretakerx_i_have_ever_seen">The best caretakerx I have ever seen!</string>
+    <string name="add_job">Add Job</string>
+    <string name="add_pet">Add Pet</string>
 
 </resources>
