@@ -1,6 +1,8 @@
 package com.example.pawsitive.acitvities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -55,6 +57,18 @@ public class FilterOption extends AppCompatActivity {
         loc = editLoc.getText().toString();
         lang = editLang.getText().toString().toUpperCase();
         exp = Integer.parseInt(expCheck);
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FilterLocation();
+                FilterPrice();
+                FilterExperience();
+                FilterGender();
+                FilterLanguage();
+                //startActivity(new Intent(FilterOption.this, HomePage.class));
+            }
+        });
     }
 
     protected void FilterLocation(){
