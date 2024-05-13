@@ -2,6 +2,7 @@ package com.example.pawsitive.acitvities;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -18,10 +19,13 @@ import com.example.pawsitive.classes.Review;
 import com.example.pawsitive.classes.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskCompletionSource;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class ReviewListActivity extends AppCompatActivity {
@@ -30,20 +34,27 @@ public class ReviewListActivity extends AppCompatActivity {
     private ReviewAdapter reviewAdapter;
     private ArrayList<Review> reviewArrayList;
     private FirebaseFirestore fStore;
-//    TextView userNameTextView = findViewById(R.id.usernameTextView);
+    String userNameEmail = User.getEmail();
+    TextView userNameTextView;
 //    TextView rateTextView = findViewById(R.id.userRateTextView);
 
+    String userName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review_list);
+        userNameTextView = findViewById(R.id.usernameTextView);
 
+        fetchUserName(userNameEmail);
+        System.out.println("username i printlieyr " + userName);
+
+        //System.out.println(userNameTextView.getText());
         // Initialize Firestore
 
         fStore = FirebaseFirestore.getInstance();
         reviewArrayList = new ArrayList<>();
         System.out.println("burda varim");
-
+        //userNameTextView.setText("Okay");
         System.out.println("burda varim 3141");
 //        progressBar.setVisibility(View.GONE);
         // Initialize RecyclerView and its adapter
@@ -56,9 +67,33 @@ public class ReviewListActivity extends AppCompatActivity {
         recyclerView.setAdapter(reviewAdapter);
 
         // Fetch reviews from Firestore
-        fetchUserReviews(User.getEmail());
+        fetchUserReviews(userNameEmail);
         System.out.println("ReviewAdapter: " + reviewArrayList.size() + " items");
     }
+    private void fetchUserName(String userEmail) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        TaskCompletionSource<DocumentSnapshot> source = new TaskCompletionSource<>();
+        Task<DocumentSnapshot> task = source.getTask();
+        db.collection("Users")
+                .whereEqualTo("Email", userEmail)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (DocumentSnapshot document : task.getResult()) {
+                                userName = document.getString("Name");
+                                System.out.println("BUraya gelmisem mi? " + userName);
+                                userNameTextView.setText(userName);
+                            }
+                        } else {
+                            source.setException(task.getException());
+                        }
+                    }
+                });
+
+    }
+
 
     private void fetchUserReviews(String userEmail) {
         System.out.println("Fetching reviews for user: " + userEmail);
