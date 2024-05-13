@@ -148,14 +148,7 @@ public class ProfilePage1 extends AppCompatActivity {
 
     String email = intent.getStringExtra("email");
 
-    this.owner = new User(email, new User.OnUserLoadListener() {
-        @Override
-        public void onUserLoaded(User user) {
-            // User and reviews are loaded successfully
-            ArrayList<Review> reviews = User.getReviewArrayList();
-            // Proceed with using reviews and user data
-        }
-    });
+    this.owner = new User(email);
 
         editButtonProfilePage = findViewById(R.id.editButtonProfile);
 
