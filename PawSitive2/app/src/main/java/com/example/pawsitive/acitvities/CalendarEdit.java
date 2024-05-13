@@ -573,7 +573,7 @@ public class CalendarEdit extends AppCompatActivity {
         for(int i = 0; i < redBoxesArray.length; i++)
         {
             for (int j = 0; j < redBoxesArray[0].length; j++) {
-                redBoxesArray[i][j].setText(" ");
+                redBoxesArray[i][j].setText("");
                 redBoxesArray[i][j].setClickable(true);
             }
         }
