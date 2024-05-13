@@ -220,6 +220,7 @@
         android:layout_marginStart="10dp"
         android:clickable="false"
         android:contextClickable="false"
+        android:isIndicator="true"
         app:layout_constraintStart_toEndOf="@+id/reviewsButton"
         app:layout_constraintTop_toTopOf="@+id/reviewsButton" />
 

@@ -5,26 +5,36 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/material_dynamic_primary80"
     tools:context=".acitvities.CalendarEdit">
+
+    <TextView
+        android:id="@+id/WhiteBackground3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="30dp"
+        android:background="#FFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editJobDisplay" />
 
     <Button
         android:id="@+id/backButtonProfilePageEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
         android:text="Back"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/editJobDisplay"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/editJobDisplay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Edit Caretaking Job"
-        app:layout_constraintBottom_toTopOf="@+id/calendarView"
+        android:layout_marginTop="30dp"
+        android:text="Edit Calendar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,24 +46,23 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/WhiteBackground3" />
 
     <TextView
         android:id="@+id/editable1_1"
         android:layout_width="33dp"
         android:layout_height="38dp"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="96dp"
         android:focusedByDefault="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.136"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/calendarView"
         app:layout_constraintTop_toTopOf="@+id/calendarView" />
 
     <TextView
         android:id="@+id/editable1_2"
         android:layout_width="33dp"
         android:layout_height="38dp"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="10dp"
         android:focusedByDefault="true"
         app:layout_constraintEnd_toStartOf="@+id/editable1_3"
         app:layout_constraintHorizontal_bias="0.3"
@@ -64,7 +73,7 @@
         android:id="@+id/editable1_3"
         android:layout_width="33dp"
         android:layout_height="38dp"
-        android:layout_marginStart="42dp"
+        android:layout_marginStart="55dp"
         android:focusedByDefault="true"
         app:layout_constraintBottom_toBottomOf="@+id/editable1_2"
         app:layout_constraintEnd_toStartOf="@+id/editable1_4"
@@ -76,6 +85,7 @@
         android:id="@+id/editable1_4"
         android:layout_width="33dp"
         android:layout_height="38dp"
+        android:layout_marginStart="55dp"
         android:focusedByDefault="true"
         app:layout_constraintBottom_toBottomOf="@+id/editable1_3"
         app:layout_constraintEnd_toStartOf="@+id/editable1_5"
@@ -347,11 +357,9 @@
         android:layout_height="38dp"
         android:layout_marginTop="160dp"
         android:focusedByDefault="true"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/editable4_1"
         app:layout_constraintStart_toStartOf="@+id/editable4_1"
-        app:layout_constraintTop_toTopOf="@+id/editable1_1"
-        app:layout_constraintVertical_bias="0.007" />
+        app:layout_constraintTop_toTopOf="@+id/editable1_1" />
 
     <TextView
         android:id="@+id/editable5_2"
@@ -414,5 +422,14 @@
         app:layout_constraintStart_toStartOf="@+id/editable4_7"
         app:layout_constraintTop_toTopOf="@+id/editable5_6"
         app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/SaveButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:text="Save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/backButtonProfilePageEdit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
