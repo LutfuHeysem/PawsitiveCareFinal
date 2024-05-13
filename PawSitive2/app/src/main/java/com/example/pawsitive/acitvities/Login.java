@@ -65,6 +65,8 @@ public class Login extends AppCompatActivity {
                                     if(currUser != null && currUser.isEmailVerified())
                                     {
                                     //TEMPORARY
+
+                                                User user = new User(logEmail);
                                                 Toast.makeText(Login.this, "Successful Login!", Toast.LENGTH_SHORT).show();
 
                                                 //TEMPORARY
@@ -73,10 +75,10 @@ public class Login extends AppCompatActivity {
                                                 //WILL GET PET NAME WHEN EDITING
                                                 Intent addPetIntent = new Intent(Login.this, AddEditPet.class);
                                                 Intent chatIntent = new Intent(Login.this, UsersActivity.class);
-                                                Intent reviewIntent = new Intent(Login.this, ReviewMain.class);
+                                                Intent reviewIntent = new Intent(Login.this, ReviewListActivity.class);
                                                 Intent profileIntent = new Intent(Login.this, ProfilePage1.class);
 
-                                                startActivity(profileIntent);
+                                                startActivity(reviewIntent);
 
 
 

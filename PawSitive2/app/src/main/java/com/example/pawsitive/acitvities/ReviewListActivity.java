@@ -30,8 +30,8 @@ public class ReviewListActivity extends AppCompatActivity {
     private ReviewAdapter reviewAdapter;
     private ArrayList<Review> reviewArrayList;
     private FirebaseFirestore fStore;
-    TextView userNameTextView = findViewById(R.id.usernameTextView);
-    TextView rateTextView = findViewById(R.id.userRateTextView);
+//    TextView userNameTextView = findViewById(R.id.usernameTextView);
+//    TextView rateTextView = findViewById(R.id.userRateTextView);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +60,7 @@ public class ReviewListActivity extends AppCompatActivity {
         System.out.println("ReviewAdapter: " + reviewArrayList.size() + " items");
     }
 
-    private void fetchUserReviews(String userEmail) {
+    private void fetchUserReviews(String x) {
         System.out.println("Fetching reviews for user: " + userEmail);
         fStore.collection("Reviews")
                 .whereEqualTo("CareTaker", userEmail)
