@@ -12,6 +12,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.pawsitive.Filtering;
 import com.example.pawsitive.R;
 import com.example.pawsitive.classes.User;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -77,8 +78,9 @@ public class Login extends AppCompatActivity {
                                                 Intent chatIntent = new Intent(Login.this, UsersActivity.class);
                                                 Intent reviewIntent = new Intent(Login.this, ReviewListActivity.class);
                                                 Intent profileIntent = new Intent(Login.this, ProfilePage1.class);
+                                                Intent filterIntent = new Intent(Login.this, Filtering.class);
 
-                                                startActivity(homeIntent);
+                                                startActivity(filterIntent);
 
 
 
