@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pawsitive.R;
 import com.example.pawsitive.adapters.HomePageDisplayAdapter;
+import com.example.pawsitive.classes.FavouriteJobs;
+import com.example.pawsitive.classes.Job;
 import com.example.pawsitive.classes.User;
 
 import java.util.ArrayList;
@@ -22,7 +24,7 @@ import java.util.List;
 
 public class HomePage extends AppCompatActivity {
 
-private boolean imageChanged = false;
+    List<FavouriteJobs> favouriteJobs;
 
     ImageView homeIcon,favouritesIcon,addIcon,chatIcon,profileIcon,favsBlankHeart;
     @Override
@@ -35,25 +37,21 @@ private boolean imageChanged = false;
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
-        //List<User> users = new ArrayList<User>();
-        List <Temp> users= new ArrayList<Temp>();
-        users.add(new Temp("John", "Male", "23"));
-        users.add(new Temp("John", "Male", "23"));
-        users.add(new Temp("John", "Male", "23"));
-        users.add(new Temp("John", "Male", "23"));
-        users.add(new Temp("John", "Male", "23"));
-        users.add(new Temp("John", "Male", "23"));
-        users.add(new Temp("John", "Male", "23"));
-        users.add(new Temp("John", "Male", "23"));
-
+       // this list is the one to be displayed
+        List <Job> jobs= new ArrayList<Job>();
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         System.out.println("adsd");
-        recyclerView.setAdapter(new HomePageDisplayAdapter(getApplicationContext(),users));
+        recyclerView.setAdapter(new HomePageDisplayAdapter(getApplicationContext(),jobs));
         System.out.println("aaaududu");
 
         }
+
+    public List<FavouriteJobs> getFavouriteJobs() {
+        return favouriteJobs;
+    }
+
     private void initializeImageViews(){
 
         homeIcon = findViewById(R.id.homeIcon);
@@ -119,12 +117,17 @@ private boolean imageChanged = false;
             }
         });
 
+        //changing the icon
         favsBlankHeart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 favsBlankHeart.setImageResource(R.drawable.heart);
+                FavouriteJobs newFav = new FavouriteJobs();
+                favouriteJobs.add(newFav);
             }
         });
+
+
 
     };
 
