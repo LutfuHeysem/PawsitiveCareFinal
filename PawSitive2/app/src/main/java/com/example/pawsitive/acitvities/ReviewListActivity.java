@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,6 +30,8 @@ public class ReviewListActivity extends AppCompatActivity {
     private ReviewAdapter reviewAdapter;
     private ArrayList<Review> reviewArrayList;
     private FirebaseFirestore fStore;
+    TextView userNameTextView = findViewById(R.id.usernameTextView);
+    TextView rateTextView = findViewById(R.id.rateTextView);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
