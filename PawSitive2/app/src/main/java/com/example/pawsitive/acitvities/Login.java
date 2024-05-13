@@ -78,7 +78,7 @@ public class Login extends AppCompatActivity {
                                                 Intent reviewIntent = new Intent(Login.this, ReviewListActivity.class);
                                                 Intent profileIntent = new Intent(Login.this, ProfilePage1.class);
 
-                                                startActivity(homeIntent);
+                                                startActivity(profileIntent);
 
 
 

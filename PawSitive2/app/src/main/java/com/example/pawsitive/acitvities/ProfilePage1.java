@@ -68,7 +68,7 @@ public class ProfilePage1 extends AppCompatActivity {
         homeButton = findViewById(R.id.homeIcon);
         favoritesButton = findViewById(R.id.heart_icon);
         addButton = findViewById(R.id.add_icon);
-        chatButton = findViewById(R.id.profile_icon);
+        chatButton = findViewById(R.id.chat_icon);
 
         profileImageView = findViewById(R.id.profileImage);
 
