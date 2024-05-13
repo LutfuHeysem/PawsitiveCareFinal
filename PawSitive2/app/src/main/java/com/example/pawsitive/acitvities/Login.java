@@ -13,15 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pawsitive.R;
-import com.example.pawsitive.classes.Review;
 import com.example.pawsitive.classes.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.util.ArrayList;
 
 public class Login extends AppCompatActivity {
 
@@ -101,7 +98,7 @@ public class Login extends AppCompatActivity {
                                                     System.out.println("array+  stars" + star);
                                                 }
 
-                                                startActivity(reviewIntent);
+                                                startActivity(profileIntent);
                                             }
                                         });
 
