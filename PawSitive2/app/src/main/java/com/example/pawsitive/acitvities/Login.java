@@ -77,7 +77,6 @@ public class Login extends AppCompatActivity {
                                     currUser = currAuth.getCurrentUser();
                                     if(currUser != null && currUser.isEmailVerified())
                                     {
-                                    Toast.makeText(Login.this, "Successful Login!", Toast.LENGTH_SHORT).show();
                                     //TEMPORARY
                                         new User(logEmail, new User.OnUserLoadListener() {
                                             @Override

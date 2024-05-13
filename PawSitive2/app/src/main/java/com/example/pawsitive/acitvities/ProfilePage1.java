@@ -40,7 +40,6 @@ public class ProfilePage1 extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        System.out.println("123");
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_profile_page1);
@@ -75,16 +74,13 @@ public class ProfilePage1 extends AppCompatActivity {
             userData.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    System.out.println("saaa");
 
                     name = documentSnapshot.getString("Name");
                     gender = documentSnapshot.getString("Gender");
-                    System.out.println("sa");
 
                     profileImageStr = documentSnapshot.getString("Profile Photo");
                     byte[] decodedString = Base64.decode(profileImageStr, Base64.DEFAULT);
                     profileImageBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                    System.out.println("sa1");
 
 
                     location = documentSnapshot.getString("Location");
@@ -92,32 +88,27 @@ public class ProfilePage1 extends AppCompatActivity {
                     locationView.setText(location);
                     String nameAndGender = name + " (" + gender + ")";
                     nameView.setText(nameAndGender);
-                    System.out.println("sa2");
 
                     profileImageView.setImageBitmap(profileImageBitmap);
                     profileImageView.setVisibility(View.VISIBLE);
 
                     try{
-                        DocumentReference careTakerJobData = db.collection("User").document(userEmail).collection("Jobs").document(userEmail);
+                        DocumentReference careTakerJobData = db.collection("Jobs").document(userEmail);
 
                         careTakerJobData.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                System.out.println("sa5");
 
                                 String price = documentSnapshot.getString("Price");
-                                String locationProperties = documentSnapshot.getString("Properties");
+                                String locationProperties = documentSnapshot.getString("Location Properties");
                                 String experienceLevel = documentSnapshot.getString("Experience");
                                 String spokenLanguages = documentSnapshot.getString("Languages");
                                 //date available
-                                System.out.println("sa6");
 
                                 priceInfo.setText(price);
                                 locationInfo.setText(locationProperties);
                                 experienceInfo.setText(experienceLevel);
                                 languagesInfo.setText(spokenLanguages);
-
-                                System.out.println("sa7");
 
                             }
                         }).addOnFailureListener(new OnFailureListener() {

@@ -3,6 +3,7 @@ package com.example.pawsitive.acitvities;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -23,7 +24,12 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.pawsitive.R;
 import com.example.pawsitive.classes.User;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.ByteArrayOutputStream;
@@ -37,15 +43,14 @@ public class EditProfilePage extends AppCompatActivity {
     public final int GET_FROM_GALLERY = 3;
     TextView locationView, nameView, priceInfo, locationInfo, experienceInfo, languagesInfo;
     Bitmap profileImageBitmap;
-    Button backButtonProfilePage, editButtonProfilePage, calendarButton, saveButton;
+    Button backButtonProfilePage, saveButton;
     private HashMap<String, Object> jobData, userData;
     String userEmail, profileImageStr;
+    String name, location, gender;
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(!profileImageView.isClickable())
-            return;
-
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode==GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
@@ -65,6 +70,8 @@ public class EditProfilePage extends AppCompatActivity {
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        System.out.println("asdfg");
+
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_edit_profile_page);
@@ -73,8 +80,6 @@ public class EditProfilePage extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        changeEditable(true);
 
         backButtonProfilePage = (Button) findViewById(R.id.backButtonProfilePage);
         saveButton = findViewById(R.id.saveButton);
@@ -88,10 +93,92 @@ public class EditProfilePage extends AppCompatActivity {
         locationView = findViewById(R.id.locationText);
         nameView = findViewById(R.id.profileUserName);
 
+        try {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+
+            userEmail = auth.getCurrentUser().getEmail();
+            System.out.println("hello1 " + userEmail);
+            DocumentReference userData = db.collection("Users").document(userEmail);
+            System.out.println("hello " + userEmail);
+
+            userData.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    System.out.println("saaa");
+
+                    name = documentSnapshot.getString("Name");
+                    gender = documentSnapshot.getString("Gender");
+                    System.out.println("sa");
+
+                    profileImageStr = documentSnapshot.getString("Profile Photo");
+                    byte[] decodedString = Base64.decode(profileImageStr, Base64.DEFAULT);
+                    profileImageBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                    System.out.println("sa1");
+
+
+                    location = documentSnapshot.getString("Location");
+
+                    locationView.setText(location);
+                    String nameAndGender = name + " (" + gender + ")";
+                    nameView.setText(nameAndGender);
+                    System.out.println("sa2");
+
+                    profileImageView.setImageBitmap(profileImageBitmap);
+                    profileImageView.setVisibility(View.VISIBLE);
+
+                    try{
+                        DocumentReference careTakerJobData = db.collection("Jobs").document(userEmail);
+
+                        careTakerJobData.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                System.out.println("sa5");
+
+                                String price = documentSnapshot.getString("Price");
+                                String locationProperties = documentSnapshot.getString("Location Properties");
+                                String experienceLevel = documentSnapshot.getString("Experience");
+                                String spokenLanguages = documentSnapshot.getString("Languages");
+                                //date available
+                                System.out.println("sa6");
+
+                                priceInfo.setText(price);
+                                locationInfo.setText(locationProperties);
+                                experienceInfo.setText(experienceLevel);
+                                languagesInfo.setText(spokenLanguages);
+
+                                System.out.println("sa7");
+
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                System.out.println("Failed to fetch job data from Firebase: " + e.getMessage());
+                            }
+                        });
+                    }catch(Exception e){
+                        priceInfo.setText("");
+                        locationInfo.setText("");
+                        experienceInfo.setText("");
+                        languagesInfo.setText("");
+                        System.out.println("Error: " + e.getMessage());
+                    }
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    System.out.println("Failed to fetch user data from Firebase: " + e.getMessage());
+                }
+            });
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
         profileImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+                startActivityForResult(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
             }
         });
 
@@ -152,28 +239,4 @@ public class EditProfilePage extends AppCompatActivity {
 
     }
 
-    private void changeEditable(boolean trueOrFalse){
-        System.out.println("changeEditable " + trueOrFalse);
-        profileImageView.setFocusable(trueOrFalse);
-        profileImageView.setClickable(trueOrFalse);
-        System.out.println(profileImageView.isClickable());
-
-        priceInfo.setFocusable(trueOrFalse);
-        priceInfo.setClickable(trueOrFalse);
-
-        locationInfo.setFocusable(trueOrFalse);
-        locationInfo.setClickable(trueOrFalse);
-
-        experienceInfo.setFocusable(trueOrFalse);
-        experienceInfo.setClickable(trueOrFalse);
-
-        languagesInfo.setFocusable(trueOrFalse);
-        languagesInfo.setClickable(trueOrFalse);
-
-        locationView.setFocusable(trueOrFalse);
-        locationView.setClickable(trueOrFalse);
-
-        nameView.setFocusable(trueOrFalse);
-        nameView.setClickable(trueOrFalse);
-    }
 }
