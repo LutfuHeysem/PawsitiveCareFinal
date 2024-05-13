@@ -22,6 +22,7 @@ import com.example.pawsitive.classes.Review;
 import com.example.pawsitive.classes.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -66,8 +67,9 @@ public class ProfilePage1 extends AppCompatActivity {
 
         try {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
+            FirebaseAuth auth = FirebaseAuth.getInstance();
 
-            userEmail = User.getEmail();
+            userEmail = auth.getCurrentUser().getEmail();
             DocumentReference userData = db.collection("Users").document(userEmail);
 
             userData.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {

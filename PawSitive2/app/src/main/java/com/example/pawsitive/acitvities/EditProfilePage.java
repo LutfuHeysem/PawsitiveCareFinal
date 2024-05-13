@@ -172,8 +172,6 @@ public class EditProfilePage extends AppCompatActivity {
             public void onClick(View v) {
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-                userEmail = User.getEmail();
-
                 jobData = new HashMap<>();
                 jobData.put("Price", priceInfo.getText().toString());
                 jobData.put("Location Properties", locationInfo.getText().toString());
@@ -184,7 +182,7 @@ public class EditProfilePage extends AppCompatActivity {
                 System.out.println("asdfg");
 
                 userData = new HashMap<>();
-                userData.put("Name", nameView.getText().toString().substring(0, nameView.getText().toString().indexOf("(")-1));
+                userData.put("Name", nameView.getText().toString());
                 System.out.println("sa9");
                 userData.put("Location", locationView.getText().toString());
 
