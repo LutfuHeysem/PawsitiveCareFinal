@@ -236,7 +236,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Experience: animal, times"
+        android:hint="Experience: Animal, times"
         android:inputType="text"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="@+id/languagesInfo"

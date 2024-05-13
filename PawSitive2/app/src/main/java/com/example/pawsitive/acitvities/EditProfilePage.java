@@ -39,7 +39,7 @@ import java.util.HashMap;
 
 public class EditProfilePage extends AppCompatActivity {
 
-    ImageView profileImageView;
+    ImageView profileImageView, homeButton, favoritesButton, addButton, chatButton;
     public final int GET_FROM_GALLERY = 3;
     TextView locationView, nameView, priceInfo, locationInfo, experienceInfo, languagesInfo;
     Bitmap profileImageBitmap;
@@ -83,6 +83,11 @@ public class EditProfilePage extends AppCompatActivity {
         saveButton = findViewById(R.id.saveButton);
 
         profileImageView = findViewById(R.id.profileImage);
+
+        homeButton = findViewById(R.id.homeIcon);
+        favoritesButton = findViewById(R.id.heart_icon);
+        addButton = findViewById(R.id.add_icon);
+        chatButton = findViewById(R.id.chat_icon);
 
         priceInfo = findViewById(R.id.priceInfo);
         locationInfo = findViewById(R.id.locationPropertiesInfo);
@@ -175,29 +180,26 @@ public class EditProfilePage extends AppCompatActivity {
                 jobData = new HashMap<>();
                 jobData.put("Price", priceInfo.getText().toString());
                 jobData.put("Location Properties", locationInfo.getText().toString());
-                jobData.put("Experience", experienceInfo.getText().toString());
+                jobData.put("Experience", experienceInfo.getText().toString().substring(experienceInfo.getText().toString().indexOf(",")+1).trim());
                 jobData.put("Languages", languagesInfo.getText().toString());
                 jobData.put("Gender", gender);
+                jobData.put("Email", userEmail);
+                jobData.put("Location", location);
 
-                System.out.println("asdfg");
 
                 userData = new HashMap<>();
                 userData.put("Name", nameView.getText().toString());
-                System.out.println("sa9");
                 userData.put("Location", locationView.getText().toString());
 
-                System.out.println("sa1");
 
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                 profileImageBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
                 byte[] byteArray = byteArrayOutputStream .toByteArray();
                 profileImageStr = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
-                System.out.println("sa2");
 
                 userData.put("Profile Photo", profileImageStr);
 
-                System.out.println("sa");
 
                 db.collection("Jobs").document(userEmail).update(jobData).
                         addOnCompleteListener(EditProfilePage.this, new OnCompleteListener<Void>() {
@@ -226,6 +228,36 @@ public class EditProfilePage extends AppCompatActivity {
                         });
 
                 Intent intent = new Intent(EditProfilePage.this, ProfilePage1.class);
+                startActivity(intent);
+            }
+        });
+
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), HomePage.class);
+                startActivity(intent);
+            }
+        });
+        favoritesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), FavouritesPage.class);
+                startActivity(intent);
+            }
+        });
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //POPUP ARRANGE
+//                Intent intent = new Intent(getApplicationContext(), HomePage.class);
+//                startActivity(intent);
+            }
+        });
+        chatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), UsersActivity.class);
                 startActivity(intent);
             }
         });

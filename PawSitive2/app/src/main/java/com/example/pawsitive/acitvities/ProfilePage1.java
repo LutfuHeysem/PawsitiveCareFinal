@@ -18,7 +18,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.pawsitive.R;
-import com.example.pawsitive.classes.Review;
 import com.example.pawsitive.classes.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -27,15 +26,14 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.ArrayList;
-
 public class ProfilePage1 extends AppCompatActivity {
     ImageView profileImageView;
 
     TextView locationView, nameView, priceInfo, locationInfo, experienceInfo, languagesInfo;
     String userEmail, profileImageStr, name, location, gender;
     Bitmap profileImageBitmap;
-    Button backButtonProfilePage, editButtonProfilePage, calendarButton;
+    Button backButtonProfilePage, editButtonProfilePage, calendarButton, reviewsButton;
+    ImageView homeButton, favoritesButton, addButton, chatButton;
     public final int GET_FROM_GALLERY = 3;
     private User owner;
 
@@ -53,6 +51,12 @@ public class ProfilePage1 extends AppCompatActivity {
         backButtonProfilePage = (Button) findViewById(R.id.backButtonProfilePage);
         editButtonProfilePage = findViewById(R.id.editButtonProfile);
         calendarButton = findViewById(R.id.EditCalendarButton);
+        reviewsButton = findViewById(R.id.reviewsButton);
+
+        homeButton = findViewById(R.id.homeIcon);
+        favoritesButton = findViewById(R.id.heart_icon);
+        addButton = findViewById(R.id.add_icon);
+        chatButton = findViewById(R.id.profile_icon);
 
         profileImageView = findViewById(R.id.profileImage);
 
@@ -161,10 +165,48 @@ public class ProfilePage1 extends AppCompatActivity {
             }
         });
 
+        reviewsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ReviewListActivity.class);
+                intent.putExtra("User Email", userEmail);
+                startActivity(intent);
+            }
+        });
+
         calendarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), CalendarEdit.class);
+                startActivity(intent);
+            }
+        });
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), HomePage.class);
+                startActivity(intent);
+            }
+        });
+        favoritesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), FavouritesPage.class);
+                startActivity(intent);
+            }
+        });
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //POPUP ARRANGE
+//                Intent intent = new Intent(getApplicationContext(), HomePage.class);
+//                startActivity(intent);
+            }
+        });
+        chatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), UsersActivity.class);
                 startActivity(intent);
             }
         });
