@@ -86,13 +86,13 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/heart"
+        android:id="@+id/filledHeart"
         android:layout_width="107dp"
         android:layout_height="56dp"
         android:layout_below="@id/price"
         android:layout_centerInParent="true"
         android:layout_toEndOf="@id/location"
-        app:srcCompat="@drawable/heart_3510" />
+        app:srcCompat="@drawable/heart" />
 
 
 </RelativeLayout>
