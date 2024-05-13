@@ -137,7 +137,7 @@ public class CreditCardInfo extends AppCompatActivity {
                                             userData.put("Expiration Date", exp);
                                             userData.put("Profile Photo", imageStrC);
                                             userData.put("Age", age);
-                                            userData.put("Language(s)", lang);
+                                            userData.put("Language(s)", lang.toUpperCase());
                                             userData.put("Gender", gender.toUpperCase());
 
                                             fStore.collection("Users").document(auth.getCurrentUser().getEmail())
