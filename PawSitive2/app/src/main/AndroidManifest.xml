@@ -15,7 +15,6 @@
         <activity
 
             android:name=".acitvities.EditProfilePage"
-            android:name=".FilterOption"
 
             android:exported="false" />
         <activity

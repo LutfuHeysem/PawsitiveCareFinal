@@ -34,17 +34,23 @@ public class HomePage extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
-        List<User> users = new ArrayList<User>();
+        //List<User> users = new ArrayList<User>();
+        List <Temp> users= new ArrayList<Temp>();
+        users.add(new Temp("John", "Male", "23"));
+        users.add(new Temp("John", "Male", "23"));
+        users.add(new Temp("John", "Male", "23"));
+        users.add(new Temp("John", "Male", "23"));
+        users.add(new Temp("John", "Male", "23"));
+        users.add(new Temp("John", "Male", "23"));
+        users.add(new Temp("John", "Male", "23"));
+        users.add(new Temp("John", "Male", "23"));
+
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        System.out.println("adsd");
         recyclerView.setAdapter(new HomePageDisplayAdapter(getApplicationContext(),users));
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        System.out.println("aaaududu");
 
         }
     private void initializeImageViews(){
