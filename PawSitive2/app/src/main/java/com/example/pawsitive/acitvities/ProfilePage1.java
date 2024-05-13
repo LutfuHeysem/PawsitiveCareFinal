@@ -31,6 +31,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class ProfilePage1 extends AppCompatActivity {
@@ -49,6 +50,7 @@ public class ProfilePage1 extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        userEmail = User.getEmail();
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_profile_page1);
@@ -273,17 +275,15 @@ public class ProfilePage1 extends AppCompatActivity {
         FirebaseFirestore fStore = FirebaseFirestore.getInstance();
         reviewArrayList = new ArrayList<>();
         fStore.collection("Reviews")
-                .whereEqualTo("CareTaker", User.getEmail())
+                .whereEqualTo("CareTaker", userEmail)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Review review = new Review();
                             review.comment = document.getString("Comment");
-
                             review.star = document.getDouble("Star").floatValue();
                             reviewArrayList.add(review);
-
                         }
                         if (!reviewArrayList.isEmpty()) {
                             rateBar.setRating(calculateStarAverage());
