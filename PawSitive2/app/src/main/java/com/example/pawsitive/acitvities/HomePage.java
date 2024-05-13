@@ -24,8 +24,9 @@ import java.util.List;
 
 public class HomePage extends AppCompatActivity {
 
+private boolean imageChanged = false;
 
-
+    ImageView homeIcon,favouritesIcon,addIcon,chatIcon,profileIcon,favsBlankHeart;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,11 +57,13 @@ public class HomePage extends AppCompatActivity {
 
         }
     private void initializeImageViews(){
-        ImageView homeIcon = findViewById(R.id.homeIcon);
-        ImageView favouritesIcon = findViewById(R.id.heart_icon);
-        ImageView addIcon = findViewById(R.id.add_icon);
-        ImageView chatIcon = findViewById(R.id.chat_icon);
-        ImageView profileIcon = findViewById(R.id.profile_icon);
+
+        homeIcon = findViewById(R.id.homeIcon);
+        favouritesIcon = findViewById(R.id.heart_icon);
+        addIcon = findViewById(R.id.add_icon);
+        chatIcon = findViewById(R.id.chat_icon);
+        profileIcon = findViewById(R.id.profile_icon);
+        favsBlankHeart = findViewById(R.id.heart);
 
         homeIcon.setOnClickListener(new View.OnClickListener(){
 
@@ -117,6 +120,15 @@ public class HomePage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        favsBlankHeart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                favsBlankHeart.setImageResource(R.drawable.heart);
+            }
+        });
+
     };
+
 
 }
