@@ -32,19 +32,20 @@ public class ReviewListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private ReviewAdapter reviewAdapter;
-    private ArrayList<Review> reviewArrayList;
+    private static ArrayList<Review> reviewArrayList;
     private FirebaseFirestore fStore;
-    String userNameEmail = User.getEmail();
+    String userNameEmail;
     TextView userNameTextView;
-//    TextView rateTextView = findViewById(R.id.userRateTextView);
+    TextView rateTextView;
 
     String userName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        userNameEmail = getIntent().getExtras().get("User Email").toString();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review_list);
         userNameTextView = findViewById(R.id.usernameTextView);
-
+        rateTextView = findViewById(R.id.userRateTextView);
         fetchUserName(userNameEmail);
         System.out.println("username i printlieyr " + userName);
 
@@ -69,6 +70,7 @@ public class ReviewListActivity extends AppCompatActivity {
         // Fetch reviews from Firestore
         fetchUserReviews(userNameEmail);
         System.out.println("ReviewAdapter: " + reviewArrayList.size() + " items");
+
     }
     private void fetchUserName(String userEmail) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -114,6 +116,7 @@ public class ReviewListActivity extends AppCompatActivity {
                             System.out.println("Added review: " + review.toString());
                             System.out.println("ReviewAdapter: " + reviewArrayList.size() + " items");
                         }
+                        rateTextView.setText(calculateStarAverage() + " / 5");
                         System.out.println("ReviewAdapter: " + reviewArrayList.get(0).getComment() + " items");
                         // Notify the adapter that data set has changed
                         reviewAdapter.notifyDataSetChanged();
@@ -122,6 +125,24 @@ public class ReviewListActivity extends AppCompatActivity {
                         Toast.makeText(ReviewListActivity.this, "Error getting reviews", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    public static float calculateStarAverage()
+    {
+        System.out.println("calculateStarAverage" + reviewArrayList.size());
+        if(reviewArrayList.isEmpty())
+        {
+            return 0;
+        }
+        float sumOfStars = 0;
+        for(Review value : reviewArrayList)
+        {
+            sumOfStars += value.getStar();
+        }
+        float sumOfStarsTimesTwo = 2 * sumOfStars;
+        float averageStarsTimesTwo = sumOfStarsTimesTwo / reviewArrayList.size();
+        float averageStarsTimesTwoRounded = Math.round(averageStarsTimesTwo);
+        return  averageStarsTimesTwoRounded/2;
     }
 
 }

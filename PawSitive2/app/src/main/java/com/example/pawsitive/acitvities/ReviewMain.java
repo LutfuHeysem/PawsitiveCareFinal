@@ -79,23 +79,6 @@ public class ReviewMain extends AppCompatActivity {
             }
             });
 }
- public static float calculateStarAverage(String email)
-    {
-        System.out.println("email" + email);
-
-//        if()
-//        {
-//            return 0;
-//        }
-        float sumOfStars = 0;
-        System.out.println("adksjfbasdkljfnalijadsnfalsdkjfnadsfKLDJSFNALKJds");
-
-        float sumOfStarsTimesTwo = 2 * sumOfStars;
-        //float averageStarsTimesTwo = sumOfStarsTimesTwo / ReviewListActivity.reviewArrayList.size();
-//        float averageStarsTimesTwoRounded = Math.round(averageStarsTimesTwo);
-//        return  averageStarsTimesTwoRounded/2;
-        return 3.23f;
-    }
 
     public static int getResource(double averageStar)
     {
