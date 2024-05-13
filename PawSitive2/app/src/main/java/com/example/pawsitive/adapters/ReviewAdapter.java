@@ -62,7 +62,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         public void bind(Review review) {
             System.out.println("Rating: " + review.getStar() + ", Comment: " + review.getComment());
             ratingBar.setRating(review.getStar());
-            textViewComment.setText("Comment: " + review.getComment());
+            textViewComment.setText(review.getComment());
         }
 
     }
