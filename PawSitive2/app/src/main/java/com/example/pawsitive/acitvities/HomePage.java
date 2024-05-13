@@ -36,11 +36,23 @@ public class HomePage extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
-        List<User> users = new ArrayList<User>();
+        //List<User> users = new ArrayList<User>();
+        List <Temp> users= new ArrayList<Temp>();
+        users.add(new Temp("John", "Male", "23"));
+        users.add(new Temp("John", "Male", "23"));
+        users.add(new Temp("John", "Male", "23"));
+        users.add(new Temp("John", "Male", "23"));
+        users.add(new Temp("John", "Male", "23"));
+        users.add(new Temp("John", "Male", "23"));
+        users.add(new Temp("John", "Male", "23"));
+        users.add(new Temp("John", "Male", "23"));
+
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        System.out.println("adsd");
         recyclerView.setAdapter(new HomePageDisplayAdapter(getApplicationContext(),users));
+        System.out.println("aaaududu");
 
         }
     private void initializeImageViews(){

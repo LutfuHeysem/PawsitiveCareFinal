@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp">
@@ -66,15 +67,6 @@
     </TextView>
 
     <ImageView
-        android:id="@+id/heart"
-        android:layout_width="110dp"
-        android:layout_height="80dp"
-        android:layout_toEndOf="@id/location"
-        android:layout_below="@id/price">
-
-    </ImageView>
-
-    <ImageView
         android:id="@+id/profileImage"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -92,6 +84,16 @@
         android:background="#D3CDCD">
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/heart"
+        android:layout_width="107dp"
+        android:layout_height="56dp"
+        android:layout_below="@id/price"
+        android:layout_centerInParent="true"
+
+        android:layout_toEndOf="@id/location"
+        app:srcCompat="@drawable/heart_3510" />
 
 
 </RelativeLayout>

@@ -15,15 +15,17 @@ import com.example.pawsitive.acitvities.MyViewHolder;
 
 import java.util.List;
 
+import com.example.pawsitive.acitvities.Temp;
 import com.example.pawsitive.classes.User;
 
 public class HomePageDisplayAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
 
     Context context;
-    List<User> users;
+    List <Temp> users;
 
-    public HomePageDisplayAdapter(Context applicationContext, List<User> users) {
+    public HomePageDisplayAdapter(Context applicationContext, List<Temp> users) {
+        System.out.println("aaauu");
         this.users = users;
         this.context = context;
     }
@@ -40,19 +42,20 @@ public class HomePageDisplayAdapter extends RecyclerView.Adapter<MyViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.nameView.setText(users.get(position).getName());
-        holder.genderAgeView.setText(users.get(position).getGender() + " " + users.get(position).getAge());
-        holder.locationView.setText(users.get(position).getLocation());
+        holder.genderAgeView.setText(users.get(position).getGender());
+        //holder.locationView.setText(users.get(position).getLocation());
         //price view will be added
-        String profileImage = users.get(position).getImage();
-        byte[] decodedString = Base64.decode(profileImage, Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        holder.profileView.setImageBitmap(decodedByte);
+        //String profileImage = users.get(position).getImage();
+        //byte[] decodedString = Base64.decode(profileImage, Base64.DEFAULT);
+        //Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        //holder.profileView.setImageBitmap(decodedByte);
         holder.heartView.setImageResource(R.drawable.heart_3510);
        // holder.review.setRating(users.get(position)); (rating)
     }
 
     @Override
     public int getItemCount() {
+        System.out.println(users.size());
         return users.size();
     }
 }
