@@ -1,7 +1,17 @@
 package com.example.pawsitive.classes;
 
+import android.view.View;
+
+import com.example.pawsitive.adapters.UsersAdapter;
+import com.example.pawsitive.utilities.Constants;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Job {
-    private String price, location, locationProperties, experienceLevel, spokenLanguages, dates, gender, email;
+    public String price, location, locationProperties, experienceLevel, spokenLanguages, dates, gender, email;
 
     public String getPrice() {
         return price;
@@ -55,4 +65,6 @@ public class Job {
     public String getDates() {
         return dates;
     }
+
+
 }
