@@ -69,7 +69,6 @@ public class ProfilePage1 extends AppCompatActivity {
 
             userEmail = User.getEmail();
             DocumentReference userData = db.collection("Users").document(userEmail);
-            System.out.println(userEmail);
 
             userData.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
@@ -177,10 +176,8 @@ public class ProfilePage1 extends AppCompatActivity {
     }
 
     private void changeEditable(boolean trueOrFalse){
-        System.out.println("changeEditable " + trueOrFalse);
         profileImageView.setFocusable(trueOrFalse);
         profileImageView.setClickable(trueOrFalse);
-        System.out.println(profileImageView.isClickable());
 
         priceInfo.setFocusable(trueOrFalse);
         priceInfo.setClickable(trueOrFalse);
