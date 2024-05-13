@@ -3,6 +3,7 @@ package com.example.pawsitive.acitvities;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CalendarView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -22,6 +23,10 @@ public class CalendarEdit extends AppCompatActivity {
             {true,true,true,true,true,true,true},
             {true,true,true,true,true,true,true}};
 
+    String avalibality = "";
+
+    CalendarView calendar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +43,7 @@ public class CalendarEdit extends AppCompatActivity {
         TextView textView41,textView42,textView43,textView44,textView45,textView46,textView47;
         TextView textView51,textView52,textView53,textView54,textView55,textView56,textView57;
 
+        calendar = findViewById(R.id.calendarView);
 
 
         textView11 =  findViewById(R.id.editable1_1);textView11.setOnClickListener(new View.OnClickListener() {
