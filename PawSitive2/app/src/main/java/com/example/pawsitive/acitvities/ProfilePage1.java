@@ -5,10 +5,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -18,6 +21,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.pawsitive.R;
+import com.example.pawsitive.classes.Review;
 import com.example.pawsitive.classes.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -25,15 +29,21 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.util.ArrayList;
 
 public class ProfilePage1 extends AppCompatActivity {
     ImageView profileImageView;
+
+    private ArrayList<Review> reviewArrayList;
 
     TextView locationView, nameView, priceInfo, locationInfo, experienceInfo, languagesInfo;
     String userEmail, profileImageStr, name, location, gender;
     Bitmap profileImageBitmap;
     Button backButtonProfilePage, editButtonProfilePage, calendarButton, reviewsButton;
     ImageView homeButton, favoritesButton, addButton, chatButton;
+    RatingBar rateBar;
     public final int GET_FROM_GALLERY = 3;
     private User owner;
 
@@ -67,7 +77,10 @@ public class ProfilePage1 extends AppCompatActivity {
         locationView = findViewById(R.id.locationText);
         nameView = findViewById(R.id.profileUserName);
 
+        rateBar = findViewById(R.id.ratingBar2);
         changeEditable(false);
+
+        fetchUserReviews();
 
         try {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -149,6 +162,9 @@ public class ProfilePage1 extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+
     Intent intent = getIntent();
 
     String email = intent.getStringExtra("email");
@@ -234,4 +250,53 @@ public class ProfilePage1 extends AppCompatActivity {
         nameView.setFocusable(trueOrFalse);
         nameView.setClickable(trueOrFalse);
     }
+
+
+
+    public float calculateStarAverage(){
+        if(reviewArrayList.isEmpty())
+        {
+            return 0;
+        }
+        float sumOfStars = 0;
+        for(Review value : reviewArrayList)
+        {
+            sumOfStars += value.getStar();
+        }
+        float sumOfStarsTimesTwo = 2 * sumOfStars;
+        float averageStarsTimesTwo = sumOfStarsTimesTwo / reviewArrayList.size();
+        float averageStarsTimesTwoRounded = Math.round(averageStarsTimesTwo);
+        return averageStarsTimesTwoRounded / 2;
+    }
+
+    private void fetchUserReviews() {
+        FirebaseFirestore fStore = FirebaseFirestore.getInstance();
+        reviewArrayList = new ArrayList<>();
+        System.out.println("buraya geloyom");
+        fStore.collection("Reviews")
+                .whereEqualTo("CareTaker", User.getEmail())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        System.out.println("bes bura?");
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Review review = new Review();
+                            review.comment = document.getString("Comment");
+
+                            review.star = document.getDouble("Star").floatValue();
+                            System.out.println("buraya da geloyom");
+                            reviewArrayList.add(review);
+
+                        }
+                        if (!reviewArrayList.isEmpty()) {
+                            rateBar.setRating(calculateStarAverage());
+                        }
+                    } else {
+                        Log.d("ReviewListActivity", "Error getting reviews: ", task.getException());
+                    }
+                });
+    }
+
+
+
 }
