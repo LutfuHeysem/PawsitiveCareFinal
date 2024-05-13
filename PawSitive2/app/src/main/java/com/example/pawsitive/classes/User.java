@@ -26,6 +26,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class User {
     private static String name, gender, age, image;
@@ -36,27 +37,13 @@ public class User {
     private static String cardNumber;
     private static String cvv;
     private static String expirationDate;
-    private static ArrayList<Review> reviewArrayList;
     private ArrayList<Pet> pets;
     private static ArrayList<String> chatUsers;
-    public static ArrayList<Float> stars = new ArrayList<>();;
 
-    public User(String email, OnUserLoadListener listener) {
+    public User(String email) {
         User.email = email;
-        getChatUsersFromDatabase();
 
-        ReviewListActivity.getReviews(email, new OnSuccessListener<ArrayList<Review>>() {
-            @Override
-            public void onSuccess(ArrayList<Review> reviews) {
-                setReviewArrayList(reviews);
-                listener.onUserLoaded(User.this);
-            }
-        }, new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                // Handle failure if needed
-            }
-        });
+        getChatUsersFromDatabase();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         TaskCompletionSource<DocumentSnapshot> source = new TaskCompletionSource<>();
@@ -106,7 +93,6 @@ public class User {
 
         });
 
-//        setReviewArrayList(ReviewListActivity.getReviews(email));
     }
 // dkjbvhy3wbhvr@yahoo.com
 // 016956216532
@@ -152,12 +138,14 @@ public static boolean searchInsidefChat(String key) {
         }
     }
 
-     static void setReviewArrayList(ArrayList<Review> reviewArrayList) {
-        User.reviewArrayList = reviewArrayList;
+    // Interface to handle review fetch callbacks
+    public interface OnReviewFetchListener {
+        void onReviewsFetch(List<Map<String, Object>> reviews);
+        void onReviewsFetchError(String errorMessage);
     }
-    public static ArrayList<Review> getReviewArrayList() {
-        return User.reviewArrayList;
-    }
+
+
+
     public static void addUserToChatPage(String user){
         chatUsers.add(user);
     }
@@ -177,7 +165,6 @@ public static boolean searchInsidefChat(String key) {
         return email;
     }
 
-    public static ArrayList<Review> getFilledAL(){ return reviewArrayList; }
 
     public static String getLocation() {
         return location;
@@ -210,7 +197,4 @@ public static boolean searchInsidefChat(String key) {
     }
     public String getImage(){return image;}
 
-    public interface OnUserLoadListener {
-        void onUserLoaded(User user);
-    }
 }

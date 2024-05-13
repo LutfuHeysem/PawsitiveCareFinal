@@ -70,8 +70,6 @@ public class EditProfilePage extends AppCompatActivity {
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        System.out.println("asdfg");
-
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_edit_profile_page);
@@ -98,31 +96,23 @@ public class EditProfilePage extends AppCompatActivity {
             FirebaseAuth auth = FirebaseAuth.getInstance();
 
             userEmail = auth.getCurrentUser().getEmail();
-            System.out.println("hello1 " + userEmail);
             DocumentReference userData = db.collection("Users").document(userEmail);
-            System.out.println("hello " + userEmail);
 
             userData.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    System.out.println("saaa");
 
                     name = documentSnapshot.getString("Name");
                     gender = documentSnapshot.getString("Gender");
-                    System.out.println("sa");
 
                     profileImageStr = documentSnapshot.getString("Profile Photo");
                     byte[] decodedString = Base64.decode(profileImageStr, Base64.DEFAULT);
                     profileImageBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                    System.out.println("sa1");
-
 
                     location = documentSnapshot.getString("Location");
 
                     locationView.setText(location);
-                    String nameAndGender = name + " (" + gender + ")";
-                    nameView.setText(nameAndGender);
-                    System.out.println("sa2");
+                    nameView.setText(name);
 
                     profileImageView.setImageBitmap(profileImageBitmap);
                     profileImageView.setVisibility(View.VISIBLE);
@@ -133,21 +123,16 @@ public class EditProfilePage extends AppCompatActivity {
                         careTakerJobData.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                System.out.println("sa5");
-
                                 String price = documentSnapshot.getString("Price");
                                 String locationProperties = documentSnapshot.getString("Location Properties");
                                 String experienceLevel = documentSnapshot.getString("Experience");
                                 String spokenLanguages = documentSnapshot.getString("Languages");
                                 //date available
-                                System.out.println("sa6");
 
                                 priceInfo.setText(price);
                                 locationInfo.setText(locationProperties);
                                 experienceInfo.setText(experienceLevel);
                                 languagesInfo.setText(spokenLanguages);
-
-                                System.out.println("sa7");
 
                             }
                         }).addOnFailureListener(new OnFailureListener() {
@@ -187,24 +172,32 @@ public class EditProfilePage extends AppCompatActivity {
             public void onClick(View v) {
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-                userEmail = User.getEmail();
-
                 jobData = new HashMap<>();
                 jobData.put("Price", priceInfo.getText().toString());
                 jobData.put("Location Properties", locationInfo.getText().toString());
                 jobData.put("Experience", experienceInfo.getText().toString());
                 jobData.put("Languages", languagesInfo.getText().toString());
+                jobData.put("Gender", gender);
+
+                System.out.println("asdfg");
 
                 userData = new HashMap<>();
-                userData.put("Name", nameView.getText().toString().substring(0, nameView.getText().toString().indexOf("(")));
+                userData.put("Name", nameView.getText().toString());
+                System.out.println("sa9");
                 userData.put("Location", locationView.getText().toString());
+
+                System.out.println("sa1");
 
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                 profileImageBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
                 byte[] byteArray = byteArrayOutputStream .toByteArray();
                 profileImageStr = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
+                System.out.println("sa2");
+
                 userData.put("Profile Photo", profileImageStr);
+
+                System.out.println("sa");
 
                 db.collection("Jobs").document(userEmail).update(jobData).
                         addOnCompleteListener(EditProfilePage.this, new OnCompleteListener<Void>() {

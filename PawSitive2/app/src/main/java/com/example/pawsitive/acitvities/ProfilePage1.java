@@ -22,6 +22,7 @@ import com.example.pawsitive.classes.Review;
 import com.example.pawsitive.classes.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -66,10 +67,10 @@ public class ProfilePage1 extends AppCompatActivity {
 
         try {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
+            FirebaseAuth auth = FirebaseAuth.getInstance();
 
-            userEmail = User.getEmail();
+            userEmail = auth.getCurrentUser().getEmail();
             DocumentReference userData = db.collection("Users").document(userEmail);
-            System.out.println(userEmail);
 
             userData.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
@@ -148,14 +149,7 @@ public class ProfilePage1 extends AppCompatActivity {
 
     String email = intent.getStringExtra("email");
 
-    this.owner = new User(email, new User.OnUserLoadListener() {
-        @Override
-        public void onUserLoaded(User user) {
-            // User and reviews are loaded successfully
-            ArrayList<Review> reviews = User.getReviewArrayList();
-            // Proceed with using reviews and user data
-        }
-    });
+    this.owner = new User(email);
 
         editButtonProfilePage = findViewById(R.id.editButtonProfile);
 
@@ -177,10 +171,8 @@ public class ProfilePage1 extends AppCompatActivity {
     }
 
     private void changeEditable(boolean trueOrFalse){
-        System.out.println("changeEditable " + trueOrFalse);
         profileImageView.setFocusable(trueOrFalse);
         profileImageView.setClickable(trueOrFalse);
-        System.out.println(profileImageView.isClickable());
 
         priceInfo.setFocusable(trueOrFalse);
         priceInfo.setClickable(trueOrFalse);
