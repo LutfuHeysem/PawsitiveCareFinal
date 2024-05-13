@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
+import java.util.Random;
 
 public class CreditCardInfo extends AppCompatActivity {
     private Button back, confirm;
@@ -34,7 +35,7 @@ public class CreditCardInfo extends AppCompatActivity {
     private FirebaseAuth auth;
     private HashMap<String, Object> userData;
     private FirebaseFirestore fStore;
-
+    private double balance;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,6 +127,8 @@ public class CreditCardInfo extends AppCompatActivity {
                                                 Toast.makeText(CreditCardInfo.this, "Verification email has sent!", Toast.LENGTH_SHORT).show();
                                             }
                                         });
+                                        Random rand = new Random();
+                                        balance = rand.nextInt(300) + (double)rand.nextInt(300) / 100;
 
                                             userData = new HashMap<>();
                                             userData.put("Name", nameC);
@@ -133,6 +136,7 @@ public class CreditCardInfo extends AppCompatActivity {
                                             userData.put("Location", locC);
                                             userData.put("Name On The Credit Card", nameCard);
                                             userData.put("Card Number", number);
+                                            userData.put("Balance", balance);
                                             userData.put("CVV", cvv);
                                             userData.put("Expiration Date", exp);
                                             userData.put("Profile Photo", imageStrC);
