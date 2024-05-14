@@ -33,9 +33,9 @@ public class Filtering extends AppCompatActivity {
     private Button save;
     private CheckBox male, female, other;
     private EditText editLoc, editMin, editMax, editExp, editLang;
-    private Job temp = new Job();
-    //private List <Job> noSorted = new ArrayList();
+    private static List<Job> jobAL;
 
+    //private List <Job> noSorted = new ArrayList();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +52,12 @@ public class Filtering extends AppCompatActivity {
         male = findViewById(R.id.checkBox2);
         female = findViewById(R.id.checkBox3);
         other = findViewById(R.id.checkBox4);
-        System.out.println("checkBox ON CREATE");
+
+        System.out.println("twmp önce");
+        Job temp = new Job();
+
+        System.out.println(temp.getJobList().size());
+        System.out.println(jobAL.size());
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,16 +74,15 @@ public class Filtering extends AppCompatActivity {
                 if(!expCheck.isEmpty())
                     exp = Integer.parseInt(expCheck);
 
-                System.out.println("filter on click");
-                System.out.println(Job.jobArrayList.size());
 //                FilterLocation();
 //                FilterPrice();
 //                FilterExperience();
 //                FilterGender();
 //                FilterLanguage();
-                for(int i = 0; i < Job.jobArrayList.size(); i++)
+                System.out.println("for öncesi");
+                for(int i = 0; i < jobAL.size(); i++)
                 {
-                    System.out.println(Job.jobArrayList.get(i));
+                    System.out.println(jobAL.get(i));
                 }
                 startActivity(new Intent(Filtering.this, ResetPassword.class));
             }
@@ -86,7 +90,7 @@ public class Filtering extends AppCompatActivity {
     }
     protected void FilterLocation(){
         if(loc.isEmpty()) {return;}
-        Job.jobArrayList = Job.jobArrayList.stream().filter(str -> !str.getLocation().equals(loc))
+        jobAL = jobAL.stream().filter(str -> !str.getLocation().equals(loc))
                 .collect(Collectors.toList());
     }
 
@@ -100,7 +104,7 @@ public class Filtering extends AppCompatActivity {
         {
             min = Integer.parseInt(minCheck);
             max = Integer.parseInt(maxCheck);
-            Job.jobArrayList = Job.jobArrayList.stream().filter(str -> Integer.parseInt(str.getPrice()) >= min && Integer.parseInt(str.getPrice()) <= max)
+            jobAL = jobAL.stream().filter(str -> Integer.parseInt(str.getPrice()) >= min && Integer.parseInt(str.getPrice()) <= max)
                     .collect(Collectors.toList());
         }
     }
@@ -108,7 +112,7 @@ public class Filtering extends AppCompatActivity {
         if(expCheck.isEmpty() && exp < 0) { exp = 0;}
         else
         {
-            Job.jobArrayList = Job.jobArrayList.stream().filter(str -> Integer.parseInt(str.getExperienceLevel()) >= exp)
+            jobAL = jobAL.stream().filter(str -> Integer.parseInt(str.getExperienceLevel()) >= exp)
                     .collect(Collectors.toList());
         }
     }
@@ -117,7 +121,7 @@ public class Filtering extends AppCompatActivity {
         if(lang.isEmpty()) { lang = "";}
         else
         {
-            Job.jobArrayList = Job.jobArrayList.stream().filter(str -> lang.contains(str.getSpokenLanguages()))
+            jobAL = jobAL.stream().filter(str -> lang.contains(str.getSpokenLanguages()))
                     .collect(Collectors.toList());
         }
     }
@@ -127,12 +131,12 @@ public class Filtering extends AppCompatActivity {
         if(female.isChecked()) { gender += "FEMALE";}
         if(other.isChecked()) { gender += "OTHER";}
 
-        Job.jobArrayList = Job.jobArrayList.stream().filter(str -> gender.contains(str.getGender()))
+        jobAL = jobAL.stream().filter(str -> gender.contains(str.getGender()))
                 .collect(Collectors.toList());
     }
 
     protected void FilterRate() {
-        Collections.sort(Job.jobArrayList, Comparator.comparing(Job::getRating));
+        Collections.sort(jobAL, Comparator.comparing(Job::getRating));
     }
 
 }

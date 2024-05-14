@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 import android.view.View;
 
+import com.example.pawsitive.acitvities.Filtering;
 import com.example.pawsitive.acitvities.ProfilePage1;
 import com.example.pawsitive.adapters.UsersAdapter;
 import com.example.pawsitive.utilities.Constants;
@@ -36,42 +37,56 @@ public class Job extends AppCompatActivity {
     String userName, imageStr;
     float userRating;
     private FirebaseFirestore fStore;
-    public static List<Job> jobArrayList;
+    private List<Job> jobArrayList;
     private ArrayList<Review> reviewArrayList;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        fStore = FirebaseFirestore.getInstance();
-        jobArrayList = new ArrayList<>();
 
+    }
+
+    public Job (){
+        fStore = FirebaseFirestore.getInstance();
         fetchUserJobs();
     }
 
     private void fetchUserJobs() {
+        jobArrayList = new ArrayList<>();
         fStore.collection("Jobs")
                 .get()
                 .addOnCompleteListener(task -> {
+                    System.out.println("taskkkkkkkkk");
                     if (task.isSuccessful()) {
+                        System.out.println("success");
                         for (QueryDocumentSnapshot document : task.getResult()) {
+                            try {
+                                Job jobNew = new Job();
+                                jobNew.experienceLevel = document.getString("Experience");
+                                jobNew.gender = document.getString("Gender").toUpperCase();
+                                jobNew.spokenLanguages = document.getString("Languages").toUpperCase();
+                                jobNew.price = document.getString("Price");
+                                System.out.println("databse de olanlar");
+                                jobNew.location = document.getString("Location").toUpperCase();
+                                jobNew.email = document.getString("Email");
+                                System.out.println("olmayanlar");
 
-                            Job jobNew = new Job();
-                            jobNew.location = document.getString("Location").toUpperCase();
-                            jobNew.gender = document.getString("Gender").toUpperCase();
-                            jobNew.spokenLanguages = document.getString("Languages").toUpperCase();
-                            jobNew.price = document.getString("Price");
-                            jobNew.email = document.getString("Email");
-                            jobNew.experienceLevel = document.getString("Experience");
-
-//                            userName, imageStr;
-//                            userRating;
-                            getUserData();
-
-                            jobArrayList.add(jobNew);
+                                System.out.println("getuserdata öncesi");
+                                getUserData();
+                                System.out.println("add öncesi");
+                                jobArrayList.add(jobNew);
+                                System.out.println("AL e eklendi!");
+                                for (int i = 0; i < jobArrayList.size(); i++) {
+                                    System.out.println(jobArrayList.get(i));
+                                }
+                            } catch (Exception e) {
+                                Log.e("Exception", "Error while parsing job document: " + e.getMessage());
+                            }
                         }
                     } else {
-                        Log.d("ReviewListActivity", "Error getting job features: ", task.getException());
+                        Log.e("Error", "Error getting job documents: ", task.getException());
                     }
                 });
+
     }
 
     private void getUserData(){
@@ -133,9 +148,6 @@ public class Job extends AppCompatActivity {
     public String getLocation() {
         return location;
     }
-
-    public List<Job> getJobArrayList(){return jobArrayList;}
-
     public String getEmail(){return email;}
 
     public String getLocationProperties() {
@@ -171,6 +183,9 @@ public class Job extends AppCompatActivity {
 
     public void setSpokenLanguages(String spokenLanguages) {
         this.spokenLanguages = spokenLanguages;
+    }
+    public List<Job> getJobList(){
+        return jobArrayList;
     }
 
     public String getImage() {
