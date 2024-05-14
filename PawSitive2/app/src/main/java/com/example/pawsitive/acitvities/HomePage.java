@@ -15,7 +15,10 @@ import com.example.pawsitive.adapters.HomePageDisplayAdapter;
 import com.example.pawsitive.classes.AddDialog;
 import com.example.pawsitive.classes.FavouriteJobs;
 import com.example.pawsitive.classes.Job;
+
+import com.example.pawsitive.classes.Review;
 import com.example.pawsitive.classes.User;
+import com.example.pawsitive.classes.UserForChat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +35,6 @@ public class HomePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
-
         initializeImageViews();
 
         jobs = new ArrayList<>();
@@ -54,6 +56,12 @@ public class HomePage extends AppCompatActivity {
         recyclerView.setAdapter(homePageDisplayAdapter);
 
         // Setup search functionality
+        // fetchJobsFromDatabase();
+
+
+
+
+//        // Setup search functionality
 //        SearchView searchView = findViewById(R.id.search);
 //        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 //            @Override
@@ -69,6 +77,13 @@ public class HomePage extends AppCompatActivity {
 //        });
     }
 
+    public List<FavouriteJobs> getFavouriteJobs() {
+        return favouriteJobs;
+    }
+
+    public List<Job> getJobs() {
+        return jobs;
+    }
 
     private void initializeImageViews() {
         homeIcon = findViewById(R.id.homeIcon);

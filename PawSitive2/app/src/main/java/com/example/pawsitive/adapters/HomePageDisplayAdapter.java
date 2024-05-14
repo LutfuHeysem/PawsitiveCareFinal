@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.util.Base64;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -37,7 +38,6 @@ public class HomePageDisplayAdapter extends RecyclerView.Adapter<HomePageDisplay
 
     @Override
     public void onBindViewHolder(@NonNull JobViewHolder holder, int position) {
-
         Job job = jobList.get(position);
         holder.name.setText(job.getName());
         holder.genderAndYear.setText(job.getGender() + ", " + job.getExperienceLevel());
@@ -50,6 +50,11 @@ public class HomePageDisplayAdapter extends RecyclerView.Adapter<HomePageDisplay
 //        holder.profileImage.setImageBitmap(BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length));
 
         // holder.heart.setImageResource(job.isFavorite() ? R.drawable.heart_filled : R.drawable.heart_outline);
+        if (job.getImage() != null && !job.getImage().isEmpty()) {
+            byte[] decodedString = Base64.decode(job.getImage(), Base64.DEFAULT);
+            holder.profileImage.setImageBitmap(BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length));
+
+        }
     }
 
     @Override

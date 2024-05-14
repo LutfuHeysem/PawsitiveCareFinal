@@ -69,7 +69,6 @@ public class Login extends AppCompatActivity {
                                                 User user = new User(logEmail);
                                                 Toast.makeText(Login.this, "Successful Login!", Toast.LENGTH_SHORT).show();
 
-                                                //TEMPORARY
                                                 Intent homeIntent = new Intent(Login.this, HomePage.class);
                                                 Intent editPetIntent = new Intent(Login.this, AddEditPet.class).putExtra("PetName", "Venus");
                                                 //WILL GET PET NAME WHEN EDITING
