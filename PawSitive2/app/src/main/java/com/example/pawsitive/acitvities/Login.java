@@ -44,20 +44,7 @@ public class Login extends AppCompatActivity {
         passEdit = findViewById(R.id.editTextText5);
 
         currAuth = FirebaseAuth.getInstance();
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Login.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
-        forget.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Login.this, ForgetPassword.class);
-                startActivity(intent);
-            }
-        });
+
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,11 +64,9 @@ public class Login extends AppCompatActivity {
                                     currUser = currAuth.getCurrentUser();
                                     if(currUser != null && currUser.isEmailVerified())
                                     {
-                                    Toast.makeText(Login.this, "Successful Login!", Toast.LENGTH_SHORT).show();
                                     //TEMPORARY
-                                        new User(logEmail, new User.OnUserLoadListener() {
-                                            @Override
-                                            public void onUserLoaded(User user) {
+
+                                                User user = new User(logEmail);
                                                 Toast.makeText(Login.this, "Successful Login!", Toast.LENGTH_SHORT).show();
 
                                                 //TEMPORARY
@@ -90,17 +75,10 @@ public class Login extends AppCompatActivity {
                                                 //WILL GET PET NAME WHEN EDITING
                                                 Intent addPetIntent = new Intent(Login.this, AddEditPet.class);
                                                 Intent chatIntent = new Intent(Login.this, UsersActivity.class);
-                                                Intent reviewIntent = new Intent(Login.this, ReviewMain.class);
+                                                Intent reviewIntent = new Intent(Login.this, ReviewListActivity.class);
                                                 Intent profileIntent = new Intent(Login.this, ProfilePage1.class);
 
-                                                System.out.println("array+  " + User.getReviewArrayList());
-                                                for(float star: User.stars){
-                                                    System.out.println("array+  stars" + star);
-                                                }
-
-                                                startActivity(profileIntent);
-                                            }
-                                        });
+                                                startActivity(homeIntent);
 
 
 

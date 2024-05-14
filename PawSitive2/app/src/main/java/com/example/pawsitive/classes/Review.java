@@ -8,4 +8,6 @@ public class Review {
     public String getCaretaker() {return  caretaker;}
     public String getPetOwner() {return  petOwner;}
     public Float getStar() {return  star;}
+
+
 }

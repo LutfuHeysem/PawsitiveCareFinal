@@ -147,7 +147,7 @@ public class AddEditPet extends AppCompatActivity {
 
         if(isEdit){
             try {
-                FirebaseAuth auth = FirebaseAuth.getInstance();
+                auth = FirebaseAuth.getInstance();
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
 
                 DocumentReference petData = db.collection("Users")

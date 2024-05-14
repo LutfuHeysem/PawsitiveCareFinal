@@ -3,6 +3,7 @@ package com.example.pawsitive.acitvities;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CalendarView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -15,12 +16,16 @@ import com.example.pawsitive.R;
 
 public class CalendarEdit extends AppCompatActivity {
 
-    static boolean[][] isRed =
-            {{false,false,false,false,false,false,false},
-            {false,false,false,false,false,false,false},
-            {false,false,false,false,false,false,false},
-            {false,false,false,false,false,false,false},
-            {false,false,false,false,false,false,false}};
+    static boolean[][] isWhite =
+            {{true,true,true,true,true,true,true},
+            {true,true,true,true,true,true,true},
+            {true,true,true,true,true,true,true},
+            {true,true,true,true,true,true,true},
+            {true,true,true,true,true,true,true}};
+
+    String avalibality = "";
+
+    CalendarView calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +43,14 @@ public class CalendarEdit extends AppCompatActivity {
         TextView textView41,textView42,textView43,textView44,textView45,textView46,textView47;
         TextView textView51,textView52,textView53,textView54,textView55,textView56,textView57;
 
+        calendar = findViewById(R.id.calendarView);
 
 
         textView11 =  findViewById(R.id.editable1_1);textView11.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if(isRed[0][0])
+                if(isWhite[0][0])
                 {
                     textView11.setBackgroundColor(Color.RED);
                 }
@@ -52,37 +58,37 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView11.setBackgroundColor(Color.WHITE);
                 }
-                isRed[0][0] = !isRed[0][0];
+                isWhite[0][0] = !isWhite[0][0];
             }
         });
         textView12 =  findViewById(R.id.editable1_2);textView12.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if (isRed[0][1]) {
+                if (isWhite[0][1]) {
                     textView12.setBackgroundColor(Color.RED);
                 } else {
                     textView12.setBackgroundColor(Color.WHITE);
                 }
-                isRed[0][1] = !isRed[0][1];
+                isWhite[0][1] = !isWhite[0][1];
             }
         });
         textView13 =  findViewById(R.id.editable1_3);textView13.setOnClickListener(new View.OnClickListener() {
             @Override
                 public void onClick(View v) {
-                    if(isRed[0][2]){
+                    if(isWhite[0][2]){
                         textView13.setBackgroundColor(Color.RED);
                     }else {
                         textView13.setBackgroundColor(Color.WHITE);
                     }
-                    isRed[0][2] = !isRed[0][2];
+                    isWhite[0][2] = !isWhite[0][2];
             }
         });
         textView14 =  findViewById(R.id.editable1_4);textView14.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if(isRed[0][3])
+                if(isWhite[0][3])
                 {
                     textView14.setBackgroundColor(Color.RED);
                 }
@@ -90,14 +96,14 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView14.setBackgroundColor(Color.WHITE);
                 }
-                isRed[0][3] = !isRed[0][3];
+                isWhite[0][3] = !isWhite[0][3];
             }
         });
         textView15 =  findViewById(R.id.editable1_5);textView14.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if(isRed[0][4])
+                if(isWhite[0][4])
                 {
                     textView15.setBackgroundColor(Color.RED);
                 }
@@ -105,14 +111,14 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView15.setBackgroundColor(Color.WHITE);
                 }
-                isRed[0][4] = !isRed[0][4];
+                isWhite[0][4] = !isWhite[0][4];
             }
         });
         textView16 =  findViewById(R.id.editable1_6);textView16.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if(isRed[0][5])
+                if(isWhite[0][5])
                 {
                     textView16.setBackgroundColor(Color.RED);
                 }
@@ -120,14 +126,14 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView16.setBackgroundColor(Color.WHITE);
                 }
-                isRed[0][5] = !isRed[0][5];
+                isWhite[0][5] = !isWhite[0][5];
             }
         });
         textView17 =  findViewById(R.id.editable1_7);textView17.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if(isRed[0][6])
+                if(isWhite[0][6])
                 {
                     textView17.setBackgroundColor(Color.RED);
                 }
@@ -135,7 +141,7 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView17.setBackgroundColor(Color.WHITE);
                 }
-                isRed[0][6] = !isRed[0][6];
+                isWhite[0][6] = !isWhite[0][6];
             }
         });
 
@@ -143,7 +149,7 @@ public class CalendarEdit extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                if(isRed[1][0])
+                if(isWhite[1][0])
                 {
                     textView21.setBackgroundColor(Color.RED);
                 }
@@ -151,14 +157,14 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView21.setBackgroundColor(Color.WHITE);
                 }
-                isRed[1][0] = !isRed[1][0];
+                isWhite[1][0] = !isWhite[1][0];
             }
         });
         textView22 =  findViewById(R.id.editable2_2);textView22.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if(isRed[1][1])
+                if(isWhite[1][1])
                 {
                     textView22.setBackgroundColor(Color.RED);
                 }
@@ -166,14 +172,14 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView22.setBackgroundColor(Color.WHITE);
                 }
-                isRed[1][1] = !isRed[1][1];
+                isWhite[1][1] = !isWhite[1][1];
             }
         });
         textView23 =  findViewById(R.id.editable2_3);textView23.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if(isRed[1][2])
+                if(isWhite[1][2])
                 {
                     textView23.setBackgroundColor(Color.RED);
                 }
@@ -181,14 +187,14 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView23.setBackgroundColor(Color.WHITE);
                 }
-                isRed[1][2] = !isRed[1][2];
+                isWhite[1][2] = !isWhite[1][2];
             }
         });
         textView24 =  findViewById(R.id.editable2_4);textView24.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if(isRed[1][3])
+                if(isWhite[1][3])
                 {
                     textView24.setBackgroundColor(Color.RED);
                 }
@@ -196,14 +202,14 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView24.setBackgroundColor(Color.WHITE);
                 }
-                isRed[1][3] = !isRed[1][3];
+                isWhite[1][3] = !isWhite[1][3];
             }
         });
         textView25 =  findViewById(R.id.editable2_5);textView25.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if(isRed[1][4])
+                if(isWhite[1][4])
                 {
                     textView25.setBackgroundColor(Color.RED);
                 }
@@ -211,14 +217,14 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView25.setBackgroundColor(Color.WHITE);
                 }
-                isRed[1][4] = !isRed[1][4];
+                isWhite[1][4] = !isWhite[1][4];
             }
         });
         textView26 =  findViewById(R.id.editable2_6);textView26.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if(isRed[1][5])
+                if(isWhite[1][5])
                 {
                     textView26.setBackgroundColor(Color.RED);
                 }
@@ -226,14 +232,14 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView26.setBackgroundColor(Color.WHITE);
                 }
-                isRed[1][5] = !isRed[1][5];
+                isWhite[1][5] = !isWhite[1][5];
             }
         });
         textView27 =  findViewById(R.id.editable2_7);textView27.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if(isRed[1][6])
+                if(isWhite[1][6])
                 {
                     textView27.setBackgroundColor(Color.RED);
                 }
@@ -241,7 +247,7 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView27.setBackgroundColor(Color.WHITE);
                 }
-                isRed[1][6] = !isRed[1][6];
+                isWhite[1][6] = !isWhite[1][6];
             }
         });
 
@@ -249,7 +255,7 @@ public class CalendarEdit extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                if(isRed[2][0])
+                if(isWhite[2][0])
                 {
                     textView31.setBackgroundColor(Color.RED);
                 }
@@ -257,14 +263,14 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView31.setBackgroundColor(Color.WHITE);
                 }
-                isRed[2][0] = !isRed[2][0];
+                isWhite[2][0] = !isWhite[2][0];
             }
         });
         textView32 =  findViewById(R.id.editable3_2);textView32.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if(isRed[2][1])
+                if(isWhite[2][1])
                 {
                     textView32.setBackgroundColor(Color.RED);
                 }
@@ -272,14 +278,14 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView32.setBackgroundColor(Color.WHITE);
                 }
-                isRed[2][1] = !isRed[2][1];
+                isWhite[2][1] = !isWhite[2][1];
             }
         });
         textView33 =  findViewById(R.id.editable3_3);textView33.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if(isRed[2][2])
+                if(isWhite[2][2])
                 {
                     textView33.setBackgroundColor(Color.RED);
                 }
@@ -287,14 +293,14 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView33.setBackgroundColor(Color.WHITE);
                 }
-                isRed[2][2] = !isRed[2][2];
+                isWhite[2][2] = !isWhite[2][2];
             }
         });
         textView34 =  findViewById(R.id.editable3_4);textView24.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if(isRed[2][3])
+                if(isWhite[2][3])
                 {
                     textView34.setBackgroundColor(Color.RED);
                 }
@@ -302,14 +308,14 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView34.setBackgroundColor(Color.WHITE);
                 }
-                isRed[2][3] = !isRed[2][3];
+                isWhite[2][3] = !isWhite[2][3];
             }
         });
         textView35 =  findViewById(R.id.editable3_5);textView25.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if(isRed[2][4])
+                if(isWhite[2][4])
                 {
                     textView35.setBackgroundColor(Color.RED);
                 }
@@ -317,14 +323,14 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView35.setBackgroundColor(Color.WHITE);
                 }
-                isRed[2][4] = !isRed[2][4];
+                isWhite[2][4] = !isWhite[2][4];
             }
         });
         textView36 =  findViewById(R.id.editable3_6);textView36.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if(isRed[2][5])
+                if(isWhite[2][5])
                 {
                     textView36.setBackgroundColor(Color.RED);
                 }
@@ -332,14 +338,14 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView36.setBackgroundColor(Color.WHITE);
                 }
-                isRed[2][5] = !isRed[2][5];
+                isWhite[2][5] = !isWhite[2][5];
             }
         });
         textView37 =  findViewById(R.id.editable3_7);textView37.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if(isRed[2][6])
+                if(isWhite[2][6])
                 {
                     textView37.setBackgroundColor(Color.RED);
                 }
@@ -347,7 +353,7 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView37.setBackgroundColor(Color.WHITE);
                 }
-                isRed[2][6] = !isRed[2][6];
+                isWhite[2][6] = !isWhite[2][6];
             }
         });
 
@@ -355,7 +361,7 @@ public class CalendarEdit extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                if(isRed[3][0])
+                if(isWhite[3][0])
                 {
                     textView41.setBackgroundColor(Color.RED);
                 }
@@ -363,14 +369,14 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView41.setBackgroundColor(Color.WHITE);
                 }
-                isRed[3][0] = !isRed[3][0];
+                isWhite[3][0] = !isWhite[3][0];
             }
         });
         textView42 =  findViewById(R.id.editable4_2);textView42.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if(isRed[3][1])
+                if(isWhite[3][1])
                 {
                     textView42.setBackgroundColor(Color.RED);
                 }
@@ -378,14 +384,14 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView42.setBackgroundColor(Color.WHITE);
                 }
-                isRed[3][1] = !isRed[3][1];
+                isWhite[3][1] = !isWhite[3][1];
             }
         });
         textView43 =  findViewById(R.id.editable4_3);textView43.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if(isRed[3][2])
+                if(isWhite[3][2])
                 {
                     textView43.setBackgroundColor(Color.RED);
                 }
@@ -393,14 +399,14 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView43.setBackgroundColor(Color.WHITE);
                 }
-                isRed[3][2] = !isRed[3][2];
+                isWhite[3][2] = !isWhite[3][2];
             }
         });
         textView44 =  findViewById(R.id.editable4_4);textView44.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if(isRed[3][3])
+                if(isWhite[3][3])
                 {
                     textView44.setBackgroundColor(Color.RED);
                 }
@@ -408,14 +414,14 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView44.setBackgroundColor(Color.WHITE);
                 }
-                isRed[3][3] = !isRed[3][3];
+                isWhite[3][3] = !isWhite[3][3];
             }
         });
         textView45 =  findViewById(R.id.editable4_5);textView45.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if(isRed[3][4])
+                if(isWhite[3][4])
                 {
                     textView45.setBackgroundColor(Color.RED);
                 }
@@ -423,14 +429,14 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView45.setBackgroundColor(Color.WHITE);
                 }
-                isRed[3][4] = !isRed[3][4];
+                isWhite[3][4] = !isWhite[3][4];
             }
         });
         textView46 =  findViewById(R.id.editable4_6);textView46.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if(isRed[3][5])
+                if(isWhite[3][5])
                 {
                     textView46.setBackgroundColor(Color.RED);
                 }
@@ -438,14 +444,14 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView46.setBackgroundColor(Color.WHITE);
                 }
-                isRed[3][5] = !isRed[3][5];
+                isWhite[3][5] = !isWhite[3][5];
             }
         });
         textView47 =  findViewById(R.id.editable4_7);textView47.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if(isRed[3][6])
+                if(isWhite[3][6])
                 {
                     textView47.setBackgroundColor(Color.RED);
                 }
@@ -453,7 +459,7 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView47.setBackgroundColor(Color.WHITE);
                 }
-                isRed[3][6] = !isRed[3][6];
+                isWhite[3][6] = !isWhite[3][6];
             }
         });
 
@@ -461,7 +467,7 @@ public class CalendarEdit extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                if(isRed[4][0])
+                if(isWhite[4][0])
                 {
                     textView51.setBackgroundColor(Color.RED);
                 }
@@ -469,14 +475,14 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView51.setBackgroundColor(Color.WHITE);
                 }
-                isRed[4][0] = !isRed[4][0];
+                isWhite[4][0] = !isWhite[4][0];
             }
         });
         textView52 =  findViewById(R.id.editable5_2);textView52.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if(isRed[4][1])
+                if(isWhite[4][1])
                 {
                     textView52.setBackgroundColor(Color.RED);
                 }
@@ -484,14 +490,14 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView52.setBackgroundColor(Color.WHITE);
                 }
-                isRed[4][1] = !isRed[4][1];
+                isWhite[4][1] = !isWhite[4][1];
             }
         });
         textView53 =  findViewById(R.id.editable5_3);textView53.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if(isRed[4][2])
+                if(isWhite[4][2])
                 {
                     textView53.setBackgroundColor(Color.RED);
                 }
@@ -499,14 +505,14 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView53.setBackgroundColor(Color.WHITE);
                 }
-                isRed[4][2] = !isRed[4][2];
+                isWhite[4][2] = !isWhite[4][2];
             }
         });
         textView54 =  findViewById(R.id.editable5_4);textView54.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if(isRed[4][3])
+                if(isWhite[4][3])
                 {
                     textView54.setBackgroundColor(Color.RED);
                 }
@@ -514,14 +520,14 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView54.setBackgroundColor(Color.WHITE);
                 }
-                isRed[4][3] = !isRed[4][3];
+                isWhite[4][3] = !isWhite[4][3];
             }
         });
         textView55 =  findViewById(R.id.editable5_5);textView55.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if(isRed[4][4])
+                if(isWhite[4][4])
                 {
                     textView55.setBackgroundColor(Color.RED);
                 }
@@ -529,14 +535,14 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView55.setBackgroundColor(Color.WHITE);
                 }
-                isRed[4][4] = !isRed[4][4];
+                isWhite[4][4] = !isWhite[4][4];
             }
         });
         textView56 =  findViewById(R.id.editable5_6);textView56.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if(isRed[4][5])
+                if(isWhite[4][5])
                 {
                     textView56.setBackgroundColor(Color.RED);
                 }
@@ -544,14 +550,14 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView56.setBackgroundColor(Color.WHITE);
                 }
-                isRed[4][5] = !isRed[4][5];
+                isWhite[4][5] = !isWhite[4][5];
             }
         });
         textView57 =  findViewById(R.id.editable5_7);textView57.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                if(isRed[4][6])
+                if(isWhite[4][6])
                 {
                     textView57.setBackgroundColor(Color.RED);
                 }
@@ -559,7 +565,7 @@ public class CalendarEdit extends AppCompatActivity {
                 {
                     textView57.setBackgroundColor(Color.WHITE);
                 }
-                isRed[4][6] = !isRed[4][6];
+                isWhite[4][6] = !isWhite[4][6];
             }
         });
 
@@ -573,7 +579,8 @@ public class CalendarEdit extends AppCompatActivity {
         for(int i = 0; i < redBoxesArray.length; i++)
         {
             for (int j = 0; j < redBoxesArray[0].length; j++) {
-                redBoxesArray[i][j].setText(" ");
+                redBoxesArray[i][j].setText("");
+                redBoxesArray[i][j].setClickable(true);
             }
         }
     }

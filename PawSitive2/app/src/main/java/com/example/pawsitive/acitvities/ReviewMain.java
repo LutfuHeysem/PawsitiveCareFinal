@@ -70,6 +70,7 @@ public class ReviewMain extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
+
                                     Toast.makeText(ReviewMain.this, "Your review is saved successfully!", Toast.LENGTH_SHORT).show();
                                 } else
                                     Toast.makeText(ReviewMain.this, "Error in adding review", Toast.LENGTH_SHORT).show();
@@ -78,26 +79,6 @@ public class ReviewMain extends AppCompatActivity {
             }
             });
 }
- public static float calculateStarAverage(String email)
-    {
-        System.out.println("email" + email);
-
-        if(User.getReviewArrayList().isEmpty())
-        {
-            return 0;
-        }
-        float sumOfStars = 0;
-        System.out.println("adksjfbasdkljfnalijadsnfalsdkjfnadsfKLDJSFNALKJds");
-        for(Review value : User.getReviewArrayList())
-        {
-            System.out.println("adksjfbasdkljfnads");
-            sumOfStars += value.getStar();
-        }
-        float sumOfStarsTimesTwo = 2 * sumOfStars;
-        float averageStarsTimesTwo = sumOfStarsTimesTwo / User.getFilledAL().size();
-        float averageStarsTimesTwoRounded = Math.round(averageStarsTimesTwo);
-        return  averageStarsTimesTwoRounded/2;
-    }
 
     public static int getResource(double averageStar)
     {

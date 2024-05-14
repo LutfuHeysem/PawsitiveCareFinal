@@ -1,64 +1,124 @@
 package com.example.pawsitive.acitvities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pawsitive.R;
+import com.example.pawsitive.adapters.ReviewAdapter;
 import com.example.pawsitive.classes.Review;
-import com.example.pawsitive.classes.User;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
 public class ReviewListActivity extends AppCompatActivity {
 
+    private ImageView backButton;
+    private RecyclerView recyclerView;
+    private ReviewAdapter reviewAdapter;
+    private ArrayList<Review> reviewArrayList;
+    private FirebaseFirestore fStore;
+    private TextView userNameTextView;
+    private TextView rateTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_review_list);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
+        String userNameEmail = getIntent().getStringExtra("User Email");
+
+        backButton = findViewById(R.id.imageBack);
+        userNameTextView = findViewById(R.id.usernameTextView);
+        rateTextView = findViewById(R.id.userRateTextView);
+        recyclerView = findViewById(R.id.userRecylerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        reviewArrayList = new ArrayList<>();
+        reviewAdapter = new ReviewAdapter(this, reviewArrayList);
+        recyclerView.setAdapter(reviewAdapter);
+
+        fStore = FirebaseFirestore.getInstance();
+
+        fetchUserName(userNameEmail);
+        fetchUserReviews(userNameEmail);
     }
 
-    public static void getReviews(String email, OnSuccessListener<ArrayList<Review>> successListener, OnFailureListener failureListener) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection("Reviews")
-                .whereEqualTo("CareTaker", email)
+    private void fetchUserName(String userEmail) {
+        fStore.collection("Users")
+                .whereEqualTo("Email", userEmail)
                 .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    ArrayList<Float> stars = new ArrayList<>();
-                    ArrayList<Review> reviewTemp = new ArrayList<>();
-
-                    for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                        Review rev = new Review();
-                        rev.star = documentSnapshot.getDouble("Star").floatValue();
-                        stars.add(rev.star);
-                        rev.caretaker = documentSnapshot.getString("CareTaker");
-                        rev.petOwner = documentSnapshot.getString("PetOwner");
-                        rev.comment = documentSnapshot.getString("Comment");
-                        reviewTemp.add(rev);
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                        DocumentSnapshot document = task.getResult().getDocuments().get(0);
+                        String userName = document.getString("Name");
+                        userNameTextView.setText(userName);
                     }
-                    User.stars = stars;
-                    successListener.onSuccess(reviewTemp);  // Notify listener with reviews
-                })
-                .addOnFailureListener(e -> {
-                    // Handle failures, log error, show error message, etc.
-                    Log.e("User", "Error getting reviews: " + e.getMessage());
                 });
+    }
+
+    private void fetchUserReviews(String userEmail) {
+        fStore.collection("Reviews")
+                .whereEqualTo("CareTaker", userEmail)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Review review = new Review();
+                            review.comment = document.getString("Comment");
+                            review.star = document.getDouble("Star").floatValue();
+                            reviewArrayList.add(review);
+                        }
+                        if (!reviewArrayList.isEmpty()) {
+                            reviewAdapter.notifyDataSetChanged();
+                            rateTextView.setText(calculateStarAverage() + " / 5");
+                        }
+                    } else {
+                        Log.d("ReviewListActivity", "Error getting reviews: ", task.getException());
+                        Toast.makeText(ReviewListActivity.this, "Error getting reviews", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    public float calculateStarAverage()
+    {
+        if(reviewArrayList.isEmpty())
+        {
+            return 0;
+        }
+        float sumOfStars = 0;
+        for(Review value : reviewArrayList)
+        {
+            sumOfStars += value.getStar();
+        }
+        float sumOfStarsTimesTwo = 2 * sumOfStars;
+        float averageStarsTimesTwo = sumOfStarsTimesTwo / reviewArrayList.size();
+        float averageStarsTimesTwoRounded = Math.round(averageStarsTimesTwo);
+        return  averageStarsTimesTwoRounded/2;
+    }
+
+
+    private void backPressed(){
+        Intent intent = new Intent(ReviewListActivity.this, ProfilePage1.class);
+        startActivity(intent);
+    }
+    private void setListener() {
+        backButton.setOnClickListener(v -> backPressed());
     }
 
 }

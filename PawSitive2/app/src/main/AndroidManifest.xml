@@ -12,8 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PawSitive"
         tools:targetApi="31">
-        <activity
 
+        <activity
             android:name=".acitvities.EditProfilePage"
 
             android:exported="false" />
@@ -22,9 +22,6 @@
             android:exported="false" />
         <activity
             android:name=".acitvities.ReviewListActivity"
-            android:exported="false" />
-        <activity
-            android:name=".acitvities.ProfilePageEdit"
             android:exported="false" />
         <activity
             android:name=".acitvities.FavouritesPage"
@@ -54,9 +51,6 @@
             android:exported="false" />
         <activity
             android:name=".acitvities.ForgetPassword"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity2"
             android:exported="false" />
         <activity
             android:name=".acitvities.ResetPassword"
