@@ -13,8 +13,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.pawsitive.R;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Date;
@@ -26,12 +28,15 @@ public class AcceptOfferDialog extends DialogFragment {
     private TextView offerAmount;
     private TextView startDate;
     private TextView endDate;
+    private TextView textOfferText;
     private Button acceptOffer;
     private Button denyOffer;
     private String receiverUserEmail;
     private String amount;
     private String startDateString;
     private String endDateString;
+    private double ownerBalance;
+    private FirebaseFirestore db;
 
     @NonNull
     @Override
@@ -45,17 +50,35 @@ public class AcceptOfferDialog extends DialogFragment {
         endDate = view.findViewById(R.id.endDate);
         acceptOffer = view.findViewById(R.id.btnAccept);
         denyOffer = view.findViewById(R.id.btnDeny);
+        textOfferText = view.findViewById(R.id.textOffer);
 
         offerAmount.setText(String.format("%s%s$", getString(R.string.offer_amount), amount));
         startDate.setText(String.format("%s %s", getString(R.string.end_date_view), startDateString));
         endDate.setText(String.format("%s %s", getString(R.string.end_date_view), endDateString));
 
+        db = FirebaseFirestore.getInstance();
+        db.collection("Users").document(receiverUserEmail).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        ownerBalance = documentSnapshot.getDouble("Balance");
+                    }
+                });
         acceptOffer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addOfferToDb(amount);
-                deleteDocument(receiverUserEmail);
-                dismiss();
+                if(ownerBalance < Double.parseDouble(amount))
+                {
+                    acceptOffer.setVisibility(View.INVISIBLE);
+                    startDate.setVisibility(View.INVISIBLE);
+                    endDate.setVisibility(View.INVISIBLE);
+                    textOfferText.setText(R.string.your_balance_is_not_sufficient);
+                }
+                else{
+                    addOfferToDb(amount);
+                    deleteDocument(receiverUserEmail);
+                    dismiss();
+                }
             }
         });
 

@@ -63,5 +63,6 @@
     <string name="start_date">Start Date</string>
     <string name="start_date_view">Start Date</string>
     <string name="end_date_view">End Date</string>
+    <string name="your_balance_is_not_sufficient">Your Balance Is Not Sufficient!!!</string>
 
 </resources>
