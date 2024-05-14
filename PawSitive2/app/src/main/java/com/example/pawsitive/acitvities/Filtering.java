@@ -41,6 +41,9 @@ public class Filtering extends AppCompatActivity {
     private static List<Job> jobAL;
     private FirebaseFirestore fStore;
 
+    public static List<Job> getFilteredJobs(){
+        return jobAL;
+    }
     //private List <Job> noSorted = new ArrayList();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +90,10 @@ public class Filtering extends AppCompatActivity {
                 {
                     System.out.println(jobAL.get(i).getName());
                 }
-                startActivity(new Intent(Filtering.this, HomePage.class));
+                Intent intent = new Intent(getApplicationContext(), HomePage.class);
+                String filtered = "filtered";
+                intent.putExtra("isFiltered", filtered);
+                startActivity(intent);
             }
         });
     }

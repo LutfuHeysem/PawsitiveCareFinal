@@ -32,8 +32,11 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class HomePage extends AppCompatActivity implements UserListener {
     RecyclerView recyclerView;
+    String isFiltered;
     private List<FavouriteJobs> favouriteJobs;
     private List<Job> jobs = new ArrayList<>();
     private HomePageDisplayAdapter homePageDisplayAdapter;
@@ -51,10 +54,18 @@ public class HomePage extends AppCompatActivity implements UserListener {
 
 
         // Setup search functionality
-        fetchUserJobs();
-
-
-
+        isFiltered = "notFiltered";
+        System.out.println("isFiltered: " + isFiltered);
+        Intent intent = getIntent();
+        if(intent.getStringExtra("isFiltered") != null)
+            isFiltered = intent.getStringExtra("isFiltered");
+        System.out.println("isFiltered: " + isFiltered);
+        if(!isFiltered.equals("filtered"))
+            fetchUserJobs();
+        else{
+            homePageDisplayAdapter = new HomePageDisplayAdapter(getApplicationContext(), Filtering.getFilteredJobs(), this);
+            recyclerView.setAdapter(homePageDisplayAdapter);
+        }
 
         // Setup search functionality
 //        SearchView searchView = findViewById(R.id.search);
@@ -129,42 +140,43 @@ public class HomePage extends AppCompatActivity implements UserListener {
     public float userRating;
     public Job jobNew = new Job();
     public void fetchUserJobs() {
-        fStore = FirebaseFirestore.getInstance();
-        jobs = new ArrayList<>();
-        fStore.collection("Jobs").get().addOnCompleteListener(task -> {
-            System.out.println("burdayim ben - inside onCompleteListener"); // This will run when the query completes
-            if (task.isSuccessful() && task.getResult() != null) {
-                for (QueryDocumentSnapshot document : task.getResult()) {
-                    try {
-                        System.out.println("burdayim ben - processing document"); // This will run for each document
-                        Job jobNew = new Job();
-                        jobNew.experienceLevel = document.getString("Experience");
-                        jobNew.gender = document.getString("Gender").toUpperCase();
-                        jobNew.spokenLanguages = document.getString("Languages").toUpperCase();
-                        jobNew.price = document.getString("Price");
-                        jobNew.location = document.getString("Location Properties").toUpperCase();
-                        System.out.println("bura gelmisem?adsfasfadsf");
-                        jobNew.email = document.getId();
-                        System.out.println("email budu" + jobNew.email);
 
-                        getUserData(jobNew.email, jobNew);
+            fStore = FirebaseFirestore.getInstance();
+            jobs = new ArrayList<>();
+            fStore.collection("Jobs").get().addOnCompleteListener(task -> {
+                System.out.println("burdayim ben - inside onCompleteListener"); // This will run when the query completes
+                if (task.isSuccessful() && task.getResult() != null) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        try {
+                            System.out.println("burdayim ben - processing document"); // This will run for each document
+                            Job jobNew = new Job();
+                            jobNew.experienceLevel = document.getString("Experience");
+                            jobNew.gender = document.getString("Gender").toUpperCase();
+                            jobNew.spokenLanguages = document.getString("Languages").toUpperCase();
+                            jobNew.price = document.getString("Price");
+                            jobNew.location = document.getString("Location Properties").toUpperCase();
+                            System.out.println("bura gelmisem?adsfasfadsf");
+                            jobNew.email = document.getId();
+                            System.out.println("email budu" + jobNew.email);
+
+                            getUserData(jobNew.email, jobNew);
 
 
-                    } catch (Exception e) {
-                        Log.e("Exception", "Error while parsing job document: " + e.getMessage());
+                        } catch (Exception e) {
+                            Log.e("Exception", "Error while parsing job document: " + e.getMessage());
+                        }
+
                     }
 
+
+                } else {
+                    Log.e("Error", "Error getting job documents: ", task.getException());
                 }
+            });
 
+            System.out.println("burdayim ben - after get() call"); // This will run immediately after initiating the get() call
 
-            } else {
-                Log.e("Error", "Error getting job documents: ", task.getException());
-            }
-        });
-
-        System.out.println("burdayim ben - after get() call"); // This will run immediately after initiating the get() call
-
-    }
+        }
 
     private void getUserData(String email, Job jobNew) {
         System.out.println("burdayamaaaaa");
