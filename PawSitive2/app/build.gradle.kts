@@ -84,7 +84,6 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.android.support:multidex:1.0.3")
 
-
 //    implementation(project(":app"))
 
     //implementation ("androidx.multidex:multidex:multidex_version")

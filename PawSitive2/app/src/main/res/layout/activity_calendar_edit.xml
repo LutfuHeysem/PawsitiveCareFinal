@@ -55,6 +55,7 @@
         android:layout_marginStart="25dp"
         android:layout_marginTop="96dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="@+id/calendarView"
         app:layout_constraintTop_toTopOf="@+id/calendarView" />
 
@@ -64,6 +65,7 @@
         android:layout_height="38dp"
         android:layout_marginStart="15dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintStart_toEndOf="@+id/editable1_1"
         app:layout_constraintTop_toTopOf="@+id/editable1_1" />
 
@@ -73,6 +75,7 @@
         android:layout_height="38dp"
         android:layout_marginStart="14dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintStart_toEndOf="@+id/editable1_2"
         app:layout_constraintTop_toTopOf="@+id/editable1_2" />
 
@@ -82,6 +85,7 @@
         android:layout_height="38dp"
         android:layout_marginStart="12dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintStart_toEndOf="@+id/editable1_3"
         app:layout_constraintTop_toTopOf="@+id/editable1_3" />
 
@@ -91,6 +95,7 @@
         android:layout_height="38dp"
         android:layout_marginStart="14dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintStart_toEndOf="@+id/editable1_4"
         app:layout_constraintTop_toTopOf="@+id/editable1_4" />
 
@@ -100,6 +105,7 @@
         android:layout_height="38dp"
         android:layout_marginStart="13dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintStart_toEndOf="@+id/editable1_5"
         app:layout_constraintTop_toTopOf="@+id/editable1_5" />
 
@@ -109,6 +115,7 @@
         android:layout_height="38dp"
         android:layout_marginStart="14dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintStart_toEndOf="@+id/editable1_6"
         app:layout_constraintTop_toTopOf="@+id/editable1_6" />
 
@@ -117,6 +124,7 @@
         android:layout_width="33dp"
         android:layout_height="38dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/editable1_1"
         app:layout_constraintStart_toStartOf="@+id/editable1_1"
         app:layout_constraintTop_toBottomOf="@+id/editable1_1" />
@@ -126,6 +134,7 @@
         android:layout_width="33dp"
         android:layout_height="38dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/editable1_2"
         app:layout_constraintStart_toStartOf="@+id/editable1_2"
         app:layout_constraintTop_toBottomOf="@+id/editable1_2" />
@@ -135,6 +144,7 @@
         android:layout_width="33dp"
         android:layout_height="38dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/editable1_3"
         app:layout_constraintStart_toStartOf="@+id/editable1_3"
         app:layout_constraintTop_toBottomOf="@+id/editable1_3" />
@@ -144,6 +154,7 @@
         android:layout_width="33dp"
         android:layout_height="38dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/editable1_4"
         app:layout_constraintStart_toStartOf="@+id/editable1_4"
         app:layout_constraintTop_toBottomOf="@+id/editable1_4" />
@@ -153,6 +164,7 @@
         android:layout_width="33dp"
         android:layout_height="38dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/editable1_5"
         app:layout_constraintStart_toStartOf="@+id/editable1_5"
         app:layout_constraintTop_toBottomOf="@+id/editable1_5" />
@@ -162,6 +174,7 @@
         android:layout_width="33dp"
         android:layout_height="38dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/editable1_6"
         app:layout_constraintStart_toStartOf="@+id/editable1_6"
         app:layout_constraintTop_toBottomOf="@+id/editable1_6" />
@@ -171,6 +184,7 @@
         android:layout_width="33dp"
         android:layout_height="38dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/editable1_7"
         app:layout_constraintStart_toStartOf="@+id/editable1_7"
         app:layout_constraintTop_toBottomOf="@+id/editable1_7" />
@@ -180,6 +194,7 @@
         android:layout_width="33dp"
         android:layout_height="38dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/editable2_1"
         app:layout_constraintStart_toStartOf="@+id/editable2_1"
         app:layout_constraintTop_toBottomOf="@+id/editable2_1" />
@@ -189,6 +204,7 @@
         android:layout_width="33dp"
         android:layout_height="38dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/editable2_2"
         app:layout_constraintStart_toStartOf="@+id/editable2_2"
         app:layout_constraintTop_toBottomOf="@+id/editable2_2" />
@@ -198,6 +214,7 @@
         android:layout_width="33dp"
         android:layout_height="38dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/editable2_3"
         app:layout_constraintStart_toStartOf="@+id/editable2_3"
         app:layout_constraintTop_toBottomOf="@+id/editable2_3" />
@@ -207,6 +224,7 @@
         android:layout_width="33dp"
         android:layout_height="38dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/editable2_4"
         app:layout_constraintStart_toStartOf="@+id/editable2_4"
         app:layout_constraintTop_toBottomOf="@+id/editable2_4" />
@@ -216,6 +234,7 @@
         android:layout_width="33dp"
         android:layout_height="38dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/editable2_5"
         app:layout_constraintStart_toStartOf="@+id/editable2_5"
         app:layout_constraintTop_toBottomOf="@+id/editable2_5" />
@@ -225,6 +244,7 @@
         android:layout_width="33dp"
         android:layout_height="38dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/editable2_6"
         app:layout_constraintStart_toStartOf="@+id/editable2_6"
         app:layout_constraintTop_toBottomOf="@+id/editable2_6" />
@@ -234,6 +254,7 @@
         android:layout_width="33dp"
         android:layout_height="38dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/editable2_7"
         app:layout_constraintStart_toStartOf="@+id/editable2_7"
         app:layout_constraintTop_toBottomOf="@+id/editable2_7" />
@@ -243,6 +264,7 @@
         android:layout_width="33dp"
         android:layout_height="38dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/editable3_1"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/editable3_1"
@@ -253,6 +275,7 @@
         android:layout_width="33dp"
         android:layout_height="38dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/editable3_2"
         app:layout_constraintStart_toStartOf="@+id/editable3_2"
         app:layout_constraintTop_toBottomOf="@+id/editable3_2" />
@@ -262,6 +285,7 @@
         android:layout_width="33dp"
         android:layout_height="38dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/editable3_3"
         app:layout_constraintStart_toStartOf="@+id/editable3_3"
         app:layout_constraintTop_toBottomOf="@+id/editable3_3" />
@@ -271,6 +295,7 @@
         android:layout_width="33dp"
         android:layout_height="38dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/editable3_4"
         app:layout_constraintStart_toStartOf="@+id/editable3_4"
         app:layout_constraintTop_toBottomOf="@+id/editable3_4" />
@@ -280,6 +305,7 @@
         android:layout_width="33dp"
         android:layout_height="38dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/editable3_5"
         app:layout_constraintStart_toStartOf="@+id/editable3_5"
         app:layout_constraintTop_toBottomOf="@+id/editable3_5" />
@@ -289,6 +315,7 @@
         android:layout_width="33dp"
         android:layout_height="38dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/editable3_6"
         app:layout_constraintStart_toStartOf="@+id/editable3_6"
         app:layout_constraintTop_toBottomOf="@+id/editable3_6" />
@@ -298,6 +325,7 @@
         android:layout_width="33dp"
         android:layout_height="38dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/editable3_7"
         app:layout_constraintStart_toStartOf="@+id/editable3_7"
         app:layout_constraintTop_toBottomOf="@+id/editable3_7" />
@@ -307,6 +335,7 @@
         android:layout_width="33dp"
         android:layout_height="38dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/editable4_1"
         app:layout_constraintStart_toStartOf="@+id/editable4_1"
         app:layout_constraintTop_toBottomOf="@+id/editable4_1" />
@@ -316,6 +345,7 @@
         android:layout_width="33dp"
         android:layout_height="38dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/editable4_2"
         app:layout_constraintStart_toStartOf="@+id/editable4_2"
         app:layout_constraintTop_toBottomOf="@+id/editable4_2" />
@@ -325,6 +355,7 @@
         android:layout_width="33dp"
         android:layout_height="38dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/editable4_3"
         app:layout_constraintStart_toStartOf="@+id/editable4_3"
         app:layout_constraintTop_toBottomOf="@+id/editable4_3" />
@@ -334,6 +365,7 @@
         android:layout_width="33dp"
         android:layout_height="38dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/editable4_4"
         app:layout_constraintStart_toStartOf="@+id/editable4_4"
         app:layout_constraintTop_toBottomOf="@+id/editable4_4" />
@@ -343,6 +375,7 @@
         android:layout_width="33dp"
         android:layout_height="38dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/editable4_5"
         app:layout_constraintStart_toStartOf="@+id/editable4_5"
         app:layout_constraintTop_toBottomOf="@+id/editable4_5" />
@@ -352,6 +385,7 @@
         android:layout_width="33dp"
         android:layout_height="38dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/editable4_6"
         app:layout_constraintStart_toStartOf="@+id/editable4_6"
         app:layout_constraintTop_toBottomOf="@+id/editable4_6" />
@@ -361,6 +395,7 @@
         android:layout_width="32dp"
         android:layout_height="38dp"
         android:focusedByDefault="true"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/editable4_7"
         app:layout_constraintStart_toStartOf="@+id/editable4_7"
         app:layout_constraintTop_toBottomOf="@+id/editable4_7" />

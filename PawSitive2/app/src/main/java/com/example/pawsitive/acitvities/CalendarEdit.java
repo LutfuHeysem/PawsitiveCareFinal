@@ -1,18 +1,26 @@
 package com.example.pawsitive.acitvities;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CalendarView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.pawsitive.R;
+import com.google.android.material.datepicker.DayViewDecorator;
+import com.google.android.material.datepicker.MaterialCalendar;
 
 public class CalendarEdit extends AppCompatActivity {
 
@@ -44,6 +52,15 @@ public class CalendarEdit extends AppCompatActivity {
         TextView textView51,textView52,textView53,textView54,textView55,textView56,textView57;
 
         calendar = findViewById(R.id.calendarView);
+
+        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                System.out.printf("year:%d month:%d day:%d\n", year, month, dayOfMonth);
+                //CHANGE THE F'ING COLOR
+
+            }
+        });
 
 
         textView11 =  findViewById(R.id.editable1_1);textView11.setOnClickListener(new View.OnClickListener() {
