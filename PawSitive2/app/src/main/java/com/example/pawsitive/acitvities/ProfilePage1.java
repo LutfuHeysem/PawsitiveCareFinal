@@ -81,7 +81,7 @@ public class ProfilePage1 extends AppCompatActivity {
         rateBar = findViewById(R.id.ratingBar2);
         changeEditable(false);
 
-        fetchUserReviews();
+        fetchUserReviews(userEmail);
 
         try {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -263,11 +263,11 @@ public class ProfilePage1 extends AppCompatActivity {
         return averageStarsTimesTwoRounded / 2;
     }
 
-    private void fetchUserReviews() {
+    private void fetchUserReviews(String email) {
         FirebaseFirestore fStore = FirebaseFirestore.getInstance();
         reviewArrayList = new ArrayList<>();
         fStore.collection("Reviews")
-                .whereEqualTo("CareTaker", userEmail)
+                .whereEqualTo("CareTaker", email)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
