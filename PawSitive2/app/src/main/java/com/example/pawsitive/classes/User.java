@@ -39,6 +39,7 @@ public class User {
     private static String expirationDate;
     private ArrayList<Pet> pets;
     private static ArrayList<String> chatUsers;
+    private static double balance;
 
     public User(String email) {
         User.email = email;
@@ -81,7 +82,7 @@ public class User {
                         gender = document.getString("Gender");
                         age = document.getString("Age");
                         image = document.getString("Profile Photo");
-
+                        balance = document.getDouble("Balance");
 
                     } else {
                         Log.d("User", "No such document");
@@ -144,6 +145,34 @@ public static boolean searchInsidefChat(String key) {
         void onReviewsFetchError(String errorMessage);
     }
 
+    public void setBalance(double newBalance)
+    {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // Assuming you have stored the user's email as a unique identifier
+        String userEmail = User.getEmail();
+
+        // Create a reference to the user's document in Firestore
+        DocumentReference userRef = db.collection("Users").document(userEmail);
+
+        // Update the 'Balance' field for the user
+        userRef.update("Balance", newBalance)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Update successful
+                        Log.d("User", "Balance updated successfully!");
+                        balance = newBalance; // Update the local balance variable
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Update failed
+                        Log.e("User", "Failed to update balance: " + e.getMessage());
+                    }
+                });
+    }
 
 
     public static void addUserToChatPage(String user){
@@ -185,10 +214,7 @@ public static boolean searchInsidefChat(String key) {
     public static String getExpirationDate() {
         return expirationDate;
     }
-    public ArrayList<Pet> getPets() {
-        return pets;
-    }
-
+    public static double getBalance(){return balance;}
     public String getGender() {
         return gender;
     }

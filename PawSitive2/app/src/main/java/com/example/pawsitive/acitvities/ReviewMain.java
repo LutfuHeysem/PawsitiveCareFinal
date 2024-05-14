@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -40,6 +41,7 @@ public class ReviewMain extends AppCompatActivity {
     private FirebaseFirestore fStore;
     private Button saveReview;
     private String feedbackReceiverUser;
+    private double transactionAmountDouble;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +93,33 @@ public class ReviewMain extends AppCompatActivity {
                         System.out.println(e.getMessage());
                     }
 
+
+                    User feedbackReceiverUserUser = new User(feedbackReceiverUser);
+                    User feedbackGiverUser = new User(User.getEmail());
+                    double feedbackGiverBalance = User.getBalance();
+                    double feedbackReceiverUserBalance = feedbackReceiverUserUser.getBalance();
+                    FirebaseFirestore db =FirebaseFirestore.getInstance();
+
+                    DocumentReference careTakerJobData = db.collection("Users").
+                            document(User.getEmail()).
+                            collection("AcceptedOffers").
+                            document(feedbackReceiverUser);
+                    careTakerJobData.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>(){
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                            String transactionAmount = documentSnapshot.getString("amount");
+                            transactionAmountDouble = Double.parseDouble(transactionAmount);
+                        }
+                    });
+
+
+
+                    feedbackReceiverUserUser.setBalance(transactionAmountDouble + feedbackReceiverUserBalance);
+                    feedbackGiverUser.setBalance(feedbackGiverBalance - transactionAmountDouble);
+
+
+                    Intent intent = new Intent(ReviewMain.this, HomePage.class);
+                    startActivity(intent);
             }
             });
 
