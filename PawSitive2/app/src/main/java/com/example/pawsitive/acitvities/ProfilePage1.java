@@ -42,7 +42,7 @@ public class ProfilePage1 extends AppCompatActivity {
     TextView locationView, nameView, priceInfo, locationInfo, experienceInfo, languagesInfo;
     String userEmail, profileImageStr, name, location, gender;
     Bitmap profileImageBitmap;
-    Button backButtonProfilePage, editButtonProfilePage, reviewsButton;
+    Button backButtonProfilePage, editButtonProfilePage, reviewsButton, myAnimalsButton;
     ImageView homeButton, favoritesButton, addButton, chatButton;
     RatingBar rateBar;
     public final int GET_FROM_GALLERY = 3;
@@ -68,6 +68,7 @@ public class ProfilePage1 extends AppCompatActivity {
         favoritesButton = findViewById(R.id.heart_icon);
         addButton = findViewById(R.id.add_icon);
         chatButton = findViewById(R.id.chat_icon);
+        myAnimalsButton = findViewById(R.id.myAnimalButton);
 
         profileImageView = findViewById(R.id.profileImage);
 
@@ -164,6 +165,14 @@ public class ProfilePage1 extends AppCompatActivity {
             }
         });
 
+        myAnimalsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MyPets.class);
+                startActivity(intent);
+            }
+        });
+
 
 
     Intent intent = getIntent();
@@ -208,7 +217,7 @@ public class ProfilePage1 extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //POPUP ARRANGE
+                //TODO: POPUP ARRANGE
 //                Intent intent = new Intent(getApplicationContext(), HomePage.class);
 //                startActivity(intent);
             }
