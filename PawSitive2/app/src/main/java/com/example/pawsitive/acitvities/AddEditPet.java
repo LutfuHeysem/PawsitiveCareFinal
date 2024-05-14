@@ -92,7 +92,9 @@ public class AddEditPet extends AppCompatActivity {
 
         Intent intent = getIntent();
         String petName = intent.getStringExtra("PetName");
+        System.out.println(petName);
         editMode(petName);
+        System.out.println(isEdit);
 
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
@@ -151,7 +153,7 @@ public class AddEditPet extends AppCompatActivity {
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
 
                 DocumentReference petData = db.collection("Users")
-                        .document(User.getEmail())
+                        .document(auth.getCurrentUser().getEmail())
                         .collection("Pets").document(editingPetName);
 
                 petData.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -165,6 +167,7 @@ public class AddEditPet extends AppCompatActivity {
                         spinnerNumberOfWalksSelector.setSelection(adapter5.getPosition(documentSnapshot.getString("Number Of Walks")));
 
                         String image64 = documentSnapshot.getString("Image");
+                        imageStr = image64;
                         byte[] decodedString = Base64.decode(image64, Base64.DEFAULT);
                         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                         //UploadImageView.setBackground(d);
@@ -208,12 +211,9 @@ public class AddEditPet extends AppCompatActivity {
 
                     //imageInBase64
 
-                    name = Name.getText().toString();
-                    additionalNotes = Notes.getText().toString();
-
                     if(typeSelection.equals("Select Type") || genderSelection.equals("Select Gender") || energyLevelSelection.equals("Select Energy Level") ||
                             feedingConditionSelection.equals("Select Feeding Condition") || numberOfWalksSelection.equals("Select Number Of Walks") ||
-                            name.isEmpty() || Age.getText().toString().isEmpty() || Weight.getText().toString().isEmpty()){
+                            Name.getText().toString().isEmpty() || Age.getText().toString().isEmpty() || Weight.getText().toString().isEmpty()){
                         Toast.makeText(AddEditPet.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -221,6 +221,9 @@ public class AddEditPet extends AppCompatActivity {
                         Toast.makeText(AddEditPet.this, "Please upload image", Toast.LENGTH_SHORT).show();
                         return;
                     }
+
+                    name = Name.getText().toString();
+                    additionalNotes = Notes.getText().toString();
 
                     age = Integer.parseInt(Age.getText().toString());
                     weight = Integer.parseInt(Weight.getText().toString());
@@ -249,7 +252,10 @@ public class AddEditPet extends AppCompatActivity {
                     petData.put("House Trained", houseTrained);
                     petData.put("Image", imageStr);
                     petData.put("Additional Notes", additionalNotes);
+                    petData.put("Gender", genderSelection);
 
+                    System.out.println(auth.getCurrentUser().getEmail());
+                    fStore = FirebaseFirestore.getInstance();
                     fStore.collection("Users").document(auth.getCurrentUser().getEmail())
                             .collection("Pets").document(name).set(petData)
                             .addOnCompleteListener(AddEditPet.this, new OnCompleteListener<Void>() {
@@ -257,6 +263,8 @@ public class AddEditPet extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()) {
                                         Toast.makeText(AddEditPet.this, "Save successful", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(getApplicationContext(), MyPets.class);
+                                        startActivity(intent);
                                     }
                                     else{
                                         Toast.makeText(AddEditPet.this, "Save failed", Toast.LENGTH_SHORT).show();

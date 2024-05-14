@@ -21,6 +21,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.pawsitive.R;
+import com.example.pawsitive.classes.AddDialog;
 import com.example.pawsitive.classes.Review;
 import com.example.pawsitive.classes.User;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -217,9 +218,8 @@ public class ProfilePage1 extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: POPUP ARRANGE
-//                Intent intent = new Intent(getApplicationContext(), HomePage.class);
-//                startActivity(intent);
+                AddDialog dialog = new AddDialog();
+                dialog.show(getSupportFragmentManager(), "AddDialog");
             }
         });
         chatButton.setOnClickListener(new View.OnClickListener() {

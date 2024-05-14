@@ -3,17 +3,9 @@ package com.example.pawsitive.acitvities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.SearchView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,7 +15,6 @@ import com.example.pawsitive.classes.FavouriteJobs;
 import com.example.pawsitive.classes.Job;
 
 import com.example.pawsitive.classes.AddDialog;
-import com.example.pawsitive.classes.MakeOfferDialog;
 import com.example.pawsitive.classes.User;
 
 import java.util.ArrayList;
@@ -48,7 +39,7 @@ private boolean imageChanged = false;
 
         initializeImageViews();
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = findViewById(R.id.recyclerView1);
 
 
        // this list is the one to be displayed
