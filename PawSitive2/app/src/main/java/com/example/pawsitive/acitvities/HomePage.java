@@ -21,6 +21,7 @@ import com.example.pawsitive.R;
 import com.example.pawsitive.adapters.HomePageDisplayAdapter;
 import com.example.pawsitive.classes.FavouriteJobs;
 import com.example.pawsitive.classes.Job;
+
 import com.example.pawsitive.classes.AddDialog;
 import com.example.pawsitive.classes.MakeOfferDialog;
 import com.example.pawsitive.classes.User;
@@ -30,9 +31,12 @@ import java.util.List;
 
 public class HomePage extends AppCompatActivity {
 
+
     List<FavouriteJobs> favouriteJobs;
     List <Job> jobs;
     //ArrayAdapter<Job> adapter;
+
+private boolean imageChanged = false;
 
     ImageView homeIcon,favouritesIcon,addIcon,chatIcon,profileIcon,favsBlankHeart;
     //SearchView searchView;
@@ -40,15 +44,18 @@ public class HomePage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home_page);
 
         initializeImageViews();
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
+
        // this list is the one to be displayed
         jobs= new ArrayList<Job>();
+
+
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         System.out.println("adsd");
         recyclerView.setAdapter(new HomePageDisplayAdapter(getApplicationContext(),jobs));
@@ -79,10 +86,12 @@ public class HomePage extends AppCompatActivity {
 
         }
 
+
     public List<FavouriteJobs> getFavouriteJobs() {
         return favouriteJobs;
     }
     public List<Job> getJobs(){return jobs;}
+
 
     private void initializeImageViews(){
 
@@ -149,17 +158,12 @@ public class HomePage extends AppCompatActivity {
             }
         });
 
-        //changing the icon
         favsBlankHeart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 favsBlankHeart.setImageResource(R.drawable.heart);
-                FavouriteJobs newFav = new FavouriteJobs();
-                favouriteJobs.add(newFav);
             }
         });
-
-
 
     };
 

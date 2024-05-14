@@ -1,8 +1,67 @@
 package com.example.pawsitive.classes;
 
-public class Job {
-    private String price, location, locationProperties, experienceLevel, spokenLanguages, dates, gender, email;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
+import android.view.View;
 
+import com.example.pawsitive.adapters.UsersAdapter;
+import com.example.pawsitive.utilities.Constants;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.example.pawsitive.R;
+import com.example.pawsitive.acitvities.ReviewListActivity;
+import com.example.pawsitive.adapters.ReviewAdapter;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.util.ArrayList;
+public class Job extends AppCompatActivity {
+    private String price, location, locationProperties, experienceLevel, spokenLanguages, dates, gender, email;\
+    float rating;
+    private FirebaseFirestore fStore;
+    public static List<Job> jobArrayList;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        fStore = FirebaseFirestore.getInstance();
+        jobArrayList = new ArrayList<>();
+
+        fetchUserJobs();
+    }
+
+    private void fetchUserJobs() {
+        fStore.collection("Jobs")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+
+                            Job jobNew = new Job();
+                            jobNew.location = document.getString("Location").toUpperCase();
+                            jobNew.gender = document.getString("Gender").toUpperCase();
+                            jobNew.spokenLanguages = document.getString("Languages").toUpperCase();
+                            jobNew.price = document.getString("Price");
+                            jobNew.email = document.getString("Email");
+                            jobNew.experienceLevel = document.getString("Experience");
+
+                            jobArrayList.add(jobNew);
+                        }
+                    } else {
+                        Log.d("ReviewListActivity", "Error getting job features: ", task.getException());
+                    }
+                });
+    }
     public String getPrice() {
         return price;
     }
@@ -10,6 +69,8 @@ public class Job {
     public String getLocation() {
         return location;
     }
+
+    public ArrayList<Job> getJobArrayList(){return jobArrayList;}
 
     public String getEmail(){return email;}
 
@@ -48,13 +109,15 @@ public class Job {
         this.spokenLanguages = spokenLanguages;
     }
 
-    public void setDates(String dates) {
-        this.dates = dates;
+    public String getImage() {
+
     }
 
-    public String getDates() {
-        return dates;
+    public int getName() {
+        
     }
 
-
+    public float getRating() {
+        return rating;
+    }
 }

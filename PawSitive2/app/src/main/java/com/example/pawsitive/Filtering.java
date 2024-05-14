@@ -1,4 +1,4 @@
-package com.example.pawsitive.acitvities;
+package com.example.pawsitive;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.pawsitive.R;
+import com.example.pawsitive.acitvities.ProfilePage1;
 import com.example.pawsitive.classes.Job;
 
 import java.util.ArrayList;
@@ -22,21 +23,24 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FilterOption extends AppCompatActivity {
+
+import java.util.stream.Collectors;
+
+public class Filtering extends AppCompatActivity {
 
     private String loc, lang,minCheck, maxCheck, expCheck, gender;
     private int min, max, exp;
     private Button save;
     private CheckBox male, female, other;
     private EditText editLoc, editMin, editMax, editExp, editLang;
-
-    private List <Job> filtered = new ArrayList();
+    private Job temp = new Job();
     //private List <Job> noSorted = new ArrayList();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_filter_option);
+        setContentView(R.layout.activity_filtering);
 
         editLoc = findViewById(R.id.editTextText3);
         editMin = findViewById(R.id.editTextText4);
@@ -48,32 +52,40 @@ public class FilterOption extends AppCompatActivity {
         male = findViewById(R.id.checkBox2);
         female = findViewById(R.id.checkBox3);
         other = findViewById(R.id.checkBox4);
-
-        minCheck = editMin.getText().toString();
-        maxCheck = editMax.getText().toString();
-        expCheck = editExp.getText().toString();
-        gender = "";
-
-        loc = editLoc.getText().toString();
-        lang = editLang.getText().toString().toUpperCase();
-        exp = Integer.parseInt(expCheck);
+        System.out.println("checkBox ON CREATE");
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                minCheck = editMin.getText().toString();
+                maxCheck = editMax.getText().toString();
+                expCheck = editExp.getText().toString();
+                gender = "";
+
+                loc = editLoc.getText().toString();
+                lang = editLang.getText().toString().toUpperCase();
+
+                if(!expCheck.isEmpty())
+                    exp = Integer.parseInt(expCheck);
+
+                System.out.println("filter on click");
                 FilterLocation();
                 FilterPrice();
                 FilterExperience();
                 FilterGender();
                 FilterLanguage();
+                for(int i = 0; i < Job.jobArrayList.size(); i++)
+                {
+                    System.out.println(Job.jobArrayList.get(i));
+                }
                 //startActivity(new Intent(FilterOption.this, HomePage.class));
             }
         });
     }
-
     protected void FilterLocation(){
         if(loc.isEmpty()) {return;}
-        filtered = filtered.stream().filter(str -> !str.getLocation().equals(loc))
+        Job.jobArrayList = Job.jobArrayList.stream().filter(str -> !str.getLocation().equals(loc))
                 .collect(Collectors.toList());
     }
 
@@ -87,7 +99,7 @@ public class FilterOption extends AppCompatActivity {
         {
             min = Integer.parseInt(minCheck);
             max = Integer.parseInt(maxCheck);
-            filtered = filtered.stream().filter(str -> Integer.parseInt(str.getPrice()) >= min && Integer.parseInt(str.getPrice()) <= max)
+            Job.jobArrayList = Job.jobArrayList.stream().filter(str -> Integer.parseInt(str.getPrice()) >= min && Integer.parseInt(str.getPrice()) <= max)
                     .collect(Collectors.toList());
         }
     }
@@ -95,7 +107,7 @@ public class FilterOption extends AppCompatActivity {
         if(expCheck.isEmpty() && exp < 0) { exp = 0;}
         else
         {
-            filtered = filtered.stream().filter(str -> Integer.parseInt(str.getExperienceLevel()) >= exp)
+            Job.jobArrayList = Job.jobArrayList.stream().filter(str -> Integer.parseInt(str.getExperienceLevel()) >= exp)
                     .collect(Collectors.toList());
         }
     }
@@ -104,7 +116,7 @@ public class FilterOption extends AppCompatActivity {
         if(lang.isEmpty()) { lang = "";}
         else
         {
-            filtered = filtered.stream().filter(str -> lang.contains(str.getSpokenLanguages().toUpperCase()))
+            Job.jobArrayList = Job.jobArrayList.stream().filter(str -> lang.contains(str.getSpokenLanguages()))
                     .collect(Collectors.toList());
         }
     }
@@ -114,16 +126,13 @@ public class FilterOption extends AppCompatActivity {
         if(female.isChecked()) { gender += "FEMALE";}
         if(other.isChecked()) { gender += "OTHER";}
 
-        filtered = filtered.stream().filter(str -> gender.contains(str.getGender()))
+        Job.jobArrayList = Job.jobArrayList.stream().filter(str -> gender.contains(str.getGender()))
                 .collect(Collectors.toList());
     }
 
-//    protected void FilterRate(){
-//        filtered = filtered.stream().sorted(str -> Comparator.comparing(ReviewMain::calculateStarAverage(str.getE)));
-//    }
-
-
-
-
+    protected void FilterRate() {
+        Collections.sort(Job.jobArrayList, Comparator.comparing(Job::getRating));
+    }
 
 }
+
