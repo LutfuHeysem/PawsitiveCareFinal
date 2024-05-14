@@ -17,7 +17,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/profileTextViewProfilePage2" />
 
     <LinearLayout
         android:id="@+id/menubar"
@@ -116,7 +116,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/backButtonProfilePage"
+        android:id="@+id/backButtonProfilePage2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
@@ -128,7 +128,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/profileTextView"
+        android:id="@+id/profileTextViewProfilePage2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -167,7 +167,7 @@
         app:layout_constraintTop_toBottomOf="@+id/profileImageProfilePage2" />
 
     <Button
-        android:id="@+id/reviewsButton"
+        android:id="@+id/reviewsButtonProfilePage2"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginStart="10dp"
@@ -209,8 +209,8 @@
         android:clickable="false"
         android:contextClickable="false"
         android:isIndicator="true"
-        app:layout_constraintStart_toEndOf="@+id/reviewsButton"
-        app:layout_constraintTop_toTopOf="@+id/reviewsButton" />
+        app:layout_constraintStart_toEndOf="@+id/reviewsButtonProfilePage2"
+        app:layout_constraintTop_toTopOf="@+id/reviewsButtonProfilePage2" />
 
     <EditText
         android:id="@+id/priceInfoProfilePage2"

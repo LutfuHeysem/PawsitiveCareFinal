@@ -32,61 +32,15 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 public class Job extends AppCompatActivity {
-    private String price, location, locationProperties, experienceLevel, spokenLanguages, dates, gender, email;
+    public String price, location, locationProperties, experienceLevel, spokenLanguages, dates, gender, email;
     float rating;
     String userName, imageStr;
     float userRating;
     private FirebaseFirestore fStore;
     private List<Job> jobArrayList;
     private ArrayList<Review> reviewArrayList;
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
-    }
-
     public Job (){
-        fStore = FirebaseFirestore.getInstance();
-        fetchUserJobs();
-    }
-
-    private void fetchUserJobs() {
-        jobArrayList = new ArrayList<>();
-        fStore.collection("Jobs")
-                .get()
-                .addOnCompleteListener(task -> {
-                    System.out.println("taskkkkkkkkk");
-                    if (task.isSuccessful()) {
-                        System.out.println("success");
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            try {
-                                Job jobNew = new Job();
-                                jobNew.experienceLevel = document.getString("Experience");
-                                jobNew.gender = document.getString("Gender").toUpperCase();
-                                jobNew.spokenLanguages = document.getString("Languages").toUpperCase();
-                                jobNew.price = document.getString("Price");
-                                System.out.println("databse de olanlar");
-                                jobNew.location = document.getString("Location").toUpperCase();
-                                jobNew.email = document.getString("Email");
-                                System.out.println("olmayanlar");
-
-                                System.out.println("getuserdata öncesi");
-                                getUserData();
-                                System.out.println("add öncesi");
-                                jobArrayList.add(jobNew);
-                                System.out.println("AL e eklendi!");
-                                for (int i = 0; i < jobArrayList.size(); i++) {
-                                    System.out.println(jobArrayList.get(i));
-                                }
-                            } catch (Exception e) {
-                                Log.e("Exception", "Error while parsing job document: " + e.getMessage());
-                            }
-                        }
-                    } else {
-                        Log.e("Error", "Error getting job documents: ", task.getException());
-                    }
-                });
-
+        getUserData();
     }
 
     private void getUserData(){
