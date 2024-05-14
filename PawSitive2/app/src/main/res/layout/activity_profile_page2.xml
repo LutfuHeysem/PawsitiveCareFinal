@@ -144,10 +144,10 @@
         android:id="@+id/profileImageProfilePage2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="20dp"
         android:clickable="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintEnd_toStartOf="@+id/activeJobs"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/WhiteBackground2"
         tools:srcCompat="@tools:sample/avatars" />
@@ -188,14 +188,14 @@
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/myAnimalButtonProfilePage2" />
+        app:layout_constraintTop_toBottomOf="@+id/AnimalButtonProfilePage2" />
 
     <Button
-        android:id="@+id/myAnimalButtonProfilePage2"
+        android:id="@+id/AnimalButtonProfilePage2"
         android:layout_width="160dp"
         android:layout_height="50dp"
         android:layout_marginTop="130dp"
-        android:text="My Animals"
+        android:text="Animals"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -271,5 +271,34 @@
         app:layout_constraintEnd_toEndOf="@+id/languagesInfoProfilePage2"
         app:layout_constraintStart_toStartOf="@+id/languagesInfoProfilePage2"
         app:layout_constraintTop_toBottomOf="@+id/languagesInfoProfilePage2" />
+
+    <TextView
+        android:id="@+id/activeJobs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="50dp"
+        android:text="Active Jobs"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/profileImageProfilePage2" />
+
+    <Button
+        android:id="@+id/startChatButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/backButtonProfilePage2" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ActiveJobsRecycler"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/profileImageProfilePage2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/profileImageProfilePage2"
+        app:layout_constraintTop_toBottomOf="@+id/activeJobs" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

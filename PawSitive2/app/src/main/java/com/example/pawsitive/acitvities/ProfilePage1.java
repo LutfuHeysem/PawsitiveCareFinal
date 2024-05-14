@@ -44,7 +44,7 @@ public class ProfilePage1 extends AppCompatActivity {
     String userEmail, profileImageStr, name, location, gender;
     Bitmap profileImageBitmap;
     Button backButtonProfilePage, editButtonProfilePage, reviewsButton, myAnimalsButton;
-    ImageView homeButton, favoritesButton, addButton, chatButton;
+    ImageView homeButton, favoritesButton, addButton, chatButton, profileButton;
     RatingBar rateBar;
     public final int GET_FROM_GALLERY = 3;
     private User owner;
@@ -70,6 +70,7 @@ public class ProfilePage1 extends AppCompatActivity {
         favoritesButton = findViewById(R.id.heart_icon);
         addButton = findViewById(R.id.add_icon);
         chatButton = findViewById(R.id.chat_icon);
+        profileButton = findViewById(R.id.profile_icon);
         myAnimalsButton = findViewById(R.id.myAnimalButton);
 
         profileImageView = findViewById(R.id.profileImage);
@@ -205,8 +206,8 @@ public class ProfilePage1 extends AppCompatActivity {
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(getApplicationContext(), HomePage.class);
-//                startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), HomePage.class);
+                startActivity(intent);
             }
         });
         favoritesButton.setOnClickListener(new View.OnClickListener() {

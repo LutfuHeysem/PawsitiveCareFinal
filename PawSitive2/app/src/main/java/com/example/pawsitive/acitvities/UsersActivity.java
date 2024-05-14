@@ -120,32 +120,4 @@ public class UsersActivity extends AppCompatActivity implements UserListener {
     }
 
 
-
-
-
-    // THIS METHOD WILL BE CALLED WHEN THE USER CLICKS THE START CHAT BUTTON IN PROFILE PAGE
-
-    public void addUserToChat(String email){ // parameter will be the email of the user that clicked
-        try {
-            User.addUserToChatPage(email);
-            FirebaseAuth auth = FirebaseAuth.getInstance();
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            HashMap<String, String> userData = new HashMap<>();
-            userData.put("email", email);
-
-            db.collection("Users").document(User.getEmail())
-                    .collection("UsersForChat").document(email).set(userData);
-
-            HashMap<String, String> userDataReceiver = new HashMap<>();
-            userDataReceiver.put("email", User.getEmail());
-            db.collection("Users").document(email)
-                    .collection("UsersForChat").document(User.getEmail()).set(userDataReceiver);
-
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-
 }

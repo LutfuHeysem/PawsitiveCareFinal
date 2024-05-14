@@ -78,7 +78,7 @@ public class Login extends AppCompatActivity {
                                                 Intent profileIntent = new Intent(Login.this, ProfilePage1.class);
                                                 Intent filterIntent = new Intent(Login.this, Filtering.class);
 
-                                                startActivity(homeIntent);
+                                                startActivity(profileIntent);
 
 
 
