@@ -47,13 +47,11 @@ public class HomePageDisplayAdapter extends RecyclerView.Adapter<HomePageDisplay
 
     @Override
     public void onBindViewHolder(@NonNull JobViewHolder holder, int position) {
-        System.out.println("name " + jobList.get(position).getName());
         Job job = jobList.get(position);
         holder.name.setText(job.getName());
         holder.genderAndYear.setText(job.getGender() + ", " + job.getExperienceLevel());
         holder.location.setText(job.getLocation());
         holder.ratingBar.setRating(job.getRating());
-        System.out.println(job.getRating());
         holder.price.setText(job.getPrice() + " $");
         holder.heart.setVisibility(View.VISIBLE);
 
@@ -61,7 +59,7 @@ public class HomePageDisplayAdapter extends RecyclerView.Adapter<HomePageDisplay
 //                v -> userListener.onUserClicked(job.getEmail())
 //        );
 //        byte[] decodedString = Base64.decode(job.getImage(), Base64.DEFAULT);
-        System.out.println("buraya geliyo mu?");
+
 //        holder.profileImage.setImageBitmap(BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length));
 
         // holder.heart.setImageResource(job.isFavorite() ? R.drawable.heart_filled : R.drawable.heart_outline);
@@ -75,7 +73,6 @@ public class HomePageDisplayAdapter extends RecyclerView.Adapter<HomePageDisplay
             public void onClick(View v) {
                 holder.heart.setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
                 favouriteJobs.add(job);
-                System.out.println(favouriteJobs.size());
             }
         });
     }

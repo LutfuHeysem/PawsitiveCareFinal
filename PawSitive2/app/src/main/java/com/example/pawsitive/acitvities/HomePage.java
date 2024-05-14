@@ -43,6 +43,7 @@ public class HomePage extends AppCompatActivity implements UserListener {
     ImageView homeIcon, favouritesIcon, addIcon, chatIcon, profileIcon, heartIcon;
     Button filterButton;
 
+    ImageView homeIcon, favouritesIcon, addIcon, chatIcon, profileIcon, heartIcon, filterIcon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +67,7 @@ public class HomePage extends AppCompatActivity implements UserListener {
             homePageDisplayAdapter = new HomePageDisplayAdapter(getApplicationContext(), Filtering.getFilteredJobs(), this);
             recyclerView.setAdapter(homePageDisplayAdapter);
         }
+
 
         // Setup search functionality
 //        SearchView searchView = findViewById(R.id.search);
@@ -99,8 +101,10 @@ public class HomePage extends AppCompatActivity implements UserListener {
         profileIcon = findViewById(R.id.profile_icon);
         heartIcon = findViewById(R.id.heart);
         filterButton = findViewById(R.id.filterButton);
+        filterIcon = findViewById(R.id.filter);
 
         filterButton.setOnClickListener(v -> {
+        filterIcon.setOnClickListener(v -> {
             Intent intent = new Intent(HomePage.this, Filtering.class);
             startActivity(intent);
         });
@@ -177,6 +181,29 @@ public class HomePage extends AppCompatActivity implements UserListener {
             System.out.println("burdayim ben - after get() call"); // This will run immediately after initiating the get() call
 
         }
+        fStore = FirebaseFirestore.getInstance();
+        jobs = new ArrayList<>();
+        fStore.collection("Jobs").get().addOnCompleteListener(task -> {
+            if (task.isSuccessful() && task.getResult() != null) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    try {
+                        Job jobNew = new Job();
+                        jobNew.experienceLevel = document.getString("Experience");
+                        jobNew.gender = document.getString("Gender").toUpperCase();
+                        jobNew.spokenLanguages = document.getString("Languages").toUpperCase();
+                        jobNew.price = document.getString("Price");
+                        jobNew.location = document.getString("Location").toUpperCase();
+                        jobNew.email = document.getId();
+                        getUserData(jobNew.email, jobNew);
+                    } catch (Exception e) {
+                        Log.e("Exception", "Error while parsing job document: " + e.getMessage());
+                    }
+                }
+            } else {
+                Log.e("Error", "Error getting job documents: ", task.getException());
+            }
+        });
+    }
 
     private void getUserData(String email, Job jobNew) {
         System.out.println("burdayamaaaaa");
@@ -216,13 +243,11 @@ public class HomePage extends AppCompatActivity implements UserListener {
                             homePageDisplayAdapter = new HomePageDisplayAdapter(getApplicationContext(), jobs, this);
                             recyclerView.setAdapter(homePageDisplayAdapter);
 
-
                     } else {
                         Log.d("ReviewListActivity", "Error getting reviews: ", task.getException());
                     }
                 });
     }
-
     public float calculateStarAverage(ArrayList<Review> reviewArrayList){
         if(reviewArrayList.isEmpty())
         {
@@ -248,12 +273,10 @@ public class HomePage extends AppCompatActivity implements UserListener {
         }
         return Math.round((sumOfStars / reviewArrayList.size()) * 2) / 2.0f;
     }
-
     @Override
     public void onUserClicked(UserForChat user) {
 
     }
-
     @Override
     public void onUserClicked(String user) {
         Intent intent = new Intent(getApplicationContext(), ProfilePage2.class);

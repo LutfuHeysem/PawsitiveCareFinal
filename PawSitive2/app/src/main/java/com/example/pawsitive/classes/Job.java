@@ -37,7 +37,7 @@ public class Job {
     }
 
     public String getSpokenLanguages() {
-        return spokenLanguages;
+        return spokenLanguages.toUpperCase();
     }
 
     public String getGender() {
