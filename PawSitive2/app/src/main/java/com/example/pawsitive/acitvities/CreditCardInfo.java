@@ -24,7 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Random;
 
-public class CreditCardInfo extends AppCompatActivity {
+public class  CreditCardInfo extends AppCompatActivity {
     private Button back, confirm;
     private String[] date = new String[2];
     private int month, year;

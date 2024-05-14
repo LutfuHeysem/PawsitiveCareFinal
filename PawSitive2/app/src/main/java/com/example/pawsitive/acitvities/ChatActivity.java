@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 
 import androidx.annotation.Nullable;
@@ -112,9 +114,13 @@ public class ChatActivity extends AppCompatActivity {
                                 String userEmail = document.getId();
                                 System.out.println("userEmail: " + userEmail);
                                 String amount = document.getString("amount");
+                                String endDate = document.getString("endDate");
+                                String startDate = document.getString("startDate");
                                 System.out.println("amount: " + amount);
                                 AcceptOfferDialog dialog = new AcceptOfferDialog();
                                 dialog.setAmount(amount);
+                                dialog.setEndDate(endDate);
+                                dialog.setStartDate(startDate);
                                 dialog.setReceiverUserEmail(receiverUser.email);
                                 dialog.show(getSupportFragmentManager(), "AcceptOfferDialog");
                                 break;
@@ -130,6 +136,72 @@ public class ChatActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+        db.collection("Users")
+                .document(User.getEmail())
+                .collection("AcceptedOffers")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+                        try {
+                            if (e != null) {
+                                System.out.println("Listen failed: " + e.getMessage());
+                                return;
+                            }
+
+                            for (DocumentChange dc : snapshot.getDocumentChanges()) {
+                                switch (dc.getType()) {
+                                    case ADDED:
+                                        DocumentSnapshot document = dc.getDocument();
+                                        String userEmail = document.getId();
+                                        System.out.println("userEmail: " + userEmail);
+                                        String amount = document.getString("amount");
+                                        String endDate = document.getString("endDate");
+                                        String startDate = document.getString("startDate");
+                                        System.out.println("amount: " + amount);
+
+                                        LocalDate today = LocalDate.now();
+
+                                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                                        String formattedDate = today.format(formatter);
+                                        System.out.println(formattedDate);
+                                        System.out.println("bulamadim :(");
+                                        System.out.println(endDate);
+                                        String[] endDateArr = new String[3];
+                                        endDateArr = endDate.split("/");
+                                        int day = Integer.parseInt(endDateArr[0]);
+                                        int month = Integer.parseInt(endDateArr[1]);
+                                        int year = Integer.parseInt(endDateArr[2]);
+
+                                        String[] todayDateArr = new String[3];
+                                        todayDateArr = formattedDate.split("/");
+                                        int day2 = Integer.parseInt(todayDateArr[0]);
+                                        int month2 = Integer.parseInt(todayDateArr[1]);
+                                        int year2 = Integer.parseInt(todayDateArr[2]);
+                                        System.out.println(receiverUser.email);
+                                        System.out.println("yukarda email var");
+                                        System.out.println(userEmail);
+                                        if(day == day2 && month == month2 && year == year2 && userEmail.equals(receiverUser.email)){
+                                            Intent intent = new Intent(ChatActivity.this, ReviewMain.class);
+                                            intent.putExtra("email", userEmail);
+                                            startActivity(intent);
+                                        }
+
+                                        break;
+                                    case MODIFIED:
+                                        break;
+                                    case REMOVED:
+                                        break;
+                                }
+                            }
+                        } catch (Exception ex) {
+                            // Handle any exceptions here
+                            System.out.println("Exception occurred: " + ex.getMessage());
+                        }
+                    }
+                });
+
 
         System.out.println("test" + receiverUser.id);
         System.out.println("au" + User.getEmail());

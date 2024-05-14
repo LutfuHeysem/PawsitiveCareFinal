@@ -203,8 +203,8 @@ public class ProfilePage1 extends AppCompatActivity {
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), HomePage.class);
-                startActivity(intent);
+//                Intent intent = new Intent(getApplicationContext(), HomePage.class);
+//                startActivity(intent);
             }
         });
         favoritesButton.setOnClickListener(new View.OnClickListener() {

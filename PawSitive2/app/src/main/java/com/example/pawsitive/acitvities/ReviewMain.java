@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -38,13 +39,14 @@ public class ReviewMain extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseFirestore fStore;
     private Button saveReview;
+    private String feedbackReceiverUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_review_main);
-
+        feedbackReceiverUser = getIntent().getExtras().getString("email");
         saveReview = findViewById(R.id.button7);
         fStore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
@@ -62,8 +64,7 @@ public class ReviewMain extends AppCompatActivity {
                 review = new HashMap<>();
                 review.put("Star", rating);
                 review.put("Comment", reviewString);
-                review.put("CareTaker", auth.getCurrentUser().getEmail());
-                review.put("PetOwner", "DENEME");
+                review.put("CareTaker", feedbackReceiverUser);
 
                 fStore.collection("Reviews").document().set(review)
                         .addOnCompleteListener(ReviewMain.this, new OnCompleteListener<Void>() {
@@ -76,8 +77,23 @@ public class ReviewMain extends AppCompatActivity {
                                     Toast.makeText(ReviewMain.this, "Error in adding review", Toast.LENGTH_SHORT).show();
                             }
                         });
+                    try {
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        DocumentReference documentRef = db.collection("Users")
+                                .document(User.getEmail())
+                                .collection("AcceptedOffers")
+                                .document(feedbackReceiverUser);
+
+                        documentRef.delete()
+                                .addOnSuccessListener(aVoid -> System.out.println("Document deleted successfully"))
+                                .addOnFailureListener(e -> System.out.println("Error deleting document: " + e.getMessage()));
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+
             }
             });
+
 }
 
     public static int getResource(double averageStar)
