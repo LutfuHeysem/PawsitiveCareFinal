@@ -6,6 +6,7 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -37,23 +38,13 @@ public class HomePage extends AppCompatActivity implements UserListener {
     private List<Job> jobs = new ArrayList<>();
     private HomePageDisplayAdapter homePageDisplayAdapter;
     ImageView homeIcon, favouritesIcon, addIcon, chatIcon, profileIcon, heartIcon;
+    Button filterButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
         initializeImageViews();
-
-        Job jobNew = new Job();
-        jobNew.experienceLevel = "Junior"; // Sample data, replace with actual data retrieval
-        jobNew.gender = "Male"; // Sample data, replace with actual data retrieval
-        jobNew.spokenLanguages = "English, Spanish"; // Sample data, replace with actual data retrieval
-        jobNew.price = "20"; // Sample data, replace with actual data retrieval
-        jobNew.location = "New York"; // Sample data, replace with actual data retrieval
-        jobNew.email = "sample@example.com"; // Sample data, replace with actual data retrieval
-
-        jobs.add(jobNew);
-
 
         recyclerView = findViewById(R.id.recyclerView2);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -65,7 +56,7 @@ public class HomePage extends AppCompatActivity implements UserListener {
 
 
 
-//        // Setup search functionality
+        // Setup search functionality
 //        SearchView searchView = findViewById(R.id.search);
 //        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 //            @Override
@@ -75,7 +66,7 @@ public class HomePage extends AppCompatActivity implements UserListener {
 //
 //            @Override
 //            public boolean onQueryTextChange(String newText) {
-//                homePageDisplayAdapter.getFilter().filter(newText);
+////                homePageDisplayAdapter.getFilter().filter(newText);
 //                return false;
 //            }
 //        });
@@ -96,6 +87,13 @@ public class HomePage extends AppCompatActivity implements UserListener {
         chatIcon = findViewById(R.id.chat_icon);
         profileIcon = findViewById(R.id.profile_icon);
         heartIcon = findViewById(R.id.heart);
+        filterButton = findViewById(R.id.filterButton);
+
+        filterButton.setOnClickListener(v -> {
+            Intent intent = new Intent(HomePage.this, Filtering.class);
+            startActivity(intent);
+        });
+
 
         homeIcon.setOnClickListener(v -> {
             Intent intent = new Intent(HomePage.this, HomePage.class);
@@ -159,9 +157,6 @@ public class HomePage extends AppCompatActivity implements UserListener {
                 }
 
 
-
-
-
             } else {
                 Log.e("Error", "Error getting job documents: ", task.getException());
             }
@@ -205,6 +200,7 @@ public class HomePage extends AppCompatActivity implements UserListener {
                             jobs.add(jobNew);
 
                             System.out.println("buraya geliyom");
+                            Filtering.setJobsArrayList((ArrayList<Job>) jobs);
                             homePageDisplayAdapter = new HomePageDisplayAdapter(getApplicationContext(), jobs, this);
                             recyclerView.setAdapter(homePageDisplayAdapter);
 

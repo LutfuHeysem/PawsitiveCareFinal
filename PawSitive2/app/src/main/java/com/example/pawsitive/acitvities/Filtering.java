@@ -64,7 +64,7 @@ public class Filtering extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                System.out.println(jobAL.size());
                 minCheck = editMin.getText().toString();
                 maxCheck = editMax.getText().toString();
                 expCheck = editExp.getText().toString();
@@ -76,19 +76,18 @@ public class Filtering extends AppCompatActivity {
                 if(!expCheck.isEmpty())
                     exp = Integer.parseInt(expCheck);
 
-                fetchUserJobs();
                 System.out.println(jobAL.size() + " ");
-//                FilterLocation();
-//                FilterPrice();
-//                FilterExperience();
-//                FilterGender();
-//                FilterLanguage();
+                FilterLocation();
+                FilterPrice();
+                FilterExperience();
+                FilterGender();
+                FilterLanguage();
                 System.out.println("for öncesi");
                 for(int i = 0; i < jobAL.size(); i++)
                 {
-                    System.out.println(jobAL.get(i));
+                    System.out.println(jobAL.get(i).getName());
                 }
-                startActivity(new Intent(Filtering.this, ResetPassword.class));
+                startActivity(new Intent(Filtering.this, HomePage.class));
             }
         });
     }
@@ -143,31 +142,9 @@ public class Filtering extends AppCompatActivity {
         Collections.sort(jobAL, Comparator.comparing(Job::getRating));
     }
 
-    private void fetchUserJobs() {
-        jobAL = new ArrayList<>();
-        fStore.collection("Jobs").whereEqualTo(mAuth.getUid(), mAuth.getUid())
-                .get()
-                .addOnSuccessListener(querySnapshot -> {
-                        for (QueryDocumentSnapshot document : querySnapshot) {
-                            Job jobNew = new Job();
-                            jobNew.experienceLevel = document.getString("Experience");
-                            jobNew.gender = document.getString("Gender").toUpperCase();
-                            jobNew.spokenLanguages = document.getString("Languages").toUpperCase();
-                            jobNew.price = document.getString("Price");
-                            System.out.println("databse de olanlar");
-                            jobNew.location = document.getString("Location").toUpperCase();
-                            jobNew.email = document.getString("Email");
-                            System.out.println("olmayanlar");
-
-                            System.out.println("getuserdata öncesi");
-
-                            System.out.println("add öncesi");
-                            jobAL.add(jobNew);
-                            System.out.println("AL e eklendi!");
-                        }
-                }).addOnFailureListener(e -> {
-                    Log.e("Error", "Error getting job documents: ", e);
-                });
+    public static void setJobsArrayList(ArrayList<Job> jobAL){
+        Filtering.jobAL = jobAL;
     }
+
 }
 
