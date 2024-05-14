@@ -48,6 +48,7 @@ public class ProfilePage1 extends AppCompatActivity {
     public final int GET_FROM_GALLERY = 3;
     private User owner;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         userEmail = User.getEmail();
