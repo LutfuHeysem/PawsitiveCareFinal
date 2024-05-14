@@ -57,8 +57,8 @@ public class  CreditCardInfo extends AppCompatActivity {
         editLang = (EditText) findViewById(R.id.langEdit);
 
         genderRadio = findViewById(R.id.radioGroup);
-        mal = findViewById(R.id.radioButton1);
-        fem = findViewById(R.id.radioButton2);
+        fem = findViewById(R.id.radioButton1);
+        mal = findViewById(R.id.radioButton2);
         oth = findViewById(R.id.radioButton3);
 
         genderRadio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -150,6 +150,7 @@ public class  CreditCardInfo extends AppCompatActivity {
                                                         public void onComplete(@NonNull Task<Void> task) {
                                                             if(task.isSuccessful())
                                                             {
+                                                                Toast.makeText(CreditCardInfo.this, gender + "  ", Toast.LENGTH_SHORT).show();
                                                                 Toast.makeText(CreditCardInfo.this, "Successful Sign Up", Toast.LENGTH_SHORT).show();
                                                                 Intent intent = new Intent(CreditCardInfo.this, Login.class);
                                                                 startActivity(intent);

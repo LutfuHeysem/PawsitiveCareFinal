@@ -12,7 +12,7 @@
         android:id="@+id/textView14"
         android:layout_width="430dp"
         android:layout_height="733dp"
-        android:layout_marginTop="92dp"
+        android:layout_marginTop="70dp"
         android:background="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -270,7 +270,7 @@
         android:layout_height="60dp"
         android:layout_marginStart="35dp"
         android:layout_marginEnd="25dp"
-        android:layout_marginBottom="85dp"
+        android:layout_marginBottom="105dp"
         android:background="@color/material_dynamic_primary80"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

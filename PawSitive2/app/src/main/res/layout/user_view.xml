@@ -81,5 +81,8 @@
         android:layout_below="@id/price"
         android:layout_centerInParent="true"
         android:layout_toEndOf="@id/location"
+        android:background="#00FF0000"
+        android:backgroundTint="#FFFFFF"
+        android:foregroundTint="#00CF0000"
         app:srcCompat="@drawable/heart_3510" />
 </RelativeLayout>

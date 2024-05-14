@@ -1,11 +1,14 @@
 package com.example.pawsitive.acitvities;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,8 +34,7 @@ public class HomePage extends AppCompatActivity {
     private List<FavouriteJobs> favouriteJobs;
     private List<Job> jobs = new ArrayList<>();
     private HomePageDisplayAdapter homePageDisplayAdapter;
-
-    ImageView homeIcon, favouritesIcon, addIcon, chatIcon, profileIcon;
+    ImageView homeIcon, favouritesIcon, addIcon, chatIcon, profileIcon, heartIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +93,7 @@ public class HomePage extends AppCompatActivity {
         addIcon = findViewById(R.id.add_icon);
         chatIcon = findViewById(R.id.chat_icon);
         profileIcon = findViewById(R.id.profile_icon);
+        heartIcon = findViewById(R.id.heart);
 
         homeIcon.setOnClickListener(v -> {
             Intent intent = new Intent(HomePage.this, HomePage.class);
