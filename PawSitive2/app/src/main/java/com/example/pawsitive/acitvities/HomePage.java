@@ -2,6 +2,7 @@ package com.example.pawsitive.acitvities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SearchView;
@@ -19,14 +20,16 @@ import com.example.pawsitive.classes.Job;
 import com.example.pawsitive.classes.Review;
 import com.example.pawsitive.classes.User;
 import com.example.pawsitive.classes.UserForChat;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomePage extends AppCompatActivity {
-
+    RecyclerView recyclerView;
     private List<FavouriteJobs> favouriteJobs;
-    private List<Job> jobs;
+    private List<Job> jobs = new ArrayList<>();
     private HomePageDisplayAdapter homePageDisplayAdapter;
 
     ImageView homeIcon, favouritesIcon, addIcon, chatIcon, profileIcon;
@@ -36,8 +39,6 @@ public class HomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
         initializeImageViews();
-
-        jobs = new ArrayList<>();
 
         Job jobNew = new Job();
         jobNew.experienceLevel = "Junior"; // Sample data, replace with actual data retrieval
@@ -50,13 +51,12 @@ public class HomePage extends AppCompatActivity {
         jobs.add(jobNew);
 
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerView2);
+        recyclerView = findViewById(R.id.recyclerView2);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        homePageDisplayAdapter = new HomePageDisplayAdapter(getApplicationContext(), jobs);
-        recyclerView.setAdapter(homePageDisplayAdapter);
+
 
         // Setup search functionality
-        // fetchJobsFromDatabase();
+        fetchUserJobs();
 
 
 
@@ -118,4 +118,128 @@ public class HomePage extends AppCompatActivity {
             startActivity(intent);
         });
     }
+
+
+
+    private FirebaseFirestore fStore;
+    public String userName, imageStr;
+    public float userRating;
+    public Job jobNew = new Job();
+    public void fetchUserJobs() {
+        fStore = FirebaseFirestore.getInstance();
+        jobs = new ArrayList<>();
+        fStore.collection("Jobs").get().addOnCompleteListener(task -> {
+            System.out.println("burdayim ben - inside onCompleteListener"); // This will run when the query completes
+            if (task.isSuccessful() && task.getResult() != null) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    try {
+                        System.out.println("burdayim ben - processing document"); // This will run for each document
+
+
+                        jobNew.experienceLevel = document.getString("Experience");
+                        jobNew.gender = document.getString("Gender").toUpperCase();
+                        jobNew.spokenLanguages = document.getString("Languages").toUpperCase();
+                        jobNew.price = document.getString("Price");
+                        jobNew.location = document.getString("Location Properties").toUpperCase();
+                        System.out.println("bura gelmisem?adsfasfadsf");
+                        jobNew.email = document.getId();
+
+                        getUserData(jobNew.email);
+
+
+                    } catch (Exception e) {
+                        Log.e("Exception", "Error while parsing job document: " + e.getMessage());
+                    }
+
+                }
+
+
+
+
+
+            } else {
+                Log.e("Error", "Error getting job documents: ", task.getException());
+            }
+        });
+
+        System.out.println("burdayim ben - after get() call"); // This will run immediately after initiating the get() call
+
+    }
+
+    private void getUserData(String email) {
+        System.out.println("burdayamaaaaa");
+        fStore.collection("Users").document(email).get().addOnSuccessListener(documentSnapshot -> {
+            System.out.println("bura gir baxim");
+            userName = documentSnapshot.getString("Name");
+            imageStr = documentSnapshot.getString("Profile Photo");
+            fetchUserReviews(email);
+        });
+    }
+    private ArrayList<Review> reviewArrayList;
+    private void fetchUserReviews(String email) {
+        fStore.collection("Reviews")
+                .whereEqualTo("CareTaker", email)
+                .get()
+                .addOnCompleteListener(task -> {
+
+                    if (task.isSuccessful()) {
+                        System.out.println("bura gir gorum");
+                        reviewArrayList = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Review review = new Review();
+                            review.comment = document.getString("Comment");
+                            review.star = document.getDouble("Star").floatValue();
+                            reviewArrayList.add(review);
+
+
+                        }
+                        if (!reviewArrayList.isEmpty()) {
+
+                            userRating = calculateStarAverage(reviewArrayList);
+                            System.out.println("bura gircen mi " + userRating);
+                            jobNew.userRating = userRating;
+                            System.out.println("bakalim " + userRating);
+                            jobNew.userName = userName;
+                            jobNew.imageStr = imageStr;
+                            jobs.add(jobNew);
+                            if(!jobs.isEmpty()) {
+                                System.out.println("buraya geliyom");
+                                homePageDisplayAdapter = new HomePageDisplayAdapter(getApplicationContext(), jobs);
+                                recyclerView.setAdapter(homePageDisplayAdapter);
+
+                            }
+                        }
+
+                    } else {
+                        Log.d("ReviewListActivity", "Error getting reviews: ", task.getException());
+                    }
+                });
+    }
+
+    public float calculateStarAverage(ArrayList<Review> reviewArrayList){
+        if(reviewArrayList.isEmpty())
+        {
+            return 0;
+        }
+        float sumOfStars = 0;
+        for(Review value : reviewArrayList)
+        {
+            sumOfStars += value.getStar();
+        }
+        float sumOfStarsTimesTwo = 2 * sumOfStars;
+        float averageStarsTimesTwo = sumOfStarsTimesTwo / reviewArrayList.size();
+        float averageStarsTimesTwoRounded = Math.round(averageStarsTimesTwo);
+        return averageStarsTimesTwoRounded / 2;
+    }
+    public float calculateStarAverage() {
+        if (reviewArrayList.isEmpty()) {
+            return 0;
+        }
+        float sumOfStars = 0;
+        for (Review value : reviewArrayList) {
+            sumOfStars += value.getStar();
+        }
+        return Math.round((sumOfStars / reviewArrayList.size()) * 2) / 2.0f;
+    }
+
 }

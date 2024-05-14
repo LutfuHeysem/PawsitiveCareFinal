@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pawsitive.R;
 import com.example.pawsitive.classes.Job;
+import com.example.pawsitive.classes.Review;
 
 import java.util.List;
 
@@ -43,6 +44,7 @@ public class HomePageDisplayAdapter extends RecyclerView.Adapter<HomePageDisplay
         holder.genderAndYear.setText(job.getGender() + ", " + job.getExperienceLevel());
         holder.location.setText(job.getLocation());
         holder.ratingBar.setRating(job.getRating());
+        System.out.println(job.getRating());
         holder.price.setText(job.getPrice() + " $");
 
 //        byte[] decodedString = Base64.decode(job.getImage(), Base64.DEFAULT);
@@ -56,6 +58,8 @@ public class HomePageDisplayAdapter extends RecyclerView.Adapter<HomePageDisplay
 
         }
     }
+
+
 
     @Override
     public int getItemCount() {
