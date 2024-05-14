@@ -202,7 +202,7 @@ public class EditProfilePage extends AppCompatActivity {
                 userData.put("Profile Photo", profileImageStr);
 
 
-                db.collection("Jobs").document(userEmail).update(jobData).
+                db.collection("Jobs").document(userEmail).set(jobData).
                         addOnCompleteListener(EditProfilePage.this, new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
