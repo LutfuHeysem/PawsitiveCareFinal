@@ -145,6 +145,6 @@ public class Filtering extends AppCompatActivity {
         originalJobList.clear();
         originalJobList.addAll(jobs);
         jobAL.clear();
-        jobAL.addAll(jobs);  
+        jobAL.addAll(jobs);
     }
 }

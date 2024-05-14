@@ -39,7 +39,6 @@ public class HomePage extends AppCompatActivity implements UserListener {
     RecyclerView recyclerView;
     String isFiltered;
     private List<FavouriteJobs> favouriteJobs;
-    private List<Job> tempJobs;
     private List<Job> jobs = new ArrayList<>();
     private HomePageDisplayAdapter homePageDisplayAdapter;
     ImageView homeIcon, favouritesIcon, addIcon, chatIcon, profileIcon, heartIcon;
@@ -65,7 +64,6 @@ public class HomePage extends AppCompatActivity implements UserListener {
         System.out.println("isFiltered: " + isFiltered);
         if(!isFiltered.equals("filtered"))
             fetchUserJobs();
-
         else{
             homePageDisplayAdapter = new HomePageDisplayAdapter(getApplicationContext(), Filtering.getFilteredJobs(), this);
             recyclerView.setAdapter(homePageDisplayAdapter);
@@ -206,7 +204,7 @@ public class HomePage extends AppCompatActivity implements UserListener {
                         jobNew.userRating = userRating;
 
                         jobs.add(jobNew);
-                        tempJobs = jobs;
+                        System.out.println("buraya geliyom");
                         Filtering.setJobsArrayList((ArrayList<Job>) jobs);
                         homePageDisplayAdapter = new HomePageDisplayAdapter(getApplicationContext(), jobs, this);
                         recyclerView.setAdapter(homePageDisplayAdapter);
