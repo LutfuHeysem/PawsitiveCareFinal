@@ -3,6 +3,18 @@ package com.example.pawsitive.classes;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+import android.view.View;
+
+import com.example.pawsitive.adapters.UsersAdapter;
+import com.example.pawsitive.utilities.Constants;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,7 +26,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
-
 public class Job extends AppCompatActivity {
     private String price, location, locationProperties, experienceLevel, spokenLanguages, dates, gender, email;
     private FirebaseFirestore fStore;
@@ -104,4 +115,6 @@ public class Job extends AppCompatActivity {
     public String getDates() {
         return dates;
     }
+
+
 }

@@ -24,31 +24,45 @@ import java.util.List;
 
 public class HomePage extends AppCompatActivity {
 
+private boolean imageChanged = false;
 
-
+    ImageView homeIcon,favouritesIcon,addIcon,chatIcon,profileIcon,favsBlankHeart;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home_page);
 
         initializeImageViews();
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
-        List<User> users = new ArrayList<User>();
+        //List<User> users = new ArrayList<User>();
+        List <Temp> users= new ArrayList<Temp>();
+        users.add(new Temp("John", "Male", "23"));
+        users.add(new Temp("John", "Male", "23"));
+        users.add(new Temp("John", "Male", "23"));
+        users.add(new Temp("John", "Male", "23"));
+        users.add(new Temp("John", "Male", "23"));
+        users.add(new Temp("John", "Male", "23"));
+        users.add(new Temp("John", "Male", "23"));
+        users.add(new Temp("John", "Male", "23"));
+
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        System.out.println("adsd");
         recyclerView.setAdapter(new HomePageDisplayAdapter(getApplicationContext(),users));
+        System.out.println("aaaududu");
 
         }
     private void initializeImageViews(){
-        ImageView homeIcon = findViewById(R.id.homeIcon);
-        ImageView favouritesIcon = findViewById(R.id.heart_icon);
-        ImageView addIcon = findViewById(R.id.add_icon);
-        ImageView chatIcon = findViewById(R.id.chat_icon);
-        ImageView profileIcon = findViewById(R.id.profile_icon);
+
+        homeIcon = findViewById(R.id.homeIcon);
+        favouritesIcon = findViewById(R.id.heart_icon);
+        addIcon = findViewById(R.id.add_icon);
+        chatIcon = findViewById(R.id.chat_icon);
+        profileIcon = findViewById(R.id.profile_icon);
+        favsBlankHeart = findViewById(R.id.heart);
 
         homeIcon.setOnClickListener(new View.OnClickListener(){
 
@@ -105,6 +119,15 @@ public class HomePage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        favsBlankHeart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                favsBlankHeart.setImageResource(R.drawable.heart);
+            }
+        });
+
     };
+
 
 }

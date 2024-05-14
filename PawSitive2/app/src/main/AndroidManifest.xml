@@ -17,6 +17,7 @@
             android:exported="false" />
         <activity
             android:name=".acitvities.EditProfilePage"
+
             android:exported="false" />
         <activity
             android:name=".acitvities.CalendarEdit"
