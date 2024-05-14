@@ -2,6 +2,8 @@ package com.example.pawsitive.adapters;
 
 import android.content.Context;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,13 +25,14 @@ import java.util.List;
 public class HomePageDisplayAdapter extends RecyclerView.Adapter<HomePageDisplayAdapter.JobViewHolder> {
 
     private Context context;
-    private List<Job> jobList;
+    private List<Job> jobList, favouriteJobs;
+
 
     public HomePageDisplayAdapter(Context context, List<Job> jobList) {
         this.context = context;
         this.jobList = jobList;
-    }
 
+    }
     @NonNull
     @Override
     public JobViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -46,6 +49,7 @@ public class HomePageDisplayAdapter extends RecyclerView.Adapter<HomePageDisplay
         holder.ratingBar.setRating(job.getUserRating());
         System.out.println(job.getRating());
         holder.price.setText(job.getPrice() + " $");
+        holder.heart.setVisibility(View.VISIBLE);
 
 //        byte[] decodedString = Base64.decode(job.getImage(), Base64.DEFAULT);
         System.out.println("buraya geliyo mu?");
@@ -57,16 +61,22 @@ public class HomePageDisplayAdapter extends RecyclerView.Adapter<HomePageDisplay
             holder.profileImage.setImageBitmap(BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length));
 
         }
+        holder.heart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.heart.setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+                favouriteJobs.add(job);
+                System.out.println(favouriteJobs.size());
+            }
+        });
+
     }
-
-
-
     @Override
     public int getItemCount() {
         return jobList.size();
     }
 
-    class JobViewHolder extends RecyclerView.ViewHolder {
+    public class JobViewHolder extends RecyclerView.ViewHolder {
 
         TextView name, genderAndYear, location, price;
         RatingBar ratingBar;
@@ -83,4 +93,5 @@ public class HomePageDisplayAdapter extends RecyclerView.Adapter<HomePageDisplay
             heart = itemView.findViewById(R.id.heart);
         }
     }
+
 }
