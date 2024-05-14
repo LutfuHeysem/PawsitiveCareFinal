@@ -45,8 +45,8 @@ public class FavouritesPage extends AppCompatActivity {
             public void onClick(View v) {
                 //handle click on home image
                 //navigate to home page
-//                Intent intent = new Intent(FavouritesPage.this, HomePage.class);
-//                startActivity(intent);
+                Intent intent = new Intent(FavouritesPage.this, HomePage.class);
+                startActivity(intent);
             }
         });
 
