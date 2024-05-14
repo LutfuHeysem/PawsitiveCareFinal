@@ -12,6 +12,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.pawsitive.R;
+import com.example.pawsitive.classes.AddDialog;
 import com.example.pawsitive.classes.User;
 
 public class FavouritesPage extends AppCompatActivity {
@@ -60,15 +61,9 @@ public class FavouritesPage extends AppCompatActivity {
             }
         });
 
-        addIcon.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                //handle click on add image
-                //navigate to add/edit page
-                Intent intent = new Intent(FavouritesPage.this, AddEditPet.class);
-                startActivity(intent);
-            }
+        addIcon.setOnClickListener(v -> {
+            AddDialog dialog = new AddDialog();
+            dialog.show(getSupportFragmentManager(), "AddDialog");
         });
 
         chatIcon.setOnClickListener(new View.OnClickListener(){
