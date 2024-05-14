@@ -56,6 +56,10 @@ public class Job {
         return rating;
     }
 
+    public float getUserRating(){
+        return userRating;
+    }
+
     public List<Job> getJobList() {
         return jobArrayList;
     }

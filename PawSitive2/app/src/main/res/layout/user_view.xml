@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/profileImage"
         android:text="Name"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textColor="@color/black"
         />
     <TextView
@@ -32,39 +31,31 @@
         android:layout_toEndOf="@id/profileImage"
         android:layout_below="@id/genderAndYear"
         android:text="Location">
-
     </TextView>
-
 
     <RatingBar
         android:id="@+id/rating_bar"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/location"
         android:layout_alignStart="@id/profileImage"
-        android:layout_alignEnd="@+id/location"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="-6dp"
-        android:layout_marginEnd="0dp"
-        android:layout_toEndOf="@id/profileImage"
-        android:isIndicator="true"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="4dp"
         android:numStars="5"
         android:rating="3.5"
-        android:scaleX="0.4"
-        android:scaleY="0.4"
-        android:stepSize="0.4">
-
-    </RatingBar>
+        android:stepSize="0.5"
+        android:isIndicator="true"
+        style="?android:attr/ratingBarStyleSmall"
+        />
 
     <TextView
         android:id="@+id/price"
         android:layout_width="110dp"
         android:layout_height="30dp"
         android:text="Price $"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textColor="@color/black"
         android:layout_toEndOf="@id/genderAndYear">
-
     </TextView>
 
     <ImageView
@@ -73,17 +64,14 @@
         android:layout_height="100dp"
         android:layout_centerVertical="true"
         android:layout_marginRight="10dp">
-
     </ImageView>
 
     <LinearLayout
-
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_below="@id/profileImage"
         android:layout_marginTop="10dp"
         android:background="#D3CDCD">
-
     </LinearLayout>
 
     <ImageView
@@ -94,6 +82,4 @@
         android:layout_centerInParent="true"
         android:layout_toEndOf="@id/location"
         app:srcCompat="@drawable/heart_3510" />
-
-
 </RelativeLayout>
