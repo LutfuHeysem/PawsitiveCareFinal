@@ -1,4 +1,4 @@
-package com.example.pawsitive;
+package com.example.pawsitive.acitvities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -70,16 +70,17 @@ public class Filtering extends AppCompatActivity {
                     exp = Integer.parseInt(expCheck);
 
                 System.out.println("filter on click");
-                FilterLocation();
-                FilterPrice();
-                FilterExperience();
-                FilterGender();
-                FilterLanguage();
+                System.out.println(Job.jobArrayList.size());
+//                FilterLocation();
+//                FilterPrice();
+//                FilterExperience();
+//                FilterGender();
+//                FilterLanguage();
                 for(int i = 0; i < Job.jobArrayList.size(); i++)
                 {
                     System.out.println(Job.jobArrayList.get(i));
                 }
-                //startActivity(new Intent(FilterOption.this, HomePage.class));
+                startActivity(new Intent(Filtering.this, ResetPassword.class));
             }
         });
     }

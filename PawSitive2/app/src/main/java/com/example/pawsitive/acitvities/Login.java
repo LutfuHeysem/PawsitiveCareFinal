@@ -12,7 +12,6 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.pawsitive.Filtering;
 import com.example.pawsitive.R;
 import com.example.pawsitive.classes.User;
 import com.google.android.gms.tasks.OnFailureListener;

@@ -16,7 +16,7 @@
             android:name=".acitvities.MyPets"
             android:exported="false" />
         <activity
-            android:name=".Filtering"
+            android:name=".acitvities.Filtering"
             android:exported="false" />
         <activity
             android:name=".acitvities.EditProfilePage"
