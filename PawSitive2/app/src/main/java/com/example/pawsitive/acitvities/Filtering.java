@@ -92,13 +92,13 @@ public class Filtering extends AppCompatActivity {
                 String filtered = "filtered";
                 intent.putExtra("isFiltered", filtered);
                 startActivity(intent);
-                startActivity(new Intent(Filtering.this, HomePage.class));
+
             }
         });
     }
     protected void FilterLocation(){
         if(loc.isEmpty()) {return;}
-        jobAL = jobAL.stream().filter(str -> str.getLocation().equals(loc))
+        jobAL = jobAL.stream().filter(str -> str.getLocation().equals(loc.toUpperCase()))
                 .collect(Collectors.toList());
     }
 
@@ -134,16 +134,24 @@ public class Filtering extends AppCompatActivity {
         }
     }
 
-    protected void FilterGender(){
-        if(!male.isChecked() && !female.isChecked() && !other.isChecked()){return;}
-        else{
-            if(male.isChecked()) { gender = "male";}
-            if(female.isChecked()) { gender = "FEMALE";}
-            if(other.isChecked()) { gender = "OTHER";}
+    protected void FilterGender() {
+        if (!male.isChecked() && !female.isChecked() && !other.isChecked()) {
+            return;
+        } else {
+            List<String> genderList = new ArrayList<>();
+            if (male.isChecked()) {
+                genderList.add("male");
+            }
+            if (female.isChecked()) {
+                genderList.add("female");
+            }
+            if (other.isChecked()) {
+                genderList.add("other");
+            }
 
-            jobAL = jobAL.stream().filter(str -> gender.contains(str.getGender()))
+            jobAL = jobAL.stream()
+                    .filter(str -> genderList.contains(str.getGender().toLowerCase()))
                     .collect(Collectors.toList());
-
         }
     }
 

@@ -41,11 +41,12 @@ public class HomePage extends AppCompatActivity implements UserListener {
     private List<Job> jobs = new ArrayList<>();
     private HomePageDisplayAdapter homePageDisplayAdapter;
     ImageView homeIcon, favouritesIcon, addIcon, chatIcon, profileIcon, heartIcon;
-    Button filterButton;
+    ImageView filterButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_home_page);
         initializeImageViews();
 
@@ -92,12 +93,14 @@ public class HomePage extends AppCompatActivity implements UserListener {
     }
 
     private void initializeImageViews() {
+        System.out.println("biurdadsfa");
         homeIcon = findViewById(R.id.homeIcon);
         favouritesIcon = findViewById(R.id.heart_icon);
         addIcon = findViewById(R.id.add_icon);
         chatIcon = findViewById(R.id.chat_icon);
         profileIcon = findViewById(R.id.profile_icon);
         heartIcon = findViewById(R.id.heart);
+        filterButton = findViewById(R.id.filter);
 
         filterButton.setOnClickListener(v -> {
             Intent intent = new Intent(HomePage.this, Filtering.class);
@@ -153,7 +156,7 @@ public class HomePage extends AppCompatActivity implements UserListener {
                         jobNew.gender = document.getString("Gender").toUpperCase();
                         jobNew.spokenLanguages = document.getString("Languages").toUpperCase();
                         jobNew.price = document.getString("Price");
-                        jobNew.location = document.getString("Location Properties").toUpperCase();
+                        jobNew.location = document.getString("Location").toUpperCase();
                         System.out.println("bura gelmisem?adsfasfadsf");
                         jobNew.email = document.getId();
                         System.out.println("email budu" + jobNew.email);
