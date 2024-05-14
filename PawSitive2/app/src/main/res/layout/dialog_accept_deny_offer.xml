@@ -28,13 +28,36 @@
         android:layout_marginTop="32dp"
          />
 
+    <TextView
+        android:id="@+id/endDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/end_date_view"
+        android:textSize="12sp"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="64dp"
+        />
+
+    <TextView
+        android:id="@+id/starDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start_date_view"
+        android:textSize="12sp"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="48dp"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@id/textOffer"
         android:gravity="center_horizontal"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="64dp">
 
         <Button
             android:id="@+id/btnDeny"

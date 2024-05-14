@@ -235,8 +235,8 @@ public class EditProfilePage extends AppCompatActivity {
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), HomePage.class);
-                startActivity(intent);
+//                Intent intent = new Intent(getApplicationContext(), HomePage.class);
+//                startActivity(intent);
             }
         });
         favoritesButton.setOnClickListener(new View.OnClickListener() {
@@ -249,7 +249,7 @@ public class EditProfilePage extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //POPUP ARRANGE
+                //TODO: POPUP ARRANGE
 //                Intent intent = new Intent(getApplicationContext(), HomePage.class);
 //                startActivity(intent);
             }

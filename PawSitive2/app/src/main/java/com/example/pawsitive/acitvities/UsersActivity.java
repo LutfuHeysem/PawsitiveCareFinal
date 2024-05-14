@@ -46,8 +46,8 @@ public class UsersActivity extends AppCompatActivity implements UserListener {
     }
 
     private void backPressed(){
-        Intent intent = new Intent(UsersActivity.this, HomePage.class);
-        startActivity(intent);
+//        Intent intent = new Intent(UsersActivity.this, HomePage.class);
+//        startActivity(intent);
     }
     private void setListener(){
         binding.imageBack.setOnClickListener(v -> backPressed());

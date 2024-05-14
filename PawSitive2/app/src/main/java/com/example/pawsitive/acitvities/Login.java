@@ -70,7 +70,7 @@ public class Login extends AppCompatActivity {
                                                 Toast.makeText(Login.this, "Successful Login!", Toast.LENGTH_SHORT).show();
 
                                                 //TEMPORARY
-                                                Intent homeIntent = new Intent(Login.this, HomePage.class);
+//                                                Intent homeIntent = new Intent(Login.this, HomePage.class);
                                                 Intent editPetIntent = new Intent(Login.this, AddEditPet.class).putExtra("PetName", "Venus");
                                                 //WILL GET PET NAME WHEN EDITING
                                                 Intent addPetIntent = new Intent(Login.this, AddEditPet.class);
@@ -79,7 +79,7 @@ public class Login extends AppCompatActivity {
                                                 Intent profileIntent = new Intent(Login.this, ProfilePage1.class);
                                                 Intent filterIntent = new Intent(Login.this, Filtering.class);
 
-                                                startActivity(filterIntent);
+                                                startActivity(profileIntent);
 
 
 

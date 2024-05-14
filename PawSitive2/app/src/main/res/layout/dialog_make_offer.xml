@@ -23,8 +23,7 @@
         android:textColorHint="@color/primary_text"
         app:layout_constraintEnd_toEndOf="@id/imgDollar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imgDollar"
@@ -37,6 +36,40 @@
         app:layout_constraintEnd_toEndOf="@id/btnSendOffer"
         app:layout_constraintTop_toTopOf="@+id/etOfferAmount" />
 
+    <EditText
+        android:id="@+id/etStartDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/start_date"
+        android:focusable="false"
+        android:clickable="true"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:inputType="none"
+        android:textColor="@color/white_color"
+        android:textColorHint="@color/primary_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etOfferAmount" />
+
+    <EditText
+        android:id="@+id/etEndDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="End Date"
+        android:focusable="false"
+        android:clickable="true"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:inputType="none"
+        android:textColor="@color/white_color"
+        android:textColorHint="@color/primary_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etStartDate" />
+
     <Button
         android:id="@+id/btnSendOffer"
         android:layout_width="0dp"
@@ -46,6 +79,6 @@
         android:backgroundTint="@color/dark_soft_cyan"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etOfferAmount" />
+        app:layout_constraintTop_toBottomOf="@+id/etEndDate" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
