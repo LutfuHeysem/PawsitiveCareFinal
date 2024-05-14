@@ -2,6 +2,7 @@ package com.example.pawsitive.acitvities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -16,6 +17,9 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.pawsitive.R;
 import com.example.pawsitive.acitvities.ProfilePage1;
 import com.example.pawsitive.classes.Job;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,7 +37,9 @@ public class Filtering extends AppCompatActivity {
     private Button save;
     private CheckBox male, female, other;
     private EditText editLoc, editMin, editMax, editExp, editLang;
+    private FirebaseAuth mAuth;
     private static List<Job> jobAL;
+    private FirebaseFirestore fStore;
 
     //private List <Job> noSorted = new ArrayList();
     @Override
@@ -41,6 +47,9 @@ public class Filtering extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_filtering);
+
+        fStore = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
         editLoc = findViewById(R.id.editTextText3);
         editMin = findViewById(R.id.editTextText4);
@@ -52,13 +61,6 @@ public class Filtering extends AppCompatActivity {
         male = findViewById(R.id.checkBox2);
         female = findViewById(R.id.checkBox3);
         other = findViewById(R.id.checkBox4);
-
-        System.out.println("twmp önce");
-        Job temp = new Job();
-
-        System.out.println(temp.getJobList().size());
-        System.out.println(jobAL.size());
-
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,6 +76,8 @@ public class Filtering extends AppCompatActivity {
                 if(!expCheck.isEmpty())
                     exp = Integer.parseInt(expCheck);
 
+                fetchUserJobs();
+                System.out.println(jobAL.size() + " ");
 //                FilterLocation();
 //                FilterPrice();
 //                FilterExperience();
@@ -139,5 +143,31 @@ public class Filtering extends AppCompatActivity {
         Collections.sort(jobAL, Comparator.comparing(Job::getRating));
     }
 
+    private void fetchUserJobs() {
+        jobAL = new ArrayList<>();
+        fStore.collection("Jobs").whereEqualTo(mAuth.getUid(), mAuth.getUid())
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                        for (QueryDocumentSnapshot document : querySnapshot) {
+                            Job jobNew = new Job();
+                            jobNew.experienceLevel = document.getString("Experience");
+                            jobNew.gender = document.getString("Gender").toUpperCase();
+                            jobNew.spokenLanguages = document.getString("Languages").toUpperCase();
+                            jobNew.price = document.getString("Price");
+                            System.out.println("databse de olanlar");
+                            jobNew.location = document.getString("Location").toUpperCase();
+                            jobNew.email = document.getString("Email");
+                            System.out.println("olmayanlar");
+
+                            System.out.println("getuserdata öncesi");
+
+                            System.out.println("add öncesi");
+                            jobAL.add(jobNew);
+                            System.out.println("AL e eklendi!");
+                        }
+                }).addOnFailureListener(e -> {
+                    Log.e("Error", "Error getting job documents: ", e);
+                });
+    }
 }
 

@@ -14,6 +14,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.pawsitive.R;
+import com.example.pawsitive.classes.Review;
 
 import java.util.ArrayList;
 
