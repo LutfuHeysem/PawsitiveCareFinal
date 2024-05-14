@@ -8,6 +8,7 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.util.Base64;
 import android.widget.RatingBar;
@@ -54,6 +55,7 @@ public class HomePageDisplayAdapter extends RecyclerView.Adapter<HomePageDisplay
         holder.ratingBar.setRating(job.getRating());
         holder.price.setText(job.getPrice() + " $");
         holder.heart.setVisibility(View.VISIBLE);
+        holder.heartClicked.setVisibility(View.GONE);
 
 //        binding.getRoot().setOnClickListener(
 //                v -> userListener.onUserClicked(job.getEmail())
@@ -62,7 +64,6 @@ public class HomePageDisplayAdapter extends RecyclerView.Adapter<HomePageDisplay
 
 //        holder.profileImage.setImageBitmap(BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length));
 
-        // holder.heart.setImageResource(job.isFavorite() ? R.drawable.heart_filled : R.drawable.heart_outline);
         if (job.getImage() != null && !job.getImage().isEmpty()) {
             byte[] decodedString = Base64.decode(job.getImage(), Base64.DEFAULT);
             holder.profileImage.setImageBitmap(BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length));
@@ -71,21 +72,31 @@ public class HomePageDisplayAdapter extends RecyclerView.Adapter<HomePageDisplay
         holder.heart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.heart.setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+                holder.heart.setVisibility(View.GONE);
+                holder.heartClicked.setVisibility(View.VISIBLE);
                 favouriteJobs.add(job);
             }
         });
+        holder.heartClicked.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.heartClicked.setVisibility(View.GONE);
+                holder.heart.setVisibility(View.VISIBLE);
+                favouriteJobs.remove(job);
+            }
+        });
     }
+    
     @Override
     public int getItemCount() {
         return jobList.size();
     }
 
     public class JobViewHolder extends RecyclerView.ViewHolder {
-
         TextView name, genderAndYear, location, price;
         RatingBar ratingBar;
-        ImageView profileImage, heart;
+        ImageView profileImage;
+        Button heart, heartClicked;
 
         public JobViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -96,7 +107,7 @@ public class HomePageDisplayAdapter extends RecyclerView.Adapter<HomePageDisplay
             ratingBar = itemView.findViewById(R.id.rating_bar);
             profileImage = itemView.findViewById(R.id.profileImage);
             heart = itemView.findViewById(R.id.heart);
+            heartClicked = itemView.findViewById(R.id.heartClicked);
         }
     }
-
 }

@@ -26,6 +26,7 @@ import com.example.pawsitive.classes.User;
 import com.example.pawsitive.classes.UserForChat;
 import com.example.pawsitive.listeners.UserListener;
 import com.example.pawsitive.utilities.Constants;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -101,7 +102,6 @@ public class HomePage extends AppCompatActivity implements UserListener {
         addIcon = findViewById(R.id.add_icon);
         chatIcon = findViewById(R.id.chat_icon);
         profileIcon = findViewById(R.id.profile_icon);
-        heartIcon = findViewById(R.id.heart);
         filterButton = findViewById(R.id.filter);
 
         filterButton.setOnClickListener(v -> {
@@ -146,13 +146,14 @@ public class HomePage extends AppCompatActivity implements UserListener {
     public void fetchUserJobs() {
 
         fStore = FirebaseFirestore.getInstance();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
         jobs = new ArrayList<>();
         fStore.collection("Jobs").get().addOnCompleteListener(task -> {
-            System.out.println("burdayim ben - inside onCompleteListener"); // This will run when the query completes
             if (task.isSuccessful() && task.getResult() != null) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     try {
-                        System.out.println("burdayim ben - processing document"); // This will run for each document
+                        if(document.getString("Email").equals(auth.getCurrentUser().getEmail()))
+                            continue;
                         Job jobNew = new Job();
                         jobNew.experienceLevel = document.getString("Experience");
                         jobNew.gender = document.getString("Gender").toUpperCase();
@@ -160,32 +161,23 @@ public class HomePage extends AppCompatActivity implements UserListener {
                         jobNew.price = document.getString("Price");
                         jobNew.location = document.getString("Location").toUpperCase();
                         System.out.println("bura gelmisem?adsfasfadsf");
+                        jobNew.location = document.getString("Location Properties").toUpperCase();
                         jobNew.email = document.getId();
-                        System.out.println("email budu" + jobNew.email);
-
                         getUserData(jobNew.email, jobNew);
-
-
                     } catch (Exception e) {
                         Log.e("Exception", "Error while parsing job document: " + e.getMessage());
                     }
-
                 }
-
-
             } else {
                 Log.e("Error", "Error getting job documents: ", task.getException());
             }
         });
 
-        System.out.println("burdayim ben - after get() call"); // This will run immediately after initiating the get() call
 
     }
 
     private void getUserData(String email, Job jobNew) {
-        System.out.println("burdayamaaaaa");
         fStore.collection("Users").document(email).get().addOnSuccessListener(documentSnapshot -> {
-            System.out.println("bura gir baxim");
             jobNew.userName = documentSnapshot.getString("Name");
             jobNew.imageStr = documentSnapshot.getString("Profile Photo");
             fetchUserReviews(email, jobNew);
@@ -199,7 +191,6 @@ public class HomePage extends AppCompatActivity implements UserListener {
                 .addOnCompleteListener(task -> {
 
                     if (task.isSuccessful()) {
-                        System.out.println("bura gir gorum");
                         reviewArrayList = new ArrayList<>();
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Review review = new Review();
@@ -209,18 +200,18 @@ public class HomePage extends AppCompatActivity implements UserListener {
                         }
                         userRating = 0.0f;
                         if(!reviewArrayList.isEmpty()) userRating = calculateStarAverage(reviewArrayList);
-                        System.out.println("bura gircen mi " + userRating);
                         jobNew.userRating = userRating;
-                        System.out.println("bakalim " + userRating);
+                        userRating = 0.0f;
+                        if(!reviewArrayList.isEmpty()) userRating = calculateStarAverage(reviewArrayList);
+                        jobNew.userRating = userRating;
 
                         jobs.add(jobNew);
                         tempJobs = jobs;
-
-                        System.out.println("buraya geliyom");
                         Filtering.setJobsArrayList((ArrayList<Job>) jobs);
                         homePageDisplayAdapter = new HomePageDisplayAdapter(getApplicationContext(), jobs, this);
                         recyclerView.setAdapter(homePageDisplayAdapter);
-
+                        homePageDisplayAdapter = new HomePageDisplayAdapter(getApplicationContext(), jobs, this);
+                        recyclerView.setAdapter(homePageDisplayAdapter);
 
                     } else {
                         Log.d("ReviewListActivity", "Error getting reviews: ", task.getException());
