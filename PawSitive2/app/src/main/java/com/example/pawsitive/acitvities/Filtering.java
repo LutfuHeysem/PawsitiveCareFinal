@@ -74,32 +74,31 @@ public class Filtering extends AppCompatActivity {
                 gender = "";
 
                 loc = editLoc.getText().toString();
+                loc = editLoc.getText().toString().toUpperCase();
                 lang = editLang.getText().toString().toUpperCase();
 
                 if(!expCheck.isEmpty())
                     exp = Integer.parseInt(expCheck);
 
-                System.out.println(jobAL.size() + " ");
+
                 FilterLocation();
                 FilterPrice();
                 FilterExperience();
                 FilterGender();
                 FilterLanguage();
-                System.out.println("for öncesi");
-                for(int i = 0; i < jobAL.size(); i++)
-                {
-                    System.out.println(jobAL.get(i).getName());
-                }
+                FilterGeneral();
+
                 Intent intent = new Intent(getApplicationContext(), HomePage.class);
                 String filtered = "filtered";
                 intent.putExtra("isFiltered", filtered);
                 startActivity(intent);
+                startActivity(new Intent(Filtering.this, HomePage.class));
             }
         });
     }
     protected void FilterLocation(){
         if(loc.isEmpty()) {return;}
-        jobAL = jobAL.stream().filter(str -> !str.getLocation().equals(loc))
+        jobAL = jobAL.stream().filter(str -> str.getLocation().equals(loc))
                 .collect(Collectors.toList());
     }
 
@@ -130,22 +129,27 @@ public class Filtering extends AppCompatActivity {
         if(lang.isEmpty()) { lang = "";}
         else
         {
-            jobAL = jobAL.stream().filter(str -> lang.contains(str.getSpokenLanguages()))
+            jobAL = jobAL.stream().filter(str -> str.getSpokenLanguages().trim().contains(lang))
                     .collect(Collectors.toList());
         }
     }
 
     protected void FilterGender(){
-        if(male.isChecked()) { gender += "MALE";}
-        if(female.isChecked()) { gender += "FEMALE";}
-        if(other.isChecked()) { gender += "OTHER";}
+        if(!male.isChecked() && !female.isChecked() && !other.isChecked()){return;}
+        else{
+            if(male.isChecked()) { gender = "male";}
+            if(female.isChecked()) { gender = "FEMALE";}
+            if(other.isChecked()) { gender = "OTHER";}
 
-        jobAL = jobAL.stream().filter(str -> gender.contains(str.getGender()))
-                .collect(Collectors.toList());
+            jobAL = jobAL.stream().filter(str -> gender.contains(str.getGender()))
+                    .collect(Collectors.toList());
+
+        }
     }
 
-    protected void FilterRate() {
-        Collections.sort(jobAL, Comparator.comparing(Job::getRating));
+    protected void FilterGeneral() {
+        Collections.sort(jobAL, Comparator.comparing(Job::getRating).reversed());
+        Collections.sort(jobAL, Comparator.comparing(Job::getExperienceLevel).reversed());
     }
 
     public static void setJobsArrayList(ArrayList<Job> jobAL){
@@ -153,3 +157,4 @@ public class Filtering extends AppCompatActivity {
     }
 
 }
+
