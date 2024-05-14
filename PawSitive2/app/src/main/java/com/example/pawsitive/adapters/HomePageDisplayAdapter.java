@@ -18,9 +18,7 @@ import com.example.pawsitive.acitvities.MyViewHolder;
 
 import java.util.List;
 
-import com.example.pawsitive.acitvities.Temp;
 import com.example.pawsitive.classes.Job;
-import com.example.pawsitive.classes.User;
 
 public class HomePageDisplayAdapter extends RecyclerView.Adapter<MyViewHolder> {
 

@@ -12,8 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pawsitive.R;
 import com.example.pawsitive.acitvities.FavouritesViewHolder;
-import com.example.pawsitive.acitvities.MyViewHolder;
-import com.example.pawsitive.acitvities.Temp;
 import com.example.pawsitive.classes.FavouriteJobs;
 
 import java.util.List;
