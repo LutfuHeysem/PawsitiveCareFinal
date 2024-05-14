@@ -42,7 +42,7 @@ public class ProfilePage1 extends AppCompatActivity {
     TextView locationView, nameView, priceInfo, locationInfo, experienceInfo, languagesInfo;
     String userEmail, profileImageStr, name, location, gender;
     Bitmap profileImageBitmap;
-    Button backButtonProfilePage, editButtonProfilePage, calendarButton, reviewsButton;
+    Button backButtonProfilePage, editButtonProfilePage, reviewsButton;
     ImageView homeButton, favoritesButton, addButton, chatButton;
     RatingBar rateBar;
     public final int GET_FROM_GALLERY = 3;
@@ -62,7 +62,6 @@ public class ProfilePage1 extends AppCompatActivity {
 
         backButtonProfilePage = (Button) findViewById(R.id.backButtonProfilePage);
         editButtonProfilePage = findViewById(R.id.editButtonProfile);
-        calendarButton = findViewById(R.id.EditCalendarButton);
         reviewsButton = findViewById(R.id.reviewsButton);
 
         homeButton = findViewById(R.id.homeIcon);
@@ -192,13 +191,6 @@ public class ProfilePage1 extends AppCompatActivity {
             }
         });
 
-        calendarButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), CalendarEdit.class);
-                startActivity(intent);
-            }
-        });
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

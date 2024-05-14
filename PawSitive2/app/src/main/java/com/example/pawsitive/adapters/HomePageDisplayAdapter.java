@@ -54,7 +54,7 @@ public class HomePageDisplayAdapter extends RecyclerView.Adapter<MyViewHolder> {
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         holder.profileView.setImageBitmap(decodedByte);
         holder.heartView.setImageResource(R.drawable.heart_3510);
-        holder.review.setRating(jobs.get(position));
+        holder.review.setRating(jobs.get(position).getRating());
     }
 
     @Override

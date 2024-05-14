@@ -27,9 +27,10 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 public class Job extends AppCompatActivity {
-    private String price, location, locationProperties, experienceLevel, spokenLanguages, dates, gender, email;
+    private String price, location, locationProperties, experienceLevel, spokenLanguages, dates, gender, email;\
+    float rating;
     private FirebaseFirestore fStore;
-    private ArrayList<Job> jobArrayList;
+    public static List<Job> jobArrayList;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -108,13 +109,15 @@ public class Job extends AppCompatActivity {
         this.spokenLanguages = spokenLanguages;
     }
 
-    public void setDates(String dates) {
-        this.dates = dates;
+    public String getImage() {
+
     }
 
-    public String getDates() {
-        return dates;
+    public int getName() {
+        
     }
 
-
+    public float getRating() {
+        return rating;
+    }
 }
