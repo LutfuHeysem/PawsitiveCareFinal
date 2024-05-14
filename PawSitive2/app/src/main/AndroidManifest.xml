@@ -13,11 +13,13 @@
         android:theme="@style/Theme.PawSitive"
         tools:targetApi="31">
         <activity
+            android:name=".acitvities.MyPets"
+            android:exported="false" />
+        <activity
             android:name=".Filtering"
             android:exported="false" />
         <activity
             android:name=".acitvities.EditProfilePage"
-
             android:exported="false" />
         <activity
             android:name=".acitvities.CalendarEdit"
