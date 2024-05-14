@@ -1,11 +1,11 @@
 package com.example.pawsitive.adapters;
 
-import android.graphics.Bitmap;
+import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
-import android.content.Context;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -14,50 +14,64 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pawsitive.R;
-import com.example.pawsitive.acitvities.MyViewHolder;
+import com.example.pawsitive.classes.Job;
 
 import java.util.List;
 
-import com.example.pawsitive.classes.Job;
+public class HomePageDisplayAdapter extends RecyclerView.Adapter<HomePageDisplayAdapter.JobViewHolder> {
 
-public class HomePageDisplayAdapter extends RecyclerView.Adapter<MyViewHolder> {
+    private Context context;
+    private List<Job> jobList;
 
-
-    Context context;
-    List <Job> jobs;
-
-    public HomePageDisplayAdapter(Context applicationContext, List<Job> jobs) {
-        System.out.println("aaauu");
-        this.jobs = jobs;
+    public HomePageDisplayAdapter(Context context, List<Job> jobList) {
         this.context = context;
+        this.jobList = jobList;
     }
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.user_view,parent,false));
+    public JobViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.user_view, parent, false);
+        return new JobViewHolder(view);
     }
 
-     public ImageView profileView, heartView;
-     public TextView nameView, genderAgeView, locationView, priceView;
-     public RatingBar review;
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.nameView.setText(jobs.get(position).getName());
-        holder.genderAgeView.setText(jobs.get(position).getGender());
-        holder.locationView.setText(jobs.get(position).getLocation());
-        holder.priceView.setText(jobs.get(position).getPrice());
-        String profileImage = jobs.get(position).getImage();
-        byte[] decodedString = Base64.decode(profileImage, Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        holder.profileView.setImageBitmap(decodedByte);
-        holder.heartView.setImageResource(R.drawable.heart_3510);
-        holder.review.setRating(jobs.get(position).getRating());
+    public void onBindViewHolder(@NonNull JobViewHolder holder, int position) {
+
+        Job job = jobList.get(position);
+        holder.name.setText(job.getName());
+        holder.genderAndYear.setText(job.getGender() + ", " + job.getExperienceLevel());
+        holder.location.setText(job.getLocation());
+        holder.ratingBar.setRating(job.getRating());
+        holder.price.setText(job.getPrice() + " $");
+
+//        byte[] decodedString = Base64.decode(job.getImage(), Base64.DEFAULT);
+        System.out.println("buraya geliyo mu?");
+//        holder.profileImage.setImageBitmap(BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length));
+
+        // holder.heart.setImageResource(job.isFavorite() ? R.drawable.heart_filled : R.drawable.heart_outline);
     }
 
     @Override
     public int getItemCount() {
-        System.out.println(jobs.size());
-        return jobs.size();
+        return jobList.size();
+    }
+
+    class JobViewHolder extends RecyclerView.ViewHolder {
+
+        TextView name, genderAndYear, location, price;
+        RatingBar ratingBar;
+        ImageView profileImage, heart;
+
+        public JobViewHolder(@NonNull View itemView) {
+            super(itemView);
+            name = itemView.findViewById(R.id.name);
+            genderAndYear = itemView.findViewById(R.id.genderAndYear);
+            location = itemView.findViewById(R.id.location);
+            price = itemView.findViewById(R.id.price);
+            ratingBar = itemView.findViewById(R.id.rating_bar);
+            profileImage = itemView.findViewById(R.id.profileImage);
+            heart = itemView.findViewById(R.id.heart);
+        }
     }
 }

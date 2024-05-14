@@ -1,17 +1,8 @@
 package com.example.pawsitive.classes;
 
-import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
-import android.view.View;
 
-import com.example.pawsitive.acitvities.Filtering;
-import com.example.pawsitive.acitvities.ProfilePage1;
-import com.example.pawsitive.adapters.UsersAdapter;
-import com.example.pawsitive.utilities.Constants;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -19,66 +10,63 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
-import com.example.pawsitive.R;
-import com.example.pawsitive.acitvities.ReviewListActivity;
-import com.example.pawsitive.adapters.ReviewAdapter;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-
-import java.util.ArrayList;
-public class Job extends AppCompatActivity {
+public class Job {
     public String price, location, locationProperties, experienceLevel, spokenLanguages, dates, gender, email;
-    float rating;
-    String userName, imageStr;
-    float userRating;
+    public float rating;
+    public String userName, imageStr;
+    public float userRating;
     private FirebaseFirestore fStore;
     private List<Job> jobArrayList;
-    private ArrayList<Review> reviewArrayList;
-    public Job (){
-        getUserData();
-    }
+    private List<Review> reviewArrayList;
 
-    private void getUserData(){
+    public Job() {
         fStore = FirebaseFirestore.getInstance();
-
-        fStore.collection("Users").document(email).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                userName = documentSnapshot.getString("Name");
-                imageStr = documentSnapshot.getString("Profile Photo");
-                fetchUserReviews(email);
-            }
-        });
+        fetchUserJobs();
     }
-    public float calculateStarAverage(){
-        if(reviewArrayList.isEmpty())
-        {
-            return 0;
-        }
-        float sumOfStars = 0;
-        for(Review value : reviewArrayList)
-        {
-            sumOfStars += value.getStar();
-        }
-        float sumOfStarsTimesTwo = 2 * sumOfStars;
-        float averageStarsTimesTwo = sumOfStarsTimesTwo / reviewArrayList.size();
-        float averageStarsTimesTwoRounded = Math.round(averageStarsTimesTwo);
-        return averageStarsTimesTwoRounded / 2;
+
+    private void fetchUserJobs() {
+        jobArrayList = new ArrayList<>();
+        fStore.collection("Jobs")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            try {
+                                Job jobNew = new Job();
+                                jobNew.experienceLevel = document.getString("Experience");
+                                jobNew.gender = document.getString("Gender").toUpperCase();
+                                jobNew.spokenLanguages = document.getString("Languages").toUpperCase();
+                                jobNew.price = document.getString("Price");
+                                jobNew.location = document.getString("Location").toUpperCase();
+                                jobNew.email = document.getString("Email");
+
+                                jobArrayList.add(jobNew);
+                                getUserData(jobNew.email);
+                            } catch (Exception e) {
+                                Log.e("Exception", "Error while parsing job document: " + e.getMessage());
+                            }
+                        }
+                    } else {
+                        Log.e("Error", "Error getting job documents: ", task.getException());
+                    }
+                });
+    }
+
+    private void getUserData(String email) {
+        fStore.collection("Users").document(email).get().addOnSuccessListener(documentSnapshot -> {
+            userName = documentSnapshot.getString("Name");
+            imageStr = documentSnapshot.getString("Profile Photo");
+            fetchUserReviews(email);
+        });
     }
 
     private void fetchUserReviews(String email) {
-        FirebaseFirestore fStore = FirebaseFirestore.getInstance();
-        reviewArrayList = new ArrayList<>();
         fStore.collection("Reviews")
                 .whereEqualTo("CareTaker", email)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+                        reviewArrayList = new ArrayList<>();
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Review review = new Review();
                             review.comment = document.getString("Comment");
@@ -94,7 +82,18 @@ public class Job extends AppCompatActivity {
                 });
     }
 
+    public float calculateStarAverage() {
+        if (reviewArrayList.isEmpty()) {
+            return 0;
+        }
+        float sumOfStars = 0;
+        for (Review value : reviewArrayList) {
+            sumOfStars += value.getStar();
+        }
+        return Math.round((sumOfStars / reviewArrayList.size()) * 2) / 2.0f;
+    }
 
+    // Getters and setters
     public String getPrice() {
         return price;
     }
@@ -102,10 +101,9 @@ public class Job extends AppCompatActivity {
     public String getLocation() {
         return location;
     }
-    public String getEmail(){return email;}
 
-    public String getLocationProperties() {
-        return locationProperties;
+    public String getEmail() {
+        return email;
     }
 
     public String getExperienceLevel() {
@@ -115,31 +113,9 @@ public class Job extends AppCompatActivity {
     public String getSpokenLanguages() {
         return spokenLanguages;
     }
+
     public String getGender() {
         return gender;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public void setLocationProperties(String locationProperties) {
-        this.locationProperties = locationProperties;
-    }
-
-    public void setExperienceLevel(String experienceLevel) {
-        this.experienceLevel = experienceLevel;
-    }
-
-    public void setSpokenLanguages(String spokenLanguages) {
-        this.spokenLanguages = spokenLanguages;
-    }
-    public List<Job> getJobList(){
-        return jobArrayList;
     }
 
     public String getImage() {
@@ -152,5 +128,9 @@ public class Job extends AppCompatActivity {
 
     public float getRating() {
         return rating;
+    }
+
+    public List<Job> getJobList() {
+        return jobArrayList;
     }
 }
