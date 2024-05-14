@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pawsitive.R;
 import com.example.pawsitive.classes.Job;
 import com.example.pawsitive.classes.Review;
+import com.example.pawsitive.databinding.ItemContainerChatBinding;
+import com.example.pawsitive.listeners.UserListener;
 
 import java.util.List;
 
@@ -27,9 +29,12 @@ public class HomePageDisplayAdapter extends RecyclerView.Adapter<HomePageDisplay
     private Context context;
     private List<Job> jobList, favouriteJobs;
 
+    private final UserListener userListener;
 
-    public HomePageDisplayAdapter(Context context, List<Job> jobList) {
+    ItemContainerChatBinding binding;
+    public HomePageDisplayAdapter(Context context, List<Job> jobList, UserListener userListener) {
         this.context = context;
+        this.userListener = userListener;
         this.jobList = jobList;
 
     }
@@ -42,15 +47,19 @@ public class HomePageDisplayAdapter extends RecyclerView.Adapter<HomePageDisplay
 
     @Override
     public void onBindViewHolder(@NonNull JobViewHolder holder, int position) {
+        System.out.println("name " + jobList.get(position).getName());
         Job job = jobList.get(position);
         holder.name.setText(job.getName());
         holder.genderAndYear.setText(job.getGender() + ", " + job.getExperienceLevel());
         holder.location.setText(job.getLocation());
-        holder.ratingBar.setRating(job.getUserRating());
+        holder.ratingBar.setRating(job.getRating());
         System.out.println(job.getRating());
         holder.price.setText(job.getPrice() + " $");
         holder.heart.setVisibility(View.VISIBLE);
 
+//        binding.getRoot().setOnClickListener(
+//                v -> userListener.onUserClicked(job.getEmail())
+//        );
 //        byte[] decodedString = Base64.decode(job.getImage(), Base64.DEFAULT);
         System.out.println("buraya geliyo mu?");
 //        holder.profileImage.setImageBitmap(BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length));
@@ -69,7 +78,6 @@ public class HomePageDisplayAdapter extends RecyclerView.Adapter<HomePageDisplay
                 System.out.println(favouriteJobs.size());
             }
         });
-
     }
     @Override
     public int getItemCount() {

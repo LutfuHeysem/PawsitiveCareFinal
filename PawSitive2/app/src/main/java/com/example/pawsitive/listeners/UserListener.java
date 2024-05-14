@@ -4,4 +4,5 @@ import com.example.pawsitive.classes.UserForChat;
 
 public interface UserListener {
     void onUserClicked(UserForChat user);
+    void onUserClicked(String user);
 }

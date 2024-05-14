@@ -23,13 +23,15 @@ import com.example.pawsitive.classes.Job;
 import com.example.pawsitive.classes.Review;
 import com.example.pawsitive.classes.User;
 import com.example.pawsitive.classes.UserForChat;
+import com.example.pawsitive.listeners.UserListener;
+import com.example.pawsitive.utilities.Constants;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomePage extends AppCompatActivity {
+public class HomePage extends AppCompatActivity implements UserListener {
     RecyclerView recyclerView;
     private List<FavouriteJobs> favouriteJobs;
     private List<Job> jobs = new ArrayList<>();
@@ -137,8 +139,7 @@ public class HomePage extends AppCompatActivity {
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     try {
                         System.out.println("burdayim ben - processing document"); // This will run for each document
-
-
+                        Job jobNew = new Job();
                         jobNew.experienceLevel = document.getString("Experience");
                         jobNew.gender = document.getString("Gender").toUpperCase();
                         jobNew.spokenLanguages = document.getString("Languages").toUpperCase();
@@ -146,8 +147,9 @@ public class HomePage extends AppCompatActivity {
                         jobNew.location = document.getString("Location Properties").toUpperCase();
                         System.out.println("bura gelmisem?adsfasfadsf");
                         jobNew.email = document.getId();
+                        System.out.println("email budu" + jobNew.email);
 
-                        getUserData(jobNew.email);
+                        getUserData(jobNew.email, jobNew);
 
 
                     } catch (Exception e) {
@@ -169,17 +171,17 @@ public class HomePage extends AppCompatActivity {
 
     }
 
-    private void getUserData(String email) {
+    private void getUserData(String email, Job jobNew) {
         System.out.println("burdayamaaaaa");
         fStore.collection("Users").document(email).get().addOnSuccessListener(documentSnapshot -> {
             System.out.println("bura gir baxim");
-            userName = documentSnapshot.getString("Name");
-            imageStr = documentSnapshot.getString("Profile Photo");
-            fetchUserReviews(email);
+            jobNew.userName = documentSnapshot.getString("Name");
+            jobNew.imageStr = documentSnapshot.getString("Profile Photo");
+            fetchUserReviews(email, jobNew);
         });
     }
     private ArrayList<Review> reviewArrayList;
-    private void fetchUserReviews(String email) {
+    private void fetchUserReviews(String email, Job jobNew) {
         fStore.collection("Reviews")
                 .whereEqualTo("CareTaker", email)
                 .get()
@@ -193,25 +195,19 @@ public class HomePage extends AppCompatActivity {
                             review.comment = document.getString("Comment");
                             review.star = document.getDouble("Star").floatValue();
                             reviewArrayList.add(review);
-
-
                         }
-                        if (!reviewArrayList.isEmpty()) {
-
-                            userRating = calculateStarAverage(reviewArrayList);
+                            userRating = 0.0f;
+                            if(!reviewArrayList.isEmpty()) userRating = calculateStarAverage(reviewArrayList);
                             System.out.println("bura gircen mi " + userRating);
                             jobNew.userRating = userRating;
                             System.out.println("bakalim " + userRating);
-                            jobNew.userName = userName;
-                            jobNew.imageStr = imageStr;
-                            jobs.add(jobNew);
-                            if(!jobs.isEmpty()) {
-                                System.out.println("buraya geliyom");
-                                homePageDisplayAdapter = new HomePageDisplayAdapter(getApplicationContext(), jobs);
-                                recyclerView.setAdapter(homePageDisplayAdapter);
 
-                            }
-                        }
+                            jobs.add(jobNew);
+
+                            System.out.println("buraya geliyom");
+                            homePageDisplayAdapter = new HomePageDisplayAdapter(getApplicationContext(), jobs, this);
+                            recyclerView.setAdapter(homePageDisplayAdapter);
+
 
                     } else {
                         Log.d("ReviewListActivity", "Error getting reviews: ", task.getException());
@@ -245,4 +241,16 @@ public class HomePage extends AppCompatActivity {
         return Math.round((sumOfStars / reviewArrayList.size()) * 2) / 2.0f;
     }
 
+    @Override
+    public void onUserClicked(UserForChat user) {
+
+    }
+
+    @Override
+    public void onUserClicked(String user) {
+        Intent intent = new Intent(getApplicationContext(), ProfilePage2.class);
+//        intent.putExtra(Constants.KEY_USER, user);
+        startActivity(intent);
+        finish();
+    }
 }
