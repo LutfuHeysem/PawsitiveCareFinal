@@ -57,6 +57,7 @@ public class ReviewListActivity extends AppCompatActivity {
 
         fetchUserName(userNameEmail);
         fetchUserReviews(userNameEmail);
+        setListener();
     }
 
     private void fetchUserName(String userEmail) {
