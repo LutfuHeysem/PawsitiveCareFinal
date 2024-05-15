@@ -85,8 +85,12 @@ public class AcceptOfferDialog extends DialogFragment {
         denyOffer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteDocument(receiverUserEmail);
-                dismiss();
+                if(ownerBalance < Double.parseDouble(amount))
+                    dismiss();
+                else {
+                    deleteDocument(receiverUserEmail);
+                    dismiss();
+                }
             }
         });
 

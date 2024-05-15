@@ -5,8 +5,11 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -37,13 +40,14 @@ import java.util.List;
 
 public class HomePage extends AppCompatActivity implements UserListener {
     RecyclerView recyclerView;
-    String isFiltered;
+    String isFiltered, location;
     private List<FavouriteJobs> favouriteJobs;
     private List<Job> jobs = new ArrayList<>();
     private HomePageDisplayAdapter homePageDisplayAdapter;
     ImageView homeIcon, favouritesIcon, addIcon, chatIcon, profileIcon, heartIcon;
     ImageView filterButton;
-
+    private EditText search;
+    private Button searchSave;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +60,11 @@ public class HomePage extends AppCompatActivity implements UserListener {
         setContentView(R.layout.activity_home_page);
         initializeImageViews();
 
+        search = findViewById(R.id.locSearch);
+        searchSave = findViewById(R.id.searchButton);
+        System.out.println("search");
         recyclerView = findViewById(R.id.recyclerView2);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
 
         // Setup search functionality
         isFiltered = "notFiltered";
@@ -71,21 +77,24 @@ public class HomePage extends AppCompatActivity implements UserListener {
             homePageDisplayAdapter = new HomePageDisplayAdapter(getApplicationContext(), Filtering.getFilteredJobs(), this);
             recyclerView.setAdapter(homePageDisplayAdapter);
         }
+        searchSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                location = search.getText().toString();
+                filterJobsByLocation(location);
+            }
+        });
+    }
 
-        // Setup search functionality
-//        SearchView searchView = findViewById(R.id.search);
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-////                homePageDisplayAdapter.getFilter().filter(newText);
-//                return false;
-//            }
-//        });
+    private void filterJobsByLocation(String location) {
+        List<Job> filteredJobs = new ArrayList<>();
+        for (Job job : jobs) {
+            if (job.getLocation().equalsIgnoreCase(location))
+                filteredJobs.add(job);
+        }
+
+        homePageDisplayAdapter = new HomePageDisplayAdapter(getApplicationContext(), filteredJobs, this);
+        recyclerView.setAdapter(homePageDisplayAdapter);
     }
 
     public List<FavouriteJobs> getFavouriteJobs() {
@@ -97,6 +106,7 @@ public class HomePage extends AppCompatActivity implements UserListener {
     }
 
     private void initializeImageViews() {
+        //System.out.println("ınıtialize image views");
         homeIcon = findViewById(R.id.homeIcon);
         favouritesIcon = findViewById(R.id.heart_icon);
         addIcon = findViewById(R.id.add_icon);
@@ -108,7 +118,6 @@ public class HomePage extends AppCompatActivity implements UserListener {
             Intent intent = new Intent(HomePage.this, Filtering.class);
             startActivity(intent);
         });
-
 
         favouritesIcon.setOnClickListener(v -> {
             Intent intent = new Intent(HomePage.this, FavouritesPage.class);
