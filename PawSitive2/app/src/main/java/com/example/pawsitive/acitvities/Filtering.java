@@ -75,11 +75,17 @@ public class Filtering extends AppCompatActivity {
                 exp = Integer.parseInt(expCheck);
             }
 
+            System.out.println(jobAL.size());
             filterLocation();
+            System.out.println(jobAL.size());
             filterPrice();
+            System.out.println(jobAL.size());
             filterExperience();
+            System.out.println(jobAL.size());
             filterGender();
+            System.out.println(jobAL.size());
             filterLanguage();
+            System.out.println(jobAL.size());
             filterGeneral();
 
             Intent intent = new Intent(getApplicationContext(), HomePage.class);
@@ -95,10 +101,11 @@ public class Filtering extends AppCompatActivity {
     }
 
     protected void filterPrice() {
-        if (minCheck.isEmpty() && maxCheck.isEmpty()) {
+        if (minCheck.isEmpty())
             min = 0;
+        if(maxCheck.isEmpty())
             max = Integer.MAX_VALUE;
-        } else {
+        else if(!minCheck.isEmpty()){
             min = Integer.parseInt(minCheck);
             max = Integer.parseInt(maxCheck);
             jobAL = jobAL.stream()
