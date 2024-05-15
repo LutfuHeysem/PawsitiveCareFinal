@@ -145,12 +145,12 @@ public static boolean searchInsidefChat(String key) {
         void onReviewsFetchError(String errorMessage);
     }
 
-    public void setBalance(double newBalance)
+    public void setBalance(double newBalance, User user)
     {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         // Assuming you have stored the user's email as a unique identifier
-        String userEmail = User.getEmail();
+        String userEmail = user.getEmail();
 
         // Create a reference to the user's document in Firestore
         DocumentReference userRef = db.collection("Users").document(userEmail);

@@ -53,7 +53,7 @@ public class AcceptOfferDialog extends DialogFragment {
         textOfferText = view.findViewById(R.id.textOffer);
 
         offerAmount.setText(String.format("%s%s$", getString(R.string.offer_amount), amount));
-        startDate.setText(String.format("%s %s", getString(R.string.end_date_view), startDateString));
+        startDate.setText(String.format("%s %s", "Start Date", startDateString));
         endDate.setText(String.format("%s %s", getString(R.string.end_date_view), endDateString));
 
         db = FirebaseFirestore.getInstance();

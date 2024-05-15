@@ -114,8 +114,8 @@ public class ReviewMain extends AppCompatActivity {
 
 
 
-                    feedbackReceiverUserUser.setBalance(transactionAmountDouble + feedbackReceiverUserBalance);
-                    feedbackGiverUser.setBalance(feedbackGiverBalance - transactionAmountDouble);
+                    feedbackReceiverUserUser.setBalance(transactionAmountDouble + feedbackReceiverUserBalance, feedbackReceiverUserUser);
+                    feedbackGiverUser.setBalance(feedbackGiverBalance - transactionAmountDouble, feedbackGiverUser);
 
 
                     Intent intent = new Intent(ReviewMain.this, HomePage.class);
