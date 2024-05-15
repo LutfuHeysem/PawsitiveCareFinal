@@ -5,5 +5,4 @@ import com.example.pawsitive.classes.UserForChat;
 public interface PetsListener {
     void onPetEditClicked(String petName);
 
-
 }

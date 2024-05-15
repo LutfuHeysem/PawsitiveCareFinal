@@ -52,7 +52,7 @@ public class ProfilePage2 extends AppCompatActivity implements ActiveJobListener
     TextView locationView, nameView, priceInfo, locationInfo, experienceInfo, languagesInfo;
     String userEmail, profileImageStr, name, location, gender;
     Bitmap profileImageBitmap;
-    Button backButtonProfilePage, reviewsButton, myAnimalsButton;
+    Button backButtonProfilePage, reviewsButton, myAnimalsButton, chatStartButton;
     ImageView homeButton, favoritesButton, addButton, chatButton, profileButton;
     RatingBar rateBar;
     private User owner;
@@ -61,30 +61,23 @@ public class ProfilePage2 extends AppCompatActivity implements ActiveJobListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_profile_page2);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-
-        recyclerView = findViewById(R.id.ActiveJobsRecycler);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
 
         backButtonProfilePage = (Button) findViewById(R.id.backButtonProfilePage2);
         reviewsButton = findViewById(R.id.reviewsButtonProfilePage2);
-
+        chatStartButton = findViewById(R.id.startChatButton);
         homeButton = findViewById(R.id.homeIcon);
         favoritesButton = findViewById(R.id.heart_icon);
         addButton = findViewById(R.id.add_icon);
         chatButton = findViewById(R.id.chat_icon);
         profileButton = findViewById(R.id.profile_icon);
-        myAnimalsButton = findViewById(R.id.AnimalButtonProfilePage2);
 
         profileImageView = findViewById(R.id.profileImageProfilePage2);
+
+        Intent intent = getIntent();
+        userEmail= intent.getStringExtra("User Email");
 
         priceInfo = findViewById(R.id.priceInfoProfilePage2);
         locationInfo = findViewById(R.id.locationPropertiesInfoProfilePage2);
@@ -99,11 +92,13 @@ public class ProfilePage2 extends AppCompatActivity implements ActiveJobListener
         fetchUserReviews(userEmail);
         fetchActiveJobs(userEmail);
 
+        recyclerView = findViewById(R.id.ActiveJobsRecycler);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         try {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-            Intent intent = getIntent();
-            userEmail= intent.getStringExtra("User Email");
 
             DocumentReference userData = db.collection("Users").document(userEmail);
 
@@ -181,16 +176,6 @@ public class ProfilePage2 extends AppCompatActivity implements ActiveJobListener
             }
         });
 
-        myAnimalsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MyPets.class);
-                startActivity(intent);
-            }
-        });
-
-
-        Intent intent = getIntent();
 
         String email = intent.getStringExtra("email");
 
@@ -219,6 +204,15 @@ public class ProfilePage2 extends AppCompatActivity implements ActiveJobListener
                 startActivity(intent);
             }
         });
+        chatStartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addUserToChat(userEmail);
+                Intent intent = new Intent(getApplicationContext(), UsersActivity.class);
+                startActivity(intent);
+            }
+        });
+
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -305,13 +299,14 @@ public class ProfilePage2 extends AppCompatActivity implements ActiveJobListener
                 .get().addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
                         for(QueryDocumentSnapshot document : task.getResult()){
+
                             String startDate = document.getString("startDate");
                             String endDate = document.getString("endDate");
-
+                            System.out.println(startDate);
                             activeJobs.add(new ActiveJobModel(startDate, endDate));
                         }
                         if(!activeJobs.isEmpty()){
-                            activeJobsAdapter = new ActiveJobsAdapter(this, activeJobs, this, email);
+                            activeJobsAdapter = new ActiveJobsAdapter(getApplicationContext(), activeJobs, this, email);
                             recyclerView.setVisibility(View.VISIBLE);
                             recyclerView.setAdapter(activeJobsAdapter);
                         }
@@ -335,17 +330,17 @@ public class ProfilePage2 extends AppCompatActivity implements ActiveJobListener
         try {
             User.addUserToChatPage(email);
             FirebaseAuth auth = FirebaseAuth.getInstance();
+
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             HashMap<String, String> userData = new HashMap<>();
             userData.put("email", email);
-
-            db.collection("Users").document(User.getEmail())
+            db.collection("Users").document(auth.getCurrentUser().getEmail())
                     .collection("UsersForChat").document(email).set(userData);
 
             HashMap<String, String> userDataReceiver = new HashMap<>();
-            userDataReceiver.put("email", User.getEmail());
+            userDataReceiver.put("email", auth.getCurrentUser().getEmail());
             db.collection("Users").document(email)
-                    .collection("UsersForChat").document(User.getEmail()).set(userDataReceiver);
+                    .collection("UsersForChat").document(auth.getCurrentUser().getEmail()).set(userDataReceiver);
 
 
         } catch (Exception e) {

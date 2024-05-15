@@ -1,16 +1,14 @@
 package com.example.pawsitive.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.util.Base64;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -18,8 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pawsitive.R;
+import com.example.pawsitive.acitvities.ProfilePage2;
 import com.example.pawsitive.classes.Job;
-import com.example.pawsitive.classes.Review;
 import com.example.pawsitive.databinding.ItemContainerChatBinding;
 import com.example.pawsitive.listeners.UserListener;
 
@@ -29,16 +27,16 @@ public class HomePageDisplayAdapter extends RecyclerView.Adapter<HomePageDisplay
 
     private Context context;
     private List<Job> jobList, favouriteJobs;
-
     private final UserListener userListener;
 
     ItemContainerChatBinding binding;
+
     public HomePageDisplayAdapter(Context context, List<Job> jobList, UserListener userListener) {
         this.context = context;
         this.userListener = userListener;
         this.jobList = jobList;
-
     }
+
     @NonNull
     @Override
     public JobViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -57,36 +55,33 @@ public class HomePageDisplayAdapter extends RecyclerView.Adapter<HomePageDisplay
         holder.heart.setVisibility(View.VISIBLE);
         holder.heartClicked.setVisibility(View.GONE);
 
-//        binding.getRoot().setOnClickListener(
-//                v -> userListener.onUserClicked(job.getEmail())
-//        );
-//        byte[] decodedString = Base64.decode(job.getImage(), Base64.DEFAULT);
-
-//        holder.profileImage.setImageBitmap(BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length));
-
         if (job.getImage() != null && !job.getImage().isEmpty()) {
             byte[] decodedString = Base64.decode(job.getImage(), Base64.DEFAULT);
             holder.profileImage.setImageBitmap(BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length));
-
         }
+
         holder.heart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.heart.setVisibility(View.GONE);
-                holder.heartClicked.setVisibility(View.VISIBLE);
-                favouriteJobs.add(job);
+
             }
         });
+
         holder.heartClicked.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.heartClicked.setVisibility(View.GONE);
-                holder.heart.setVisibility(View.VISIBLE);
-                favouriteJobs.remove(job);
+
+            }
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userListener.onUserClicked(job.getEmail());
             }
         });
     }
-    
+
     @Override
     public int getItemCount() {
         return jobList.size();

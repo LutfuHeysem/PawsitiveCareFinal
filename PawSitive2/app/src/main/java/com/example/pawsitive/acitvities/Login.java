@@ -75,9 +75,8 @@ public class Login extends AppCompatActivity {
                                                 Intent addPetIntent = new Intent(Login.this, AddEditPet.class);
                                                 Intent chatIntent = new Intent(Login.this, UsersActivity.class);
                                                 Intent reviewIntent = new Intent(Login.this, ReviewListActivity.class);
-                                                Intent profileIntent = new Intent(Login.this, ProfilePage1.class);
+                                                Intent profileIntent = new Intent(Login.this, ProfilePage2.class);
                                                 Intent filterIntent = new Intent(Login.this, Filtering.class);
-
                                                 startActivity(homeIntent);
 
 

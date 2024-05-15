@@ -44,6 +44,7 @@ public class HomePage extends AppCompatActivity implements UserListener {
     ImageView homeIcon, favouritesIcon, addIcon, chatIcon, profileIcon, heartIcon;
     ImageView filterButton;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -251,8 +252,8 @@ public class HomePage extends AppCompatActivity implements UserListener {
     @Override
     public void onUserClicked(String user) {
         Intent intent = new Intent(getApplicationContext(), ProfilePage2.class);
-//        intent.putExtra(Constants.KEY_USER, user);
+        intent.putExtra("User Email", user);
+        System.out.println("buraya geldim mi?");
         startActivity(intent);
-        finish();
     }
 }

@@ -9,7 +9,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:padding="16dp">
 
         <ImageView
@@ -25,39 +25,39 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="8dp"
             android:layout_toEndOf="@id/profileImage"
             android:text="Name"
-            android:textSize="20sp"
             android:textColor="@color/black"
-            android:layout_marginBottom="8dp"
-            android:layout_alignParentTop="true" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/genderAndYear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/profileImage"
             android:layout_below="@id/name"
+            android:layout_marginBottom="8dp"
+            android:layout_toEndOf="@id/profileImage"
             android:text="Gender, Age"
-            android:textColor="@color/black"
-            android:layout_marginBottom="8dp" />
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/profileImage"
             android:layout_below="@id/genderAndYear"
-            android:text="Location"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp"
+            android:layout_toEndOf="@id/profileImage"
+            android:text="Location" />
 
         <RatingBar
             android:id="@+id/rating_bar"
             style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/profileImage"
             android:layout_below="@id/location"
+            android:layout_toEndOf="@id/profileImage"
             android:isIndicator="true"
             android:numStars="5"
             android:rating="3.5"
@@ -67,10 +67,10 @@
             android:id="@+id/price"
             android:layout_width="110dp"
             android:layout_height="30dp"
+            android:layout_marginStart="300dp"
             android:text="Price $"
-            android:textSize="20sp"
             android:textColor="@color/black"
-            android:layout_marginStart="300dp" />
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/heart"
@@ -79,8 +79,8 @@
             android:layout_below="@id/price"
             android:layout_alignEnd="@id/price"
             android:layout_marginTop="8dp"
-            android:text=""
             android:background="@drawable/heart_3510"
+            android:text=""
             android:visibility="visible" />
 
         <Button

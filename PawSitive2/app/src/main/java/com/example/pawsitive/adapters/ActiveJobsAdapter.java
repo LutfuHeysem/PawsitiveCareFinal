@@ -41,17 +41,17 @@ public class ActiveJobsAdapter extends RecyclerView.Adapter<ViewHolderForActiveJ
         holder.startDate.setText(activeJobModelList.get(position).getStartDate());
         holder.endDate.setText(activeJobModelList.get(position).getEndDate());
 
-        holder.chatButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                activeJobListener.onChatClicked();
-            }
-        });
+//        holder.chatButton.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                activeJobListener.onChatClicked();
+//            }
+//        });
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return activeJobModelList.size();
     }
 }
