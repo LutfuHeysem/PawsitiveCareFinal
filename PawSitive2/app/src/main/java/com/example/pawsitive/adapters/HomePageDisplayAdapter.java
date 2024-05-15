@@ -25,13 +25,13 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
+import java.util.Timer;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class HomePageDisplayAdapter extends RecyclerView.Adapter<HomePageDisplayAdapter.JobViewHolder> {
 
     private Context context;
     private List<Job> jobList, favouriteJobs;
-    private List<Job> jobList;
 
     private final UserListener userListener;
 
@@ -98,7 +98,7 @@ public class HomePageDisplayAdapter extends RecyclerView.Adapter<HomePageDisplay
             }
         });
 
-        holder.heartClicked.setOnClickListener(new View.OnClickListener() {
+        holder.clickedHeart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
