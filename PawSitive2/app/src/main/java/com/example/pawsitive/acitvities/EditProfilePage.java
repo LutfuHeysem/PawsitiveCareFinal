@@ -139,7 +139,6 @@ public class EditProfilePage extends AppCompatActivity {
                                 locationInfo.setText(locationProperties);
                                 experienceInfo.setText(experienceLevel);
                                 languagesInfo.setText(spokenLanguages);
-
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -154,7 +153,6 @@ public class EditProfilePage extends AppCompatActivity {
                         languagesInfo.setText("");
                         System.out.println("Error: " + e.getMessage());
                     }
-
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override

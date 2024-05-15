@@ -140,7 +140,6 @@ public class ProfilePage2 extends AppCompatActivity implements ActiveJobListener
                                 locationInfo.setText(locationProperties);
                                 experienceInfo.setText(experienceLevel);
                                 languagesInfo.setText(spokenLanguages);
-
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -155,7 +154,6 @@ public class ProfilePage2 extends AppCompatActivity implements ActiveJobListener
                         languagesInfo.setText("");
                         System.out.println("Error: " + e.getMessage());
                     }
-
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override

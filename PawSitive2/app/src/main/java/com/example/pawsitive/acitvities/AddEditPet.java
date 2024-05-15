@@ -183,8 +183,6 @@ public class AddEditPet extends AppCompatActivity {
                         Friendly.setChecked(documentSnapshot.get("Friendly").toString().equals("true"));
                         CanBeLeftAlone.setChecked(documentSnapshot.get("Can Be Left Alone").toString().equals("true"));
                         HouseTrained.setChecked(documentSnapshot.get("House Trained").toString().equals("true"));
-
-
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override

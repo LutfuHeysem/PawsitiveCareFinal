@@ -84,13 +84,15 @@
             android:visibility="visible" />
 
         <Button
-            android:id="@+id/heartClicked"
+            android:id="@+id/clickedHeart"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_below="@id/price"
             android:layout_alignEnd="@id/price"
             android:layout_marginTop="8dp"
+            android:text=""
             android:background="@drawable/heart"
-            android:visibility="gone" />
+            android:visibility="visible" />
+
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
