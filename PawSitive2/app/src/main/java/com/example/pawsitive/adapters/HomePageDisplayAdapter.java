@@ -65,26 +65,29 @@ public class HomePageDisplayAdapter extends RecyclerView.Adapter<HomePageDisplay
             fStore.collection("Users").document(auth.getCurrentUser().getEmail()).
                     collection("FavouriteJobs").get().addOnCompleteListener(task -> {
                         if (task.isSuccessful() && task.getResult() != null)
-                            for (DocumentSnapshot document : task.getResult())
+                            for (DocumentSnapshot document : task.getResult()) {
                                 if (document.getString("email").equals(job.email)) {
                                     System.out.println("trueinsidecheck: " + job.email);
                                     isOk.set(true);
                                 }
+                            }
+                        if(!isOk.get()){
+                            System.out.println("false: " + job.email);
+                            holder.heart.setVisibility(View.VISIBLE);
+                            holder.clickedHeart.setVisibility(View.GONE);
+                        }
+                        else{
+                            System.out.println("true: " + job.email);
+                            holder.heart.setVisibility(View.GONE);
+                            holder.clickedHeart.setVisibility(View.VISIBLE);
+                        }
+
                     });
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
 
-        if(!isOk.get()){
-            System.out.println("false: " + job.email);
-            holder.heart.setVisibility(View.VISIBLE);
-            holder.clickedHeart.setVisibility(View.GONE);
-        }
-        else{
-            System.out.println("true: " + job.email);
-            holder.heart.setVisibility(View.GONE);
-            holder.clickedHeart.setVisibility(View.VISIBLE);
-        }
+
 
         if (job.getImage() != null && !job.getImage().isEmpty()) {
             byte[] decodedString = Base64.decode(job.getImage(), Base64.DEFAULT);
@@ -94,14 +97,12 @@ public class HomePageDisplayAdapter extends RecyclerView.Adapter<HomePageDisplay
         holder.heart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-            }
-        });
-
-        holder.clickedHeart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
+                FirebaseFirestore fStore = FirebaseFirestore.getInstance();
+                FirebaseAuth auth = FirebaseAuth.getInstance();
+                holder.heart.setVisibility(View.GONE);
+                holder.clickedHeart.setVisibility(View.VISIBLE);
+                fStore.collection("Users").document(auth.getCurrentUser().getEmail()).
+                        collection("FavouriteJobs").document(job.email).set(job);
             }
         });
 
@@ -109,12 +110,6 @@ public class HomePageDisplayAdapter extends RecyclerView.Adapter<HomePageDisplay
             @Override
             public void onClick(View v) {
                 userListener.onUserClicked(job.getEmail());
-                FirebaseFirestore fStore = FirebaseFirestore.getInstance();
-                FirebaseAuth auth = FirebaseAuth.getInstance();
-                holder.heart.setVisibility(View.GONE);
-                holder.clickedHeart.setVisibility(View.VISIBLE);
-                fStore.collection("Users").document(auth.getCurrentUser().getEmail()).
-                        collection("FavouriteJobs").document(job.email).set(job);
             }
         });
         holder.clickedHeart.setOnClickListener(new View.OnClickListener() {
