@@ -48,6 +48,7 @@ public class UsersActivity extends AppCompatActivity implements UserListener {
     private void backPressed(){
         Intent intent = new Intent(UsersActivity.this, HomePage.class);
         startActivity(intent);
+        finish();
     }
     private void setListener(){
         binding.imageBack.setOnClickListener(v -> backPressed());
@@ -56,46 +57,51 @@ public class UsersActivity extends AppCompatActivity implements UserListener {
     private void getUsers() {
         loading(true);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Users")
-                .get()
-                .addOnCompleteListener(task -> {
-                    loading(false);
-                    String currentUserId = preferenceManager.getString(Constants.KEY_USER_ID);
-                    if(task.isSuccessful() && task.getResult() != null){
+            try {
+                db.collection("Users")
+                        .get()
+                        .addOnCompleteListener(task -> {
+                            loading(false);
+                            String currentUserId = preferenceManager.getString(Constants.KEY_USER_ID);
+                            if (task.isSuccessful() && task.getResult() != null) {
 
-                        System.out.println(task.getResult());
+                                System.out.println(task.getResult());
 
-                        List<UserForChat> users = new ArrayList<>();
-                        for (QueryDocumentSnapshot queryDocumentSnapshot: task.getResult()){
-//                            if(currentUserId.equals(queryDocumentSnapshot.getId())){
-//                                continue;
-//                            }
-                            System.out.println(queryDocumentSnapshot.getString(Constants.KEY_NAME));
-                            UserForChat user = new UserForChat();
-                            user.name = queryDocumentSnapshot.getString(Constants.KEY_NAME);
-                            user.email = queryDocumentSnapshot.getString(Constants.KEY_EMAIL);
-                            //user.token = queryDocumentSnapshot.getString(Constants.KEY_FCM_TOKEN);
-                            user.img = queryDocumentSnapshot.getString(Constants.KEY_IMAGE);
-                            user.id = queryDocumentSnapshot.getId();
-                            if(User.searchInsidefChat(user.email)) {
-                                System.out.println(user.email);
-                                users.add(user);
+                                List<UserForChat> users = new ArrayList<>();
+                                UserForChat user;
+                                for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+    //                            if(currentUserId.equals(queryDocumentSnapshot.getId())){
+    //                                continue;
+    //                            }
+
+                                    user = new UserForChat();
+                                    user.name = queryDocumentSnapshot.getString(Constants.KEY_NAME);
+                                    user.email = queryDocumentSnapshot.getString(Constants.KEY_EMAIL);
+                                    //user.token = queryDocumentSnapshot.getString(Constants.KEY_FCM_TOKEN);
+                                    user.img = queryDocumentSnapshot.getString(Constants.KEY_IMAGE);
+                                    user.id = queryDocumentSnapshot.getId();
+                                    System.out.println(queryDocumentSnapshot.getString(Constants.KEY_NAME));
+                                    if (User.searchInsidefChat(user.email)) {
+                                        System.out.println(user.email);
+                                        users.add(user);
+                                    }
+                                }
+                                if (!users.isEmpty()) {
+                                    UsersAdapter usersAdapter = new UsersAdapter(users, this);
+                                    binding.userRecylerView.setVisibility(View.VISIBLE);
+                                    binding.userRecylerView.setAdapter(usersAdapter);
+                                } else {
+                                    showErrorMessage();
+                                }
+                            } else {
+                                showErrorMessage();
                             }
-                        }
-                        if(!users.isEmpty()){
-                            UsersAdapter usersAdapter = new UsersAdapter(users, this);
-                            binding.userRecylerView.setVisibility(View.VISIBLE);
-                            binding.userRecylerView.setAdapter(usersAdapter);
-                        }else{
-                            showErrorMessage();
-                        }
-                    }
 
-                    else{
-                        showErrorMessage();
-                    }
-
-                });
+                        });
+            }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
 
     }
     private void showErrorMessage(){
@@ -115,8 +121,9 @@ public class UsersActivity extends AppCompatActivity implements UserListener {
     public void onUserClicked(UserForChat user) {
         Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
         intent.putExtra(Constants.KEY_USER, user);
+        System.out.println("user" + user.name);
         startActivity(intent);
-        finish();
+//        finish();
     }
 
     @Override

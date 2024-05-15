@@ -169,8 +169,7 @@ public class ProfilePage2 extends AppCompatActivity implements ActiveJobListener
         backButtonProfilePage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Login.class);
-                intent.putExtra("home", userEmail);
+                Intent intent = new Intent(getApplicationContext(), HomePage.class);
                 startActivity(intent);
             }
         });
@@ -194,7 +193,7 @@ public class ProfilePage2 extends AppCompatActivity implements ActiveJobListener
             @Override
             public void onClick(View v) {
                 addUserToChat(userEmail);
-                Intent intent = new Intent(getApplicationContext(), Login.class);
+                Intent intent = new Intent(getApplicationContext(), HomePage.class);
                 intent.putExtra("email", userEmail);
                 startActivity(intent);
             }

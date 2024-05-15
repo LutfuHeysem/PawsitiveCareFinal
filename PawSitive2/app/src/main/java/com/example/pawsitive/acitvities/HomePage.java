@@ -47,6 +47,10 @@ public class HomePage extends AppCompatActivity implements UserListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if(getIntent().getStringExtra("email") != null){
+            Intent chatIntent = new Intent(HomePage.this, UsersActivity.class);
+            startActivity(chatIntent);
+        }
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_home_page);

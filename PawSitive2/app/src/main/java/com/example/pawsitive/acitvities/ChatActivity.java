@@ -23,6 +23,7 @@ import com.example.pawsitive.adapters.ChatAdapter;
 import com.example.pawsitive.databinding.ActivityChatBinding;
 import com.example.pawsitive.utilities.Constants;
 import com.example.pawsitive.utilities.PreferenceManager;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -45,6 +46,7 @@ public class ChatActivity extends AppCompatActivity {
     private ChatAdapter chatAdapter;
     private PreferenceManager preferenceManager;
     private FirebaseFirestore db;
+    FirebaseAuth auth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,23 +56,27 @@ public class ChatActivity extends AppCompatActivity {
         setListeners();
         loadReceiverDetails();
         init();
+        System.out.println(User.getEmail());
+        System.out.println(auth.getCurrentUser().getEmail());
         listenMessages();
+        System.out.println("buraya giriyorumm mumumu");
     }
     private void init(){
+
         preferenceManager = new PreferenceManager(getApplicationContext());
         chatMessages = new ArrayList<>();
         chatAdapter = new ChatAdapter(
                 chatMessages,
                 getBitmapFromEncodedString(receiverUser.img),
-                User.getEmail()
-        );
+                auth.getCurrentUser().getEmail()
+                );
         binding.chatRecyclerView.setAdapter(chatAdapter);
         db = FirebaseFirestore.getInstance();
     }
 
     private void sendMessage(){
         HashMap<String,Object> message = new HashMap<>();
-        message.put(Constants.KEY_SENDER_ID, User.getEmail());
+        message.put(Constants.KEY_SENDER_ID, auth.getCurrentUser().getEmail());
         message.put(Constants.KEY_RECEIVER_ID, receiverUser.id);
         message.put(Constants.KEY_MESSAGE, binding.inputMessage.getText().toString());
         message.put(Constants.KEY_TIMESTAMP, new Date());
@@ -86,17 +92,17 @@ public class ChatActivity extends AppCompatActivity {
 
     private void listenMessages(){
         db.collection(Constants.KEY_COLLECTION_CHAT)
-                .whereEqualTo(Constants.KEY_SENDER_ID, User.getEmail())
+                .whereEqualTo(Constants.KEY_SENDER_ID, auth.getCurrentUser().getEmail())
                 .whereEqualTo(Constants.KEY_RECEIVER_ID, receiverUser.id)
                 .addSnapshotListener(eventListener);
         db.collection(Constants.KEY_COLLECTION_CHAT)
                 .whereEqualTo(Constants.KEY_SENDER_ID, receiverUser.id)
-                .whereEqualTo(Constants.KEY_RECEIVER_ID, User.getEmail())
+                .whereEqualTo(Constants.KEY_RECEIVER_ID, auth.getCurrentUser().getEmail())
                 .addSnapshotListener(eventListener);
 
 
         db.collection("Users")
-                .document(User.getEmail())
+                .document(auth.getCurrentUser().getEmail())
                 .collection("Offers")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -139,7 +145,7 @@ public class ChatActivity extends AppCompatActivity {
 
 
         db.collection("Users")
-                .document(User.getEmail())
+                .document(auth.getCurrentUser().getEmail())
                 .collection("AcceptedOffers")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
