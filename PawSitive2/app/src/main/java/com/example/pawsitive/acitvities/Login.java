@@ -50,6 +50,14 @@ public class Login extends AppCompatActivity {
         currAuth = FirebaseAuth.getInstance();
 
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent backIntent = new Intent(Login.this, MainActivity.class);
+                startActivity(backIntent);
+            }
+        });
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
