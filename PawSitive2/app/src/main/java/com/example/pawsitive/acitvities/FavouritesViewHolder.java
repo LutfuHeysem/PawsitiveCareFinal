@@ -1,6 +1,7 @@
 package com.example.pawsitive.acitvities;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -12,13 +13,15 @@ import com.example.pawsitive.R;
 
 public class FavouritesViewHolder extends RecyclerView.ViewHolder {
 
-    public ImageView profileView, heartView;
+    public ImageView profileView;
+    public Button heartView, clickedHeartView;
     public TextView nameView, genderAgeView, locationView, priceView;
     public RatingBar review;
     public FavouritesViewHolder(@NonNull View itemView) {
         super(itemView);
         profileView = itemView.findViewById(R.id.profileImage);
-        heartView = itemView.findViewById(R.id.filledHeart);
+        heartView = itemView.findViewById(R.id.heart);
+        clickedHeartView = itemView.findViewById(R.id.clickedHeart);
         nameView = itemView.findViewById(R.id.name);
         genderAgeView = itemView.findViewById(R.id.genderAndYear);
         locationView = itemView.findViewById(R.id.location);
@@ -30,7 +33,7 @@ public class FavouritesViewHolder extends RecyclerView.ViewHolder {
         return profileView;
     }
 
-    public ImageView getHeartView() {
+    public Button getHeartView() {
         return heartView;
     }
 

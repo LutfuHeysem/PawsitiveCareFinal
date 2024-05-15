@@ -58,11 +58,9 @@ public class HomePage extends AppCompatActivity implements UserListener {
 
         // Setup search functionality
         isFiltered = "notFiltered";
-        System.out.println("isFiltered: " + isFiltered);
         Intent intent = getIntent();
         if(intent.getStringExtra("isFiltered") != null)
             isFiltered = intent.getStringExtra("isFiltered");
-        System.out.println("isFiltered: " + isFiltered);
         if(!isFiltered.equals("filtered"))
             fetchUserJobs();
         else{
@@ -95,7 +93,6 @@ public class HomePage extends AppCompatActivity implements UserListener {
     }
 
     private void initializeImageViews() {
-        System.out.println("biurdadsfa");
         homeIcon = findViewById(R.id.homeIcon);
         favouritesIcon = findViewById(R.id.heart_icon);
         addIcon = findViewById(R.id.add_icon);
@@ -198,7 +195,6 @@ public class HomePage extends AppCompatActivity implements UserListener {
                         jobNew.userRating = userRating;
 
                         jobs.add(jobNew);
-                        System.out.println("buraya geliyom");
                         Filtering.setJobsArrayList((ArrayList<Job>) jobs);
                         homePageDisplayAdapter = new HomePageDisplayAdapter(getApplicationContext(), jobs, this);
                         recyclerView.setAdapter(homePageDisplayAdapter);
@@ -246,7 +242,6 @@ public class HomePage extends AppCompatActivity implements UserListener {
     public void onUserClicked(String user) {
         Intent intent = new Intent(getApplicationContext(), ProfilePage2.class);
         intent.putExtra("User Email", user);
-        System.out.println("buraya geldim mi?");
         startActivity(intent);
     }
 }

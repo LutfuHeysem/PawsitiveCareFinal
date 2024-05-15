@@ -31,7 +31,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class HomePageDisplayAdapter extends RecyclerView.Adapter<HomePageDisplayAdapter.JobViewHolder> {
 
     private Context context;
-    private List<Job> jobList, favouriteJobs;
+    private List<Job> jobList;
 
     private final UserListener userListener;
 
@@ -68,17 +68,14 @@ public class HomePageDisplayAdapter extends RecyclerView.Adapter<HomePageDisplay
                         if (task.isSuccessful() && task.getResult() != null)
                             for (DocumentSnapshot document : task.getResult()) {
                                 if (document.getString("email").equals(job.email)) {
-                                    System.out.println("trueinsidecheck: " + job.email);
                                     isOk.set(true);
                                 }
                             }
                         if(!isOk.get()){
-                            System.out.println("false: " + job.email);
                             holder.heart.setVisibility(View.VISIBLE);
                             holder.clickedHeart.setVisibility(View.GONE);
                         }
                         else{
-                            System.out.println("true: " + job.email);
                             holder.heart.setVisibility(View.GONE);
                             holder.clickedHeart.setVisibility(View.VISIBLE);
                         }
