@@ -169,7 +169,8 @@ public class ProfilePage2 extends AppCompatActivity implements ActiveJobListener
         backButtonProfilePage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), HomePage.class);
+                Intent intent = new Intent(getApplicationContext(), Login.class);
+                intent.putExtra("home", userEmail);
                 startActivity(intent);
             }
         });
@@ -188,42 +189,40 @@ public class ProfilePage2 extends AppCompatActivity implements ActiveJobListener
             }
         });
 
-        homeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), HomePage.class);
-                startActivity(intent);
-            }
-        });
-        favoritesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), FavouritesPage.class);
-                startActivity(intent);
-            }
-        });
+
         chatStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addUserToChat(userEmail);
-                Intent intent = new Intent(getApplicationContext(), UsersActivity.class);
+                Intent intent = new Intent(getApplicationContext(), Login.class);
+                intent.putExtra("email", userEmail);
                 startActivity(intent);
             }
+        });
+        homeButton.setOnClickListener(v -> {
+            Intent intenta = new Intent(ProfilePage2.this, HomePage.class);
+            startActivity(intenta);
         });
 
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AddDialog dialog = new AddDialog();
-                dialog.show(getSupportFragmentManager(), "AddDialog");
-            }
+        favoritesButton.setOnClickListener(v -> {
+            Intent intenta = new Intent(ProfilePage2.this, FavouritesPage.class);
+            startActivity(intenta);
         });
-        chatButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), UsersActivity.class);
-                startActivity(intent);
-            }
+
+        addButton.setOnClickListener(v -> {
+            AddDialog dialog = new AddDialog();
+            dialog.show(getSupportFragmentManager(), "AddDialog");
+        });
+
+        chatButton.setOnClickListener(v -> {
+            Intent intenta = new Intent(ProfilePage2.this, UsersActivity.class);
+            startActivity(intenta);
+        });
+
+        profileButton.setOnClickListener(v -> {
+            Intent intenta = new Intent(ProfilePage2.this, ProfilePage1.class);
+            intent.putExtra("email", User.getEmail());
+            startActivity(intenta);
         });
     }
 

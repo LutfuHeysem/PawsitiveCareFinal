@@ -109,11 +109,6 @@ public class HomePage extends AppCompatActivity implements UserListener {
         });
 
 
-        homeIcon.setOnClickListener(v -> {
-            Intent intent = new Intent(HomePage.this, HomePage.class);
-            startActivity(intent);
-        });
-
         favouritesIcon.setOnClickListener(v -> {
             Intent intent = new Intent(HomePage.this, FavouritesPage.class);
             startActivity(intent);
@@ -159,8 +154,6 @@ public class HomePage extends AppCompatActivity implements UserListener {
                         jobNew.spokenLanguages = document.getString("Languages").toUpperCase();
                         jobNew.price = document.getString("Price");
                         jobNew.location = document.getString("Location").toUpperCase();
-                        System.out.println("bura gelmisem?adsfasfadsf");
-                        jobNew.location = document.getString("Location Properties").toUpperCase();
                         jobNew.email = document.getId();
                         getUserData(jobNew.email, jobNew);
                     } catch (Exception e) {

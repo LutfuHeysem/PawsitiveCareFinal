@@ -49,18 +49,7 @@ public class FavouritesPage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        favouritesIcon.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                //handle click on favourites image
-                //navigate to favourite page
-                Intent intent = new Intent(FavouritesPage.this, FavouritesPage.class);
-                startActivity(intent);
-            }
-        });
-
+        
         addIcon.setOnClickListener(v -> {
             AddDialog dialog = new AddDialog();
             dialog.show(getSupportFragmentManager(), "AddDialog");

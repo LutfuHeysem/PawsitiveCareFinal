@@ -32,7 +32,16 @@ public class Login extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if(getIntent().getStringExtra("email") != null){
+            Intent chatIntent = new Intent(Login.this, UsersActivity.class);
+            startActivity(chatIntent);
+        }
+        else if(getIntent().getStringExtra("home") != null){
+            Intent homeIntent = new Intent(Login.this, HomePage.class);
+            startActivity(homeIntent);
+        }
         super.onCreate(savedInstanceState);
+
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
 
@@ -49,8 +58,10 @@ public class Login extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 logEmail = emailEdit.getText().toString();
                 logPass = passEdit.getText().toString();
+
 
                 if(TextUtils.isEmpty(logEmail))
                     Toast.makeText(Login.this, "You must enter an email!", Toast.LENGTH_SHORT).show();
