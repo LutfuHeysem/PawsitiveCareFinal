@@ -94,28 +94,28 @@ public class ReviewMain extends AppCompatActivity {
                     }
 
 
-                    User feedbackReceiverUserUser = new User(feedbackReceiverUser);
-                    User feedbackGiverUser = new User(User.getEmail());
-                    double feedbackGiverBalance = User.getBalance();
-                    double feedbackReceiverUserBalance = feedbackReceiverUserUser.getBalance();
-                    FirebaseFirestore db =FirebaseFirestore.getInstance();
+//                    User feedbackReceiverUserUser = new User(feedbackReceiverUser);
+//                    User feedbackGiverUser = new User(User.getEmail());
+//                    double feedbackGiverBalance = User.getBalance();
+//                    double feedbackReceiverUserBalance = feedbackReceiverUserUser.getBalance();
+//                    FirebaseFirestore db =FirebaseFirestore.getInstance();
+//
+//                    DocumentReference careTakerJobData = db.collection("Users").
+//                            document(User.getEmail()).
+//                            collection("AcceptedOffers").
+//                            document(feedbackReceiverUser);
+//                    careTakerJobData.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>(){
+//                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+//
+//                            String transactionAmount = documentSnapshot.getString("amount");
+//                            transactionAmountDouble = Double.parseDouble(transactionAmount);
+//                        }
+//                    });
 
-                    DocumentReference careTakerJobData = db.collection("Users").
-                            document(User.getEmail()).
-                            collection("AcceptedOffers").
-                            document(feedbackReceiverUser);
-                    careTakerJobData.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>(){
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-
-                            String transactionAmount = documentSnapshot.getString("amount");
-                            transactionAmountDouble = Double.parseDouble(transactionAmount);
-                        }
-                    });
 
 
-
-                    feedbackReceiverUserUser.setBalance(transactionAmountDouble + feedbackReceiverUserBalance, feedbackReceiverUserUser);
-                    feedbackGiverUser.setBalance(feedbackGiverBalance - transactionAmountDouble, feedbackGiverUser);
+//                    feedbackReceiverUserUser.setBalance(transactionAmountDouble + feedbackReceiverUserBalance, feedbackReceiverUserUser);
+//                    feedbackGiverUser.setBalance(feedbackGiverBalance - transactionAmountDouble, feedbackGiverUser);
 
 
                     Intent intent = new Intent(ReviewMain.this, HomePage.class);
