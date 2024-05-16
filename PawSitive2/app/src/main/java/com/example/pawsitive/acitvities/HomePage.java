@@ -62,7 +62,6 @@ public class HomePage extends AppCompatActivity implements UserListener {
 
         search = findViewById(R.id.locSearch);
         searchSave = findViewById(R.id.searchButton);
-        System.out.println("search");
         recyclerView = findViewById(R.id.recyclerView2);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -106,7 +105,6 @@ public class HomePage extends AppCompatActivity implements UserListener {
     }
 
     private void initializeImageViews() {
-        //System.out.println("ınıtialize image views");
         homeIcon = findViewById(R.id.homeIcon);
         favouritesIcon = findViewById(R.id.heart_icon);
         addIcon = findViewById(R.id.add_icon);

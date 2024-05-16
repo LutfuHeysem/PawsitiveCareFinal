@@ -65,8 +65,6 @@ public class UsersActivity extends AppCompatActivity implements UserListener {
                             String currentUserId = preferenceManager.getString(Constants.KEY_USER_ID);
                             if (task.isSuccessful() && task.getResult() != null) {
 
-                                System.out.println(task.getResult());
-
                                 List<UserForChat> users = new ArrayList<>();
                                 UserForChat user;
                                 for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
@@ -80,9 +78,7 @@ public class UsersActivity extends AppCompatActivity implements UserListener {
                                     //user.token = queryDocumentSnapshot.getString(Constants.KEY_FCM_TOKEN);
                                     user.img = queryDocumentSnapshot.getString(Constants.KEY_IMAGE);
                                     user.id = queryDocumentSnapshot.getId();
-                                    System.out.println(queryDocumentSnapshot.getString(Constants.KEY_NAME));
                                     if (User.searchInsidefChat(user.email)) {
-                                        System.out.println(user.email);
                                         users.add(user);
                                     }
                                 }
@@ -121,9 +117,7 @@ public class UsersActivity extends AppCompatActivity implements UserListener {
     public void onUserClicked(UserForChat user) {
         Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
         intent.putExtra(Constants.KEY_USER, user);
-        System.out.println("user" + user.name);
         startActivity(intent);
-//        finish();
     }
 
     @Override

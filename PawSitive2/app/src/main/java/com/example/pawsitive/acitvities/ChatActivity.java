@@ -6,11 +6,13 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
+import android.widget.Toast;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,6 +25,9 @@ import com.example.pawsitive.adapters.ChatAdapter;
 import com.example.pawsitive.databinding.ActivityChatBinding;
 import com.example.pawsitive.utilities.Constants;
 import com.example.pawsitive.utilities.PreferenceManager;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -46,6 +51,7 @@ public class ChatActivity extends AppCompatActivity {
     private ChatAdapter chatAdapter;
     private PreferenceManager preferenceManager;
     private FirebaseFirestore db;
+    private double caretakerBalance, ownerBalance;
     FirebaseAuth auth = FirebaseAuth.getInstance();
 
     @Override
@@ -56,12 +62,11 @@ public class ChatActivity extends AppCompatActivity {
         setListeners();
         loadReceiverDetails();
         init();
-        System.out.println(User.getEmail());
-        System.out.println(auth.getCurrentUser().getEmail());
         listenMessages();
-        System.out.println("buraya giriyorumm mumumu");
+        takeUsersBalance();
     }
-    private void init(){
+
+    private void init() {
 
         preferenceManager = new PreferenceManager(getApplicationContext());
         chatMessages = new ArrayList<>();
@@ -69,13 +74,13 @@ public class ChatActivity extends AppCompatActivity {
                 chatMessages,
                 getBitmapFromEncodedString(receiverUser.img),
                 auth.getCurrentUser().getEmail()
-                );
+        );
         binding.chatRecyclerView.setAdapter(chatAdapter);
         db = FirebaseFirestore.getInstance();
     }
 
-    private void sendMessage(){
-        HashMap<String,Object> message = new HashMap<>();
+    private void sendMessage() {
+        HashMap<String, Object> message = new HashMap<>();
         message.put(Constants.KEY_SENDER_ID, auth.getCurrentUser().getEmail());
         message.put(Constants.KEY_RECEIVER_ID, receiverUser.id);
         message.put(Constants.KEY_MESSAGE, binding.inputMessage.getText().toString());
@@ -84,13 +89,13 @@ public class ChatActivity extends AppCompatActivity {
         binding.inputMessage.setText(null);
     }
 
-    private void makeOffer(){
+    private void makeOffer() {
         MakeOfferDialog dialog = new MakeOfferDialog();
         dialog.setReceiverUser(receiverUser.email);
         dialog.show(getSupportFragmentManager(), "MakeOfferDialog");
     }
 
-    private void listenMessages(){
+    private void listenMessages() {
         db.collection(Constants.KEY_COLLECTION_CHAT)
                 .whereEqualTo(Constants.KEY_SENDER_ID, auth.getCurrentUser().getEmail())
                 .whereEqualTo(Constants.KEY_RECEIVER_ID, receiverUser.id)
@@ -105,43 +110,41 @@ public class ChatActivity extends AppCompatActivity {
                 .document(auth.getCurrentUser().getEmail())
                 .collection("Offers")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
-                try {
-                    if (e != null) {
-                        System.out.println("Listen failed: " + e.getMessage());
-                        return;
-                    }
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+                        try {
+                            if (e != null) {
+                                System.out.println("Listen failed: " + e.getMessage());
+                                return;
+                            }
 
-                    for (DocumentChange dc : snapshot.getDocumentChanges()) {
-                        switch (dc.getType()) {
-                            case ADDED:
-                                DocumentSnapshot document = dc.getDocument();
-                                String userEmail = document.getId();
-                                System.out.println("userEmail: " + userEmail);
-                                String amount = document.getString("amount");
-                                String endDate = document.getString("endDate");
-                                String startDate = document.getString("startDate");
-                                System.out.println("amount: " + amount);
-                                AcceptOfferDialog dialog = new AcceptOfferDialog();
-                                dialog.setAmount(amount);
-                                dialog.setEndDate(endDate);
-                                dialog.setStartDate(startDate);
-                                dialog.setReceiverUserEmail(receiverUser.email);
-                                dialog.show(getSupportFragmentManager(), "AcceptOfferDialog");
-                                break;
-                            case MODIFIED:
-                                break;
-                            case REMOVED:
-                                break;
+                            for (DocumentChange dc : snapshot.getDocumentChanges()) {
+                                switch (dc.getType()) {
+                                    case ADDED:
+                                        DocumentSnapshot document = dc.getDocument();
+                                        String userEmail = document.getId();
+                                        String amount = document.getString("amount");
+                                        String endDate = document.getString("endDate");
+                                        String startDate = document.getString("startDate");
+                                        AcceptOfferDialog dialog = new AcceptOfferDialog();
+                                        dialog.setAmount(amount);
+                                        dialog.setEndDate(endDate);
+                                        dialog.setStartDate(startDate);
+                                        dialog.setReceiverUserEmail(receiverUser.email);
+                                        dialog.show(getSupportFragmentManager(), "AcceptOfferDialog");
+                                        break;
+                                    case MODIFIED:
+                                        break;
+                                    case REMOVED:
+                                        break;
+                                }
+                            }
+                        } catch (Exception ex) {
+                            // Handle any exceptions here
+                            System.out.println("Exception occurred: " + ex.getMessage());
                         }
                     }
-                } catch (Exception ex) {
-                    // Handle any exceptions here
-                    System.out.println("Exception occurred: " + ex.getMessage());
-                }
-            }
-        });
+                });
 
 
         db.collection("Users")
@@ -161,19 +164,14 @@ public class ChatActivity extends AppCompatActivity {
                                     case ADDED:
                                         DocumentSnapshot document = dc.getDocument();
                                         String userEmail = document.getId();
-                                        System.out.println("userEmail: " + userEmail);
                                         String amount = document.getString("amount");
                                         String endDate = document.getString("endDate");
                                         String startDate = document.getString("startDate");
-                                        System.out.println("amount: " + amount);
 
                                         LocalDate today = LocalDate.now();
 
                                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                                         String formattedDate = today.format(formatter);
-                                        System.out.println(formattedDate);
-                                        System.out.println("bulamadim :(");
-                                        System.out.println(endDate);
                                         String[] endDateArr = new String[3];
                                         endDateArr = endDate.split("/");
                                         int day = Integer.parseInt(endDateArr[0]);
@@ -184,16 +182,28 @@ public class ChatActivity extends AppCompatActivity {
                                         todayDateArr = formattedDate.split("/");
                                         int day2 = Integer.parseInt(todayDateArr[0]);
                                         int month2 = Integer.parseInt(todayDateArr[1]);
-                                        int year2 = Integer.parseInt(todayDateArr[2]);
-                                        System.out.println(receiverUser.email);
-                                        System.out.println("yukarda email var");
-                                        System.out.println(userEmail);
-                                        if(day == day2 && month == month2 && year == year2 && userEmail.equals(receiverUser.email)){
+                                        int year2 = Integer.parseInt(todayDateArr[2]); //receiveremail caretaker -*- auth
+                                        if (day == day2 && month == month2 && year == year2 && userEmail.equals(receiverUser.email)) {
+
+                                            //OWNER auth.getCurrentUser().getEmail()
+                                            //CARETAKER receiverUser.email
+                                            double amountD = Double.parseDouble(amount);
+                                            HashMap<String, Object> updateBalanceCaretaker = new HashMap<>();
+                                            HashMap<String, Object> updateBalanceOwner = new HashMap<>();
+
+                                            //There are some confussions in the naming but works correctly
+                                            ownerBalance -= amountD;
+                                            caretakerBalance += amountD;
+                                            updateBalanceCaretaker.put("Balance", ownerBalance);
+                                            updateBalanceOwner.put("Balance", caretakerBalance);
+
+                                            updateInfo(updateBalanceCaretaker, receiverUser.email);
+                                            updateInfo(updateBalanceOwner, auth.getCurrentUser().getEmail());
+
                                             Intent intent = new Intent(ChatActivity.this, ReviewMain.class);
                                             intent.putExtra("email", userEmail);
                                             startActivity(intent);
                                         }
-
                                         break;
                                     case MODIFIED:
                                         break;
@@ -207,36 +217,28 @@ public class ChatActivity extends AppCompatActivity {
                         }
                     }
                 });
-
-
-        System.out.println("test" + receiverUser.id);
-        System.out.println("au" + User.getEmail());
     }
 
     private final EventListener<QuerySnapshot> eventListener = (value, error) -> {
-        if(error != null)
+        if (error != null)
             return;
-        if(value != null){
+        if (value != null) {
             int count = chatMessages.size();
-            for(DocumentChange documentChange : value.getDocumentChanges()){
-                System.out.println("Fora girdim");
-                if(documentChange.getType() == DocumentChange.Type.ADDED) {
-                    System.out.println("if e girdim");
+            for (DocumentChange documentChange : value.getDocumentChanges()) {
+                if (documentChange.getType() == DocumentChange.Type.ADDED) {
                     ChatMessage chatMessage = new ChatMessage();
                     chatMessage.senderId = documentChange.getDocument().getString(Constants.KEY_SENDER_ID);
                     chatMessage.receiverId = documentChange.getDocument().getString(Constants.KEY_RECEIVER_ID);
                     chatMessage.message = documentChange.getDocument().getString(Constants.KEY_MESSAGE);
                     chatMessage.dateTime = getReadableDateTime(documentChange.getDocument().getDate(Constants.KEY_TIMESTAMP));
                     chatMessage.dateObject = documentChange.getDocument().getDate(Constants.KEY_TIMESTAMP);
-                    System.out.println(documentChange.getDocument().getString(Constants.KEY_MESSAGE));
                     chatMessages.add(chatMessage);
                 }
             }
             Collections.sort(chatMessages, (obj1, obj2) -> obj1.dateObject.compareTo(obj2.dateObject));
-            if(count == 0){
+            if (count == 0) {
                 chatAdapter.notifyDataSetChanged();
-            }
-            else{
+            } else {
                 chatAdapter.notifyItemRangeInserted(chatMessages.size(), chatMessages.size());
                 binding.chatRecyclerView.smoothScrollToPosition(chatMessages.size() - 1);
             }
@@ -245,27 +247,62 @@ public class ChatActivity extends AppCompatActivity {
         binding.progressBar.setVisibility(View.GONE);
     };
 
-    private Bitmap getBitmapFromEncodedString(String encodedImage){
+    private Bitmap getBitmapFromEncodedString(String encodedImage) {
         byte[] bytes = Base64.decode(encodedImage, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 
-    private void loadReceiverDetails(){
+    private void loadReceiverDetails() {
         receiverUser = (UserForChat) getIntent().getSerializableExtra(Constants.KEY_USER);
         binding.textName.setText(receiverUser.name);
     }
 
-    private void backPressed(){
+    private void backPressed() {
         Intent intent = new Intent(ChatActivity.this, UsersActivity.class);
         startActivity(intent);
     }
-    private void setListeners(){
+
+    private void setListeners() {
         binding.imageBack.setOnClickListener(v -> backPressed());
         binding.layoutSend.setOnClickListener(v -> sendMessage());
-        binding.layoutOffer.setOnClickListener(v-> makeOffer());
+        binding.layoutOffer.setOnClickListener(v -> makeOffer());
     }
 
-    private String getReadableDateTime(Date date){
+    private String getReadableDateTime(Date date) {
         return new SimpleDateFormat("MMMM dd, yyyy - hh:mm a", Locale.getDefault()).format(date);
+    }
+    //OWNER auth.getCurrentUser().getEmail()
+    //CARETAKER receiverUser.email
+    private void takeUsersBalance(){
+        db.collection("Users").document(auth.getCurrentUser().getEmail()).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        ownerBalance = documentSnapshot.getDouble("Balance");
+                    }
+                });
+        db.collection("Users").document(receiverUser.email).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        caretakerBalance = documentSnapshot.getDouble("Balance");
+                    }
+                });
+    }
+
+    private void updateInfo(HashMap<String, Object> hashMap, String email) {
+        db.collection("Users")
+                .document(email)
+                .update(hashMap)
+                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(ChatActivity.this, "Balance updated successfully", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(ChatActivity.this, "Failed to update balance", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 }

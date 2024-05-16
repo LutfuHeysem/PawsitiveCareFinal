@@ -75,17 +75,11 @@ public class Filtering extends AppCompatActivity {
                 exp = Integer.parseInt(expCheck);
             }
 
-            System.out.println(jobAL.size());
             filterLocation();
-            System.out.println(jobAL.size());
             filterPrice();
-            System.out.println(jobAL.size());
             filterExperience();
-            System.out.println(jobAL.size());
             filterGender();
-            System.out.println(jobAL.size());
             filterLanguage();
-            System.out.println(jobAL.size());
             filterGeneral();
 
             Intent intent = new Intent(getApplicationContext(), HomePage.class);

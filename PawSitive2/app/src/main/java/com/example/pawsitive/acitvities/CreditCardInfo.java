@@ -150,7 +150,6 @@ public class  CreditCardInfo extends AppCompatActivity {
                                                         public void onComplete(@NonNull Task<Void> task) {
                                                             if(task.isSuccessful())
                                                             {
-                                                                Toast.makeText(CreditCardInfo.this, gender + "  ", Toast.LENGTH_SHORT).show();
                                                                 Toast.makeText(CreditCardInfo.this, "Successful Sign Up", Toast.LENGTH_SHORT).show();
                                                                 Intent intent = new Intent(CreditCardInfo.this, Login.class);
                                                                 startActivity(intent);

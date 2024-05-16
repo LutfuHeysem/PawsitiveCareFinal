@@ -85,7 +85,6 @@ public class FavouritesPage extends AppCompatActivity implements UserListener {
                                 get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                     @Override
                                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                        System.out.println(document.getString("email"));
                                         Job jobNew = new Job();
                                         jobNew.experienceLevel = documentSnapshot.getString("Experience");
                                         jobNew.gender = documentSnapshot.getString("Gender").toUpperCase();

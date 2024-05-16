@@ -35,7 +35,7 @@ public class AcceptOfferDialog extends DialogFragment {
     private String amount;
     private String startDateString;
     private String endDateString;
-    private double ownerBalance;
+    private double ownerBalance, takerBalance;
     private FirebaseFirestore db;
 
     @NonNull
@@ -90,7 +90,6 @@ public class AcceptOfferDialog extends DialogFragment {
 
             }
         });
-
         builder.setView(view);
         return builder.create();
     }
@@ -103,7 +102,6 @@ public class AcceptOfferDialog extends DialogFragment {
             userData.put("amount", amount);
             userData.put("startDate", startDateString);
             userData.put("endDate", endDateString);
-            System.out.println(userData);
             db.collection("Users").document(User.getEmail())
                     .collection("AcceptedOffers").document(receiverUserEmail).set(userData);
 
@@ -116,7 +114,7 @@ public class AcceptOfferDialog extends DialogFragment {
         try {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             DocumentReference documentRef = db.collection("Users")
-                    .document(User.getEmail())  // Assuming User.getEmail() gets the current user's email
+                    .document(User.getEmail())
                     .collection("Offers")
                     .document(userEmail);
 
@@ -134,10 +132,7 @@ public class AcceptOfferDialog extends DialogFragment {
 
     public void setAmount(String amount) {
         this.amount = amount;
-        System.out.println(amount);
     }
-
-
     public void setStartDate(String startDate) {
         this.startDateString = startDate;
     }

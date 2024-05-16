@@ -70,11 +70,9 @@ public class MyPets extends AppCompatActivity implements PetsListener {
                 startActivity(intent);
             }
         });
-
     }
 
     private void displayItems() {
-
         fStore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
         fStore.collection("Users").document(auth.getCurrentUser().getEmail()).collection("Pets").
@@ -95,8 +93,6 @@ public class MyPets extends AppCompatActivity implements PetsListener {
 
                             petList.add(new MyPetModel(imageStr, name, type, friendly, neutered, microchipped,
                                     food, walks, age, weight, trained));
-
-                            System.out.println(petList.size());
                         }
                         if(!petList.isEmpty()){
                             petsAdapter = new MyPetsAdapter(this, petList, this);

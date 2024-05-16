@@ -26,22 +26,18 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
     public ReviewAdapter(Context context, ArrayList<Review> reviewArrayList) {
         this.context = context;
         this.reviewArrayList = reviewArrayList;
-        System.out.println("ReviewAdapter: " + reviewArrayList.size() + " items");
-//        System.out.println(reviewArrayList.get(0).getComment());
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_container_review, parent, false);
-
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Review review = reviewArrayList.get(position);
-
         holder.bind(review);
     }
 
@@ -60,7 +56,6 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         }
 
         public void bind(Review review) {
-            System.out.println("Rating: " + review.getStar() + ", Comment: " + review.getComment());
             ratingBar.setRating(review.getStar());
             textViewComment.setText(review.getComment());
         }

@@ -30,7 +30,6 @@ public class MyPetsAdapter extends RecyclerView.Adapter<ViewHolderForMyPets> {
         this.context = context;
         this.petsList = petsList;
         this.petsListener = petsListener;
-        System.out.println("MyPetAdapter " + petsList.size());
     }
 
     @NonNull
@@ -41,28 +40,18 @@ public class MyPetsAdapter extends RecyclerView.Adapter<ViewHolderForMyPets> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolderForMyPets holder, int position) {
-        System.out.println("sa1");
         String imageStr = petsList.get(position).getImageStr();
         byte[] decodedString = Base64.decode(imageStr, Base64.DEFAULT);
         holder.petImage.setImageBitmap(BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length));
 
-        System.out.println("sa2");
         holder.petName.setText(petsList.get(position).getName());
-        System.out.println("sa3");
         holder.petAge.setText(String.valueOf(petsList.get(position).getAge()));
-        System.out.println("sa4");
         holder.petWeight.setText(String.valueOf(petsList.get(position).getWeight()));
-        System.out.println("sa5");
         holder.petType.setText(petsList.get(position).getType());
-        System.out.println("sa6");
         holder.petFriendly.setText(petsList.get(position).getFriendly());
-        System.out.println("sa7");
         holder.petNeutered.setText(petsList.get(position).getNeutered());
-        System.out.println("sa8");
         holder.petMicrochipped.setText(petsList.get(position).getMicrochipped());
-        System.out.println("sa9");
         holder.petFood.setText(petsList.get(position).getFood());
-        System.out.println("sa10");
         holder.petWalks.setText(petsList.get(position).getWalks());
         holder.trainedText.setText(petsList.get(position).getTrained());
 

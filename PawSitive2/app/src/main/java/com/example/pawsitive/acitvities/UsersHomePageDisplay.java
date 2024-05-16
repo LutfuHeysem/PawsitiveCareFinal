@@ -8,12 +8,9 @@ import java.util.ArrayList;
 
 public class UsersHomePageDisplay {
     private ArrayList<User> usersOnDisplay;
-
-
     public UsersHomePageDisplay(){
         this.usersOnDisplay = new ArrayList<>();
     }
-
     public ArrayList<User> getUsersOnDisplay(){
         return this.usersOnDisplay;
     }

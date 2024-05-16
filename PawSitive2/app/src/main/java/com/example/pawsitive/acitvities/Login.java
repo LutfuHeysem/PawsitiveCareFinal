@@ -65,7 +65,6 @@ public class Login extends AppCompatActivity {
                 logEmail = emailEdit.getText().toString();
                 logPass = passEdit.getText().toString();
 
-
                 if(TextUtils.isEmpty(logEmail))
                     Toast.makeText(Login.this, "You must enter an email!", Toast.LENGTH_SHORT).show();
                 else if(TextUtils.isEmpty(logPass))
@@ -78,23 +77,10 @@ public class Login extends AppCompatActivity {
                                     currUser = currAuth.getCurrentUser();
                                     if(currUser != null && currUser.isEmailVerified())
                                     {
-                                    //TEMPORARY
-
-                                                User user = new User(logEmail);
-                                                Toast.makeText(Login.this, "Successful Login!", Toast.LENGTH_SHORT).show();
-
-                                                Intent homeIntent = new Intent(Login.this, HomePage.class);
-                                                Intent editPetIntent = new Intent(Login.this, AddEditPet.class).putExtra("PetName", "Venus");
-                                                //WILL GET PET NAME WHEN EDITING
-                                                Intent addPetIntent = new Intent(Login.this, AddEditPet.class);
-                                                Intent chatIntent = new Intent(Login.this, UsersActivity.class);
-                                                Intent reviewIntent = new Intent(Login.this, ReviewListActivity.class);
-                                                Intent profileIntent = new Intent(Login.this, ProfilePage2.class);
-                                                Intent filterIntent = new Intent(Login.this, Filtering.class);
-                                                startActivity(homeIntent);
-
-
-
+                                        User user = new User(logEmail);
+                                        Toast.makeText(Login.this, "Successful Login!", Toast.LENGTH_SHORT).show();
+                                        Intent homeIntent = new Intent(Login.this, HomePage.class);
+                                        startActivity(homeIntent);
                                     }
                                     else if(currUser != null && !currUser.isEmailVerified())
                                         Toast.makeText(Login.this, "Verify your email first!", Toast.LENGTH_SHORT).show();

@@ -90,9 +90,7 @@ public class AddEditPet extends AppCompatActivity {
 
         Intent intent = getIntent();
         String petName = intent.getStringExtra("PetName");
-        System.out.println(petName);
         editMode(petName);
-        System.out.println(isEdit);
 
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
@@ -250,7 +248,6 @@ public class AddEditPet extends AppCompatActivity {
                     petData.put("Additional Notes", additionalNotes);
                     petData.put("Gender", genderSelection);
 
-                    System.out.println(auth.getCurrentUser().getEmail());
                     fStore = FirebaseFirestore.getInstance();
                     fStore.collection("Users").document(auth.getCurrentUser().getEmail())
                             .collection("Pets").document(name).set(petData)
@@ -273,7 +270,6 @@ public class AddEditPet extends AppCompatActivity {
 
             }
         });
-
         UploadImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -297,10 +293,8 @@ public class AddEditPet extends AppCompatActivity {
                     imageInBase64 = bos.toByteArray();
                     imageStr = Base64.encodeToString(imageInBase64, Base64.DEFAULT);
                 }
-
             }
         });
-
         BackButton.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -310,10 +304,8 @@ public class AddEditPet extends AppCompatActivity {
             }
         });
     }
-
     public void editMode(String petName){
         isEdit = true;
         editingPetName = petName;
     }
-
 }

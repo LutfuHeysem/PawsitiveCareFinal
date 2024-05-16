@@ -165,7 +165,6 @@ public class ProfilePage2 extends AppCompatActivity implements ActiveJobListener
             System.out.println("Error: " + e.getMessage());
         }
 
-
         backButtonProfilePage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -174,11 +173,8 @@ public class ProfilePage2 extends AppCompatActivity implements ActiveJobListener
             }
         });
 
-
         String email = intent.getStringExtra("email");
-
         this.owner = new User(email);
-
         reviewsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -298,7 +294,6 @@ public class ProfilePage2 extends AppCompatActivity implements ActiveJobListener
 
                             String startDate = document.getString("startDate");
                             String endDate = document.getString("endDate");
-                            System.out.println(startDate);
                             activeJobs.add(new ActiveJobModel(startDate, endDate));
                         }
                         if(!activeJobs.isEmpty()){

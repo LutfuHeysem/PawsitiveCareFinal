@@ -20,11 +20,9 @@ public class ActiveJobsAdapter extends RecyclerView.Adapter<ViewHolderForActiveJ
 
     private Context context;
     private final List<ActiveJobModel> activeJobModelList;
-    private final ActiveJobListener activeJobListener;
     String clickedEmail;
 
     public ActiveJobsAdapter(Context context, ArrayList<ActiveJobModel> activeJobList, ActiveJobListener activeJobListener, String email) {
-        this.activeJobListener = activeJobListener;
         this.context = context;
         this.activeJobModelList = activeJobList;
         this.clickedEmail = email;
@@ -40,14 +38,6 @@ public class ActiveJobsAdapter extends RecyclerView.Adapter<ViewHolderForActiveJ
     public void onBindViewHolder(@NonNull ViewHolderForActiveJobs holder, int position) {
         holder.startDate.setText(activeJobModelList.get(position).getStartDate());
         holder.endDate.setText(activeJobModelList.get(position).getEndDate());
-
-//        holder.chatButton.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                activeJobListener.onChatClicked();
-//            }
-//        });
     }
 
     @Override

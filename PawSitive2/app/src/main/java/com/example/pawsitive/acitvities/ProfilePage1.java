@@ -156,8 +156,6 @@ public class ProfilePage1 extends AppCompatActivity {
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
-
-
         backButtonProfilePage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -174,16 +172,10 @@ public class ProfilePage1 extends AppCompatActivity {
             }
         });
 
-
-
     Intent intent = getIntent();
-
     String email = intent.getStringExtra("email");
-
     this.owner = new User(email);
-
-        editButtonProfilePage = findViewById(R.id.editButtonProfile);
-
+    editButtonProfilePage = findViewById(R.id.editButtonProfile);
         editButtonProfilePage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -200,7 +192,6 @@ public class ProfilePage1 extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -230,7 +221,6 @@ public class ProfilePage1 extends AppCompatActivity {
             }
         });
     }
-
     private void changeEditable(boolean trueOrFalse){
         profileImageView.setFocusable(trueOrFalse);
         profileImageView.setClickable(trueOrFalse);
@@ -253,8 +243,6 @@ public class ProfilePage1 extends AppCompatActivity {
         nameView.setFocusable(trueOrFalse);
         nameView.setClickable(trueOrFalse);
     }
-
-
 
     public float calculateStarAverage(){
         if(reviewArrayList.isEmpty())

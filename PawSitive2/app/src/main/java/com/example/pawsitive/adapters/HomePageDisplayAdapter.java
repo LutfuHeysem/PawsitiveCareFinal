@@ -56,7 +56,6 @@ public class HomePageDisplayAdapter extends RecyclerView.Adapter<HomePageDisplay
         holder.genderAndYear.setText(job.getGender() + ", " + job.getExperienceLevel());
         holder.location.setText(job.getLocation());
         holder.ratingBar.setRating(job.getUserRating());
-        System.out.println("job" + job.getRating());
         holder.price.setText(job.getPrice() + " $");
 
         AtomicReference<Boolean> isOk = new AtomicReference<>(false);
