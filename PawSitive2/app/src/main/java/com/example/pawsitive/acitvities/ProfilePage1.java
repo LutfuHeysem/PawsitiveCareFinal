@@ -40,8 +40,8 @@ public class ProfilePage1 extends AppCompatActivity {
 
     private ArrayList<Review> reviewArrayList;
 
-    TextView locationView, nameView, priceInfo, locationInfo, experienceInfo, languagesInfo;
-    String userEmail, profileImageStr, name, location, gender;
+    TextView locationView, nameView, priceInfo, locationInfo, experienceInfo, languagesInfo, balanceInfo;
+    String userEmail, profileImageStr, name, location, gender, balance;
     Bitmap profileImageBitmap;
     Button backButtonProfilePage, editButtonProfilePage, reviewsButton, myAnimalsButton;
     ImageView homeButton, favoritesButton, addButton, chatButton, profileButton;
@@ -81,6 +81,7 @@ public class ProfilePage1 extends AppCompatActivity {
         languagesInfo = findViewById(R.id.languagesInfo);
         locationView = findViewById(R.id.locationText);
         nameView = findViewById(R.id.profileUserName);
+        balanceInfo = findViewById(R.id.BalanceView);
 
         rateBar = findViewById(R.id.ratingBar2);
         changeEditable(false);
@@ -100,6 +101,7 @@ public class ProfilePage1 extends AppCompatActivity {
 
                     name = documentSnapshot.getString("Name");
                     gender = documentSnapshot.getString("Gender");
+                    balance = String.valueOf(documentSnapshot.get("Balance"));
 
                     profileImageStr = documentSnapshot.getString("Profile Photo");
                     byte[] decodedString = Base64.decode(profileImageStr, Base64.DEFAULT);
@@ -111,6 +113,7 @@ public class ProfilePage1 extends AppCompatActivity {
                     locationView.setText(location);
                     String nameAndGender = name + " (" + gender + ")";
                     nameView.setText(nameAndGender);
+                    balanceInfo.setText(balance);
 
                     profileImageView.setImageBitmap(profileImageBitmap);
                     profileImageView.setVisibility(View.VISIBLE);

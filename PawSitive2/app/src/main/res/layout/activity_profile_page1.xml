@@ -282,4 +282,24 @@
         app:layout_constraintStart_toStartOf="@+id/languagesInfo"
         app:layout_constraintTop_toBottomOf="@+id/languagesInfo" />
 
+    <TextView
+        android:id="@+id/BalanceText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="60dp"
+        android:text="Balance"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/profileImage"
+        app:layout_constraintEnd_toStartOf="@+id/profileImage"
+        app:layout_constraintTop_toTopOf="@+id/profileImage" />
+
+    <TextView
+        android:id="@+id/BalanceView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/BalanceText"
+        app:layout_constraintStart_toStartOf="@+id/BalanceText"
+        app:layout_constraintTop_toBottomOf="@+id/BalanceText" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
