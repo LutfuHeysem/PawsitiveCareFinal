@@ -12,7 +12,8 @@ Lütfü Heysem Kızıloğlu
 
 Project Summary:
 Pawsitive is an Android app for pet owners to find temporary caretakers for their pets. Pet owners are able to save their pets' info within the app.
-They can filter the caretakers based on their preferences. Caretakers and pet owners can chat through the chat page, send an offer and once the job is done, pet owners can leave a review for the caretaker.
+They can filter the caretakers on the home page based on their preferences. 
+Caretakers and pet owners can chat through the chat page, send an offer and once the job is done, pet owners can leave a review for the caretaker.
 
 
 How To Run:
