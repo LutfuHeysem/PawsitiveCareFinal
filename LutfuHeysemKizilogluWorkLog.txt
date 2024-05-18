@@ -1,0 +1,50 @@
+08.05.2024
+Start : 13.00
+End : 17.40
+Total working hour : 4.40
+Work summary : commit d32bde187af499434186f0d6d6964b216fef5d78
+
+
+09.05.2024
+Start : 16.45
+End : 17.45
+Total working hour : 1
+Work summary : fixed shared environment issues
+
+09.05.2024
+Start : 19.20
+End : 01.20
+Total working hour : 6
+Work summary : Worked on Add Pet 
+
+
+10.05.2024
+Start : 12.00 
+End : 14.35
+Total working hour : 2.35
+Work summary : Worked on Add Pet
+
+
+11.05.2024
+Start : 16.00
+End : 17.10
+Total working hour : 1.10
+Work summary : Worked on Add Pet Database issues
+
+
+12.05.2024
+Start : 16.00
+End : 06.00
+Total Working Hour : 16
+Work Summary : 
+
+
+14.05.2024
+Start : 13.00
+End : 08.00
+Total Working Hour : 19
+Work Summary : Finished the project
+
+
+
+TOTAL WORKING TIME : 50 h 25 m
